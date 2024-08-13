@@ -407,51 +407,42 @@
 
 
 
-
 .slider {
-    width: 100%;
+    width: 100vw;
+    height: 50px;
     margin: auto;
-    height: 10vh;
     overflow: hidden;
-    background-color: #fff;
 }
 
 .slider .slide-track {
     display: flex;
-    height: 10vh;
-    align-items: center;
-    justify-content: center;
-    width: calc(200px * 28);
-    /* Ajustar a 2 veces la cantidad de elementos */
-    animation: scroll 15s linear infinite;
-    -webkit-animation: scroll 35s linear infinite;
+    animation: scroll 40s linear infinite;
+    -webkit-animation: scroll 40s linear infinite;
+    width: calc(200px * 14);
+    height: 100%;
 }
 
 .slider .slide {
     width: 200px;
-    margin: 0 25px;
-    height: 75px;
+    height: 100%;
     display: flex;
     align-items: center;
 }
 
 .slider .slide img {
-    width: 90%;
-    height: 20px;
+    
 }
 
 @keyframes scroll {
     0% {
+        -webkit-transform: translateX(0);
         transform: translateX(0);
     }
-
     100% {
-        transform: translateX(calc(-200px * 14));
-        /* Ajustar a la mitad de la cantidad de elementos */
+        -webkit-transform: translateX(calc(-200px * 7));
+        transform: translateX(calc(-200px * 7));
     }
 }
-
-
 
 
 
