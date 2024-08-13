@@ -6,41 +6,41 @@ const FuerteCarousel = () => {
         <div class="slider">
         <div class="slide-track">
             <div class="slide">
-                <Image src={logo} width={125} height={25} alt="Logo" />
+                <Image src={logo} width={175} height={25} alt="Logo" />
             </div>
             <div class="slide">
-                <Image src={logo} width={125} height={25} alt="Logo" />
+                <Image src={logo} width={175} height={25} alt="Logo" />
             </div>
             <div class="slide">
-                <Image src={logo} width={125} height={25} alt="Logo" />
+                <Image src={logo} width={175} height={25} alt="Logo" />
             </div>
             <div class="slide">
-                <Image src={logo} width={125} height={25} alt="Logo" />
+                <Image src={logo} width={175} height={25} alt="Logo" />
             </div>
             <div class="slide">
-                <Image src={logo} width={125} height={25} alt="Logo" />
+                <Image src={logo} width={175} height={25} alt="Logo" />
             </div>
             <div class="slide">
-                <Image src={logo} width={125} height={25} alt="Logo" />
+                <Image src={logo} width={175} height={25} alt="Logo" />
             </div>
             <div class="slide">
-                <Image src={logo} width={125} height={25} alt="Logo" />
+                <Image src={logo} width={175} height={25} alt="Logo" />
             </div>
 
             <div class="slide">
-                <Image src={logo} width={125} height={25} alt="Logo" />
+                <Image src={logo} width={175} height={25} alt="Logo" />
             </div>
             <div class="slide">
-                <Image src={logo} width={125} height={25} alt="Logo" />
+                <Image src={logo} width={175} height={25} alt="Logo" />
             </div>
             <div class="slide">
-                <Image src={logo} width={125} height={25} alt="Logo" />
+                <Image src={logo} width={175} height={25} alt="Logo" />
             </div>
             <div class="slide">
-                <Image src={logo} width={125} height={25} alt="Logo" />
+                <Image src={logo} width={175} height={25} alt="Logo" />
             </div>
             <div class="slide">
-                <Image src={logo} width={125} height={25} alt="Logo" />
+                <Image src={logo} width={175} height={25} alt="Logo" />
             </div>
         </div>
     </div>
