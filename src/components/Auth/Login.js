@@ -8,7 +8,7 @@ import Image from 'next/image';
 import { UserContext } from "@/features/UserContext";
 
 const Login = () => {
-
+    const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
 
@@ -53,9 +53,9 @@ const Login = () => {
 
             let url = '';
             if (mailUserExists) {
-                url = 'https://localhost:7207/user/login';
+                url = `${API_BASE_URL}/user/login`;
             } else if (mailAdminExists) {
-                url = 'https://localhost:7207/admin/login';
+                url = `${API_BASE_URL}/admin/login`;
             }
 
             const response = await fetch(url, {
@@ -114,7 +114,7 @@ const Login = () => {
         try {
             await new Promise(resolve => setTimeout(resolve, 2000)); // Simular una espera de 2 segundos
             // Verificar email como admin
-            const responseAdmin = await fetch('https://localhost:7207/admin/check-email', {
+            const responseAdmin = await fetch(`${API_BASE_URL}/admin/check-email`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -135,7 +135,7 @@ const Login = () => {
                     setShowLoginForm(true); // Mostrar formulario de login
                 } else {
                     // El email no está registrado como admin, verificar como usuario normal
-                    const responseUser = await fetch('https://localhost:7207/user/check-email', {
+                    const responseUser = await fetch(`${API_BASE_URL}/admin/check-email`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

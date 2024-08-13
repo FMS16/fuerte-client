@@ -156,6 +156,7 @@
 .nav-menu h1 button svg {
     width: 25px;
     height: 25px;
+    color: #000;
 }
 
 .overlay {
@@ -527,6 +528,7 @@
     overflow: hidden;
     font-weight: bold;
     border-radius: 5px;
+    color: #000;
     position: relative;
     transition: all 0.5s;
 }
