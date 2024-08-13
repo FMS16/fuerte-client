@@ -416,7 +416,6 @@
 
 
 
-
 .container {
     max-width: 95%;
     margin: auto;
@@ -604,7 +603,7 @@
 
 
 .is-whishlisted svg {
-    color: red;
+    color: red !important;
 }
 
 .shop {
@@ -654,13 +653,14 @@
 }
 
 .product-item-details {
-    margin-top: 10px;
+    margin-top: var(--margin-top-separation);
+    margin-bottom: var(--margin-top-separation);
 }
 
-.product-item-details h1,
 .product-item-details h2 {
     font-size: var(--size-normal);
     margin: 5px 10px;
+    font-weight: normal;
 }
 
 .product-item-details .price {
@@ -687,6 +687,8 @@
 .product-details-sizes {
     display: flex;
     list-style: none;
+    margin-top: var(--margin-top-separation);
+    margin-bottom: var(--margin-bottom-separation);
 }
 
 .product-details-sizes li {
@@ -705,11 +707,13 @@
 }
 
 .product-details-info p {
-    margin: 15px 0;
+    margin-top: var(--margin-top-separation);
+    margin-bottom: var(--margin-bottom-separation);
 }
 
 .product-details-actions {
     display: flex;
+    margin-top: 15px;
     justify-content: flex-start;
 }
 
@@ -753,7 +757,7 @@
 }
 
 .is-wishlisted svg {
-    color: red;
+    color: red !important;
 }
 
 .btn-continue-shopping {
