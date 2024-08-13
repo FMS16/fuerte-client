@@ -211,6 +211,7 @@
     width: 25px;
     height: 25px;
     border: none;
+    color: #000;
 }
 
 .cart-header button {
@@ -498,7 +499,14 @@
 .newsletter-container h1 {
     font-size: 20px;
     width: 75%;
+    display: flex;
+    flex-wrap: wrap;
     text-transform: uppercase;
+}
+
+.newsletter-container h1 span{
+    width: 100%;
+    margin-bottom: var(--margin-bottom-separation);
 }
 
 /* .newsletter-container h2 {

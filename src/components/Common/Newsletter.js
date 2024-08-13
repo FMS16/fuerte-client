@@ -9,7 +9,7 @@ const Newsletter = () => {
     return (
         <div className='newsletter'>
             <div className='newsletter-container'>
-                <h1>Convertite en una mujer <Image src={logo} alt='Logo'></Image></h1>
+                <h1><span>Convertite en una mujer</span> <Image src={logo} alt='Logo'></Image></h1>
 {/*                 <h2>Para disfrutar de beneficios exclusivos, descuentos y m&aacute;s</h2> */}
                 <button className='btn-join'>UNIRME AL CLUB</button>
             </div>
