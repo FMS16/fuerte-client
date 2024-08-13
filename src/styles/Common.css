@@ -423,7 +423,7 @@
     justify-content: center;
     width: calc(200px * 28);
     /* Ajustar a 2 veces la cantidad de elementos */
-    animation: scroll 35s linear infinite;
+    animation: scroll 15s linear infinite;
     -webkit-animation: scroll 35s linear infinite;
 }
 
@@ -696,6 +696,7 @@
 .product-item-wish svg {
     width: 25px;
     height: 25px;
+    color: #000;
 }
 
 .product-item-details {
