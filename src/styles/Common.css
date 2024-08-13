@@ -416,8 +416,8 @@
 
 .slider .slide-track {
     display: flex;
-    animation: scroll 40s linear infinite;
-    -webkit-animation: scroll 40s linear infinite;
+    animation: scroll 25s linear infinite;
+    -webkit-animation: scroll 25s linear infinite;
     width: calc(200px * 14);
     height: 100%;
 }
@@ -427,10 +427,6 @@
     height: 100%;
     display: flex;
     align-items: center;
-}
-
-.slider .slide img {
-    
 }
 
 @keyframes scroll {
