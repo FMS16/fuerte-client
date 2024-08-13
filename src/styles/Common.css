@@ -407,39 +407,6 @@
 
 
 
-.slider {
-    width: 100vw;
-    height: 50px;
-    margin: auto;
-    overflow: hidden;
-}
-
-.slider .slide-track {
-    display: flex;
-    animation: scroll 25s linear infinite;
-    -webkit-animation: scroll 25s linear infinite;
-    width: calc(200px * 14);
-    height: 100%;
-}
-
-.slider .slide {
-    width: 200px;
-    height: 100%;
-    display: flex;
-    align-items: center;
-}
-
-@keyframes scroll {
-    0% {
-        -webkit-transform: translateX(0);
-        transform: translateX(0);
-    }
-    100% {
-        -webkit-transform: translateX(calc(-200px * 7));
-        transform: translateX(calc(-200px * 7));
-    }
-}
-
 
 
 

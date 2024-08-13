@@ -16,7 +16,6 @@ export default function Home() {
         positionTextTop='50'
         colorText={'white'}
       />
-      <FuerteCarousel />
     </>
   );
 }
