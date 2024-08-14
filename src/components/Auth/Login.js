@@ -52,7 +52,7 @@ const Login = () => {
             return;
         }
 
-
+        
 
         setLoading(true);
 
@@ -277,7 +277,9 @@ const Login = () => {
                 "lastName": lastName.trim(),
                 "password": passwordRegister.trim(),
                 "phone": phoneRegister.trim(),
+                "dateBorn": dateBornRegister
             }
+
 
             const responseRegister = await fetch(`${API_BASE_URL}/user/create`, {
                 method: 'POST',
@@ -291,7 +293,6 @@ const Login = () => {
             }
 
             const data = await responseRegister.json();
-            console.log(data);
             if (data.isSuccess) {
                 toast.success(data.message, {
                     position: "bottom-right",
