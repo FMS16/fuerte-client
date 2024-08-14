@@ -828,6 +828,10 @@
     background-color: var(--error-color);
 }
 
+.not-found-payment-header h1{
+    background-color: var(--info-color);
+}
+
 .result-payment-body {
     padding: 10px 0;
     font-size: var(--size-normal);

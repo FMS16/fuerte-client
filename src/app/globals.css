@@ -15,6 +15,7 @@
   --warning-color: #ffc107;
   --success-color: #14FA40;
   --error-color:#dc3545;
+  --info-color: #17a2b8;
 }
 .relative{
   position: relative;

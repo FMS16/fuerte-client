@@ -21,8 +21,8 @@ const Checkout = () => {
                 "title": item.product.name,
                 "description": item.size.name,
                 "categoryId": "Ropa deportiva",
-                "quantity": 7,
-                "unitPrice": 1000,
+                "quantity": item.quantity,
+                "unitPrice": item.product.price,
                 "currencyId": "UYU",
                 "warranty": true,
                 "eventDate": "2024-08-12T20:30:30.266Z"
@@ -49,7 +49,7 @@ const Checkout = () => {
 
         fetchData();
 
-    }, [])
+    }, []);
 
     return (
         <>

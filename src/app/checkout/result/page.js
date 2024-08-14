@@ -7,6 +7,7 @@ import { useCart } from '@/features/CartContext';
 import Success from '@/components/Payment/Success';
 import Pending from '@/components/Payment/Pending';
 import Failure from '@/components/Payment/Failure';
+import PaymentNotFound from '@/components/Payment/PaymentNotFound';
 
 const Page = () => {
     const searchParams = useSearchParams();
@@ -15,13 +16,13 @@ const Page = () => {
     const { isAuthenticated } = state;
     const [ paymentStatus, setPaymentStatus ] = useState(null); // Estados: 'loading', 'success', 'pending', 'failure'
     const paymentId = Number(searchParams.get('payment_id'));
-
+    const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
     useEffect(() => {
-        if (paymentStatus === 'success' && paymentId) {
+        if (paymentStatus === 'success' || paymentStatus == "pending" && paymentId) {
             const verifyAndCreateOrder = async () => {
                 try {
                     // Primero verifica si la orden ya existe
-                    const verifyResponse = await fetch(`https://localhost:7207/order/check-order-exists-payment-id?paymentId=${paymentId}`, {
+                    const verifyResponse = await fetch(`${API_BASE_URL}/order/check-order-exists-payment-id?paymentId=${paymentId}`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                     });
@@ -42,8 +43,7 @@ const Page = () => {
                             }
                             items.push(object);
                         });
-                        console.log(items);
-                        const response = await fetch('https://localhost:7207/order/add', {
+                        const response = await fetch(`${API_BASE_URL}/order/add`, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
@@ -53,7 +53,8 @@ const Page = () => {
                                 "lastName": "nombre",
                                 "phone": "092363626",
                                 "email": "mailpruebaorden52@mail.com",
-                                "paymentId": paymentId
+                                "paymentId": paymentId,
+                                "paymentStatus": paymentStatus
                             })
                         });
 
@@ -63,9 +64,35 @@ const Page = () => {
 
                         // Manejar la respuesta de la creación de la orden aquí
                         const responseAdd = await response.json();
-                        console.log(responseAdd);
                     } else {
-                        // La orden ya existe, manejar si es necesario
+                        if(paymentStatus === "pending" && paymentId){
+                            const object = { "paymentId": paymentId };
+                            try {
+                                const response = await fetch(`${API_BASE_URL}/MercadoPago/verify-payment`, {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify(object)
+                                });
+            
+                                if (!response.ok) {
+                                    throw new Error('Network response was not ok');
+                                }
+            
+                                const data = await response.json();
+                                // Manejo de diferentes estados de pago
+                                if (data.data === "approved") {
+                                    setPaymentStatus('success');
+                                } else if (data.data === "pending") {
+                                    setPaymentStatus('pending');
+                                } else if (data.data === "failure") {
+                                    setPaymentStatus('failure');
+                                } else {
+                                    setPaymentStatus('not-found');
+                                }
+                            } catch (error) {
+                                setPaymentStatus('not-found');
+                            }
+                        }
                     }
 
                 } catch (error) {
@@ -79,13 +106,15 @@ const Page = () => {
         }
     }, [ paymentStatus, paymentId ]);
 
+    
+
     useEffect(() => {
         const paymentId = Number(searchParams.get('payment_id'));
         if (paymentId) {
             const object = { "paymentId": paymentId };
             const fetchData = async () => {
                 try {
-                    const response = await fetch(`https://localhost:7207/MercadoPago/verify-payment`, {
+                    const response = await fetch(`${API_BASE_URL}/MercadoPago/verify-payment`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(object)
@@ -103,17 +132,25 @@ const Page = () => {
                         setPaymentStatus('pending');
                     } else if (data.data === "failure") {
                         setPaymentStatus('failure');
-                    } else {
-                        setPaymentStatus('failure'); // Manejo por defecto para estados desconocidos
+                    } else if(data.data == null) {
+                        setPaymentStatus('not-found');
+                    }else{
+                        setPaymentStatus('not-found');
                     }
                 } catch (error) {
-                    setPaymentStatus('failure');
+                    setPaymentStatus('not-found');
                 }
             };
 
             fetchData();
+        }else{
+            setPaymentStatus('not-found');
         }
     }, [ searchParams, paymentId ]);
+
+    if(paymentId == null){
+        return <PaymentNotFound paymentId={0} />
+    }
 
 
     // Mostrar el resultado basado en el estado del pago
@@ -122,6 +159,7 @@ const Page = () => {
             {paymentStatus === 'success' && <Success paymentId={paymentId} />}
             {paymentStatus === 'pending' && <Pending paymentId={paymentId} />}
             {paymentStatus === 'failure' && <Failure paymentId={paymentId} />}
+            {paymentStatus === 'not-found' && <PaymentNotFound paymentId={paymentId} />}
         </div>
     );
 };
