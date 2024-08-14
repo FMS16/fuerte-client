@@ -1,19 +1,20 @@
 "use client";
 
-import { useRouter } from 'next/navigation'
+import { redirect } from 'next/navigation'
 import React from "react";
 import { useEffect, useState, useContext } from "react";
 import logo from "../../assets/images/logoRecortado.png"
 import Image from 'next/image';
 import { UserContext } from "@/features/UserContext";
+import { toast } from 'react-toastify';
 
 const Login = () => {
     const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-    const [message, setMessage] = useState('');
-    const [loading, setLoading] = useState(false);
+    const [ message, setMessage ] = useState('');
+    const [ loading, setLoading ] = useState(false);
 
     const [ email, setEmail ] = useState('');
-    const [password, setPassword] = useState('');
+    const [ password, setPassword ] = useState('');
 
     const [ showLoginForm, setShowLoginForm ] = useState(false);
     const [ mailUserExists, setMailUserExists ] = useState(false);
@@ -23,15 +24,13 @@ const Login = () => {
     const { dispatch, state } = useContext(UserContext);
     const { isAuthenticated } = state;
 
-    const router = useRouter();
-
     useEffect(() => {
 
-        if(isAuthenticated){
-            router.push('/');
+        if (isAuthenticated) {
+            redirect('/');
         }
 
-    }, [isAuthenticated]);
+    }, [ isAuthenticated ]);
 
     const handleInputPassword = (e) => {
         setPassword(e.target.value);
@@ -86,7 +85,7 @@ const Login = () => {
                 });
 
                 const redirectPath = location.state?.from || '/';
-                navigate(redirectPath);
+                router.push(redirectPath);
             } else {
                 setPassword('');
                 setMessage(responseData.message);
@@ -94,7 +93,7 @@ const Login = () => {
         } catch (error) {
             console.error('Error en el inicio de sesión:', error);
             setMessage('Error en el inicio de sesión');
-        }finally{
+        } finally {
             setLoading(false);
         }
     };
@@ -107,13 +106,20 @@ const Login = () => {
     const handleSubmitInit = async (e) => {
         e.preventDefault();
         if (email === '') {
-            setMessage("El correo electrónico no puede estar vacío");
+            toast.error('El mail no puede estar vacio.', {
+                position: "bottom-right",
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
             return;
         }
         setLoading(true); // Activar loader al iniciar la verificación
         try {
-            await new Promise(resolve => setTimeout(resolve, 2000)); // Simular una espera de 2 segundos
-            // Verificar email como admin
             const responseAdmin = await fetch(`${API_BASE_URL}/admin/check-email`, {
                 method: 'POST',
                 headers: {
@@ -127,7 +133,7 @@ const Login = () => {
 
             const responseDataAdmin = await responseAdmin.json();
             if (responseDataAdmin.isSuccess) {
-                setInitForm(false); // Desactivar el formulario inicial
+                setInitForm(false); 
                 setLoading(false);
                 if (responseDataAdmin.data === true) {
                     // El email existe como admin
@@ -135,7 +141,7 @@ const Login = () => {
                     setShowLoginForm(true); // Mostrar formulario de login
                 } else {
                     // El email no está registrado como admin, verificar como usuario normal
-                    const responseUser = await fetch(`${API_BASE_URL}/admin/check-email`, {
+                    const responseUser = await fetch(`${API_BASE_URL}/user/check-email`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -169,6 +175,8 @@ const Login = () => {
 
     const [ name, setName ] = useState('');
     const [ lastName, setLastName ] = useState('');
+
+    const [ phoneRegister, setPhoneRegister ] = useState('');
     const [ passwordRegister, setPasswordRegister ] = useState('');
     const [ dateBornRegister, setDateBorRegister ] = useState('');
 
@@ -184,12 +192,107 @@ const Login = () => {
         setPasswordRegister(e.target.value);
     }
 
+    const handleInputChangePhoneRegister = (e) => {
+        setPhoneRegister(e.target.value);
+    }
+
     const handleInputChangeDateBornRegister = (e) => {
         setDateBorRegister(e.target.value);
     }
 
-    const handleRegister = () => {
-        // Implementar lógica de registro si es necesario
+    const handleRegister = async (e) => {
+        e.preventDefault();
+
+        if (passwordRegister == '' || name == '' || lastName == '' || email == '' || phoneRegister == '') {
+            toast.info('No pueden haber valores vacios.', {
+                position: "bottom-right",
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            return;
+        }
+
+        setLoading(true);
+
+        try {
+            const object = {
+                "name": name,
+                "email": email,
+                "lastName": lastName,
+                "password": passwordRegister,
+                "phone": phoneRegister,
+            }
+
+            const responseRegister = await fetch(`${API_BASE_URL}/user/create`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(object), // Enviar email como objeto JSON
+            });
+            if (!responseRegister.ok) {
+                throw new Error('Error en el registro');
+            }
+
+            const data = await responseRegister.json();
+            console.log(data);
+            if (data.isSuccess) {
+                toast.success(data.message, {
+                    position: "bottom-right",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+
+                sessionStorage.setItem('user', JSON.stringify(data.data));
+                sessionStorage.setItem('isAuthenticated', JSON.stringify(true));
+                sessionStorage.setItem('isAdmin', JSON.stringify(data.data.rol === "Admin"));
+
+                dispatch({
+                    type: actionTypes.LOGIN,
+                    payload: {
+                        user: data.data,
+                    },
+                });
+
+                redirect('/')
+
+            } else {
+                toast.info(data.message, {
+                    position: "bottom-right",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            }
+
+        } catch (err) {
+            toast.error(err, {
+                position: "bottom-right",
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        } finally {
+            setLoading(false);
+        }
     }
 
     const changeEmailLogin = () => {
@@ -233,7 +336,7 @@ const Login = () => {
                     <form className='form-login' onSubmit={handleLogin}>
                         {message !== '' && (
                             <div className='login-message'>
-                               
+
                             </div>
                         )}
 
@@ -268,8 +371,11 @@ const Login = () => {
                             </div>
                         </div>
                         <div className="input-field">
-                            <input value={dateBornRegister} onChange={handleInputChangeDateBornRegister} type="text" required spellCheck="false" />
-                            <label>Fecha de Nacimiento</label>
+                            <input value={dateBornRegister} onChange={handleInputChangeDateBornRegister} type="date" required spellCheck="false" />
+                        </div>
+                        <div className="input-field">
+                            <input value={phoneRegister} onChange={handleInputChangePhoneRegister} type="text" required spellCheck="false" />
+                            <label>Tel&eacute;fono</label>
                         </div>
                         <div className="input-field">
                             <input value={passwordRegister} onChange={handleInputChangePasswordRegister} type="password" required spellCheck="false" />

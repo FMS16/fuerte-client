@@ -1,18 +1,22 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import "../../styles/Common.css";
 import logo from "../../assets/images/logo_small.png";
 import MyCart from './MyCart';
+import { UserContext } from '@/features/UserContext';
 import { useCart } from '@/features/CartContext';
 
 const Header = () => {
     const [ navVisible, setNavVisible ] = useState(false);
     const [ isMobileOrTablet, setIsMobileOrTablet ] = useState(false);
     const { cart, myCartVisible, setMyCartVisible } = useCart();
+
+    const { state } = useContext(UserContext);
+    const { isAuthenticated } = state;
 
     useEffect(() => {
         const mediaQuery = window.matchMedia("(max-width: 1024px)");
@@ -22,7 +26,7 @@ const Header = () => {
         mediaQuery.addEventListener('change', updateMediaQuery);
 
         return () => mediaQuery.removeEventListener('change', updateMediaQuery);
-    }, []);
+    }, [isAuthenticated]);
 
     const toggleCartVisibility = () => {
         setMyCartVisible(!myCartVisible);
@@ -35,7 +39,7 @@ const Header = () => {
     return (
         <header className='header'>
             <div className='header-pre'>
-                <p>¡Hola preciosa!</p>
+                {isAuthenticated ? <p>¡Hola {state.user.name} {state.user.lastName}!</p> : <p>¡Hola preciosa!</p>}
             </div>
             {isMobileOrTablet ? (
                 <div className='header-main'>

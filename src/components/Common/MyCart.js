@@ -11,7 +11,7 @@ const MyCart = () => {
     const { cart, myCartVisible, setMyCartVisible, dispatch } = useCart();
     const [ subtotal, setSubTotal ] = useState(0);
     const [ loading, setLoading ] = useState(false);
-    const baseUrl = "https://localhost:7207/uploads";
+    const baseImgUrl = process.env.NEXT_PUBLIC_BASE_IMG_URL;
 
     useEffect(() => {
         const calculatedSubtotal = cart.reduce((total, item) => {
@@ -52,6 +52,10 @@ const MyCart = () => {
         setLoading(true);
     };
 
+    const myLoader = ({ src }) => {
+        return src;
+    };
+
     return (
         <div className='cart-container' id='cart-container'>
             <motion.div className='my-cart'
@@ -72,8 +76,10 @@ const MyCart = () => {
                         <AnimatePresence>
                             {cart.map((item, index) => (
                                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className='cart-item' key={index}>
-                                    <div className='cart-item-image'>
-                                        <img src={`${baseUrl}/${item.product.image}`} />
+                                    <div className='cart-item-image relative'>
+                                        <Link onClick={toggleCartVisibility} href={`/product/${item.product.id}`}>
+                                            <Image loader={myLoader} fill src={`${baseImgUrl}/${item.product.image}`} />
+                                        </Link>
                                     </div>
                                     <div className='cart-item-info'>
                                         <h1>{item.product.name}</h1>

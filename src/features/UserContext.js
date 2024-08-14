@@ -22,31 +22,30 @@ export const initialState = {
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(userReducer, initialState);
+    const [ state, dispatch ] = useReducer(userReducer, initialState);
 
     // Effect to check localStorage on mount
     useEffect(() => {
-        console.log('Initial sessionStorage values:', {
-            user: sessionStorage.getItem('user'),
-            isAuthenticated: sessionStorage.getItem('isAuthenticated'),
-            isAdmin: sessionStorage.getItem('isAdmin'),
-        });
-    
-        const storedUser = JSON.parse(sessionStorage.getItem('user'));
-        const storedIsAuthenticated = JSON.parse(sessionStorage.getItem('isAuthenticated'));
-        const storedIsAdmin = JSON.parse(sessionStorage.getItem('isAdmin'));
-    
-        if (storedUser && storedIsAuthenticated) {
-            dispatch({
-                type: actionTypes.LOGIN,
-                payload: {
-                    user: storedUser,
-                },
-            });
+        if (typeof window !== 'undefined') {
+            const storedUser = JSON.parse(sessionStorage.getItem('user'));
+            const storedIsAuthenticated = JSON.parse(sessionStorage.getItem('isAuthenticated'));
+            const storedIsAdmin = JSON.parse(sessionStorage.getItem('isAdmin'));
+
+            if (storedUser && storedIsAuthenticated) {
+                dispatch({
+                    type: actionTypes.LOGIN,
+                    payload: {
+                        user: storedUser,
+                    },
+                });
+            }
         }
+
+
+
     }, []);
-    
-    
+
+
 
     // Function to fetch users
     const fetchUsers = async () => {
@@ -94,7 +93,6 @@ export const userReducer = (state, action) => {
                 sessionStorage.setItem('isAuthenticated', JSON.stringify(true));
                 sessionStorage.setItem('isAdmin', JSON.stringify(action.payload.user.rol === 'Admin'));
             }
-
 
             return {
                 ...state,
