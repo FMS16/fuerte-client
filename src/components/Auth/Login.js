@@ -11,7 +11,6 @@ import { actionTypes } from '@/features/UserContext';
 
 const Login = () => {
     const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-    const [ message, setMessage ] = useState('');
     const [ loading, setLoading ] = useState(false);
 
     const [ email, setEmail ] = useState('');
@@ -52,12 +51,15 @@ const Login = () => {
             });
             return;
         }
+
+
+
         setLoading(true);
 
         try {
             const userData = {
-                "email": email,
-                "password": password
+                "email": email.trim(),
+                "password": password.trim()
             };
 
             let url = '';
@@ -66,10 +68,6 @@ const Login = () => {
             } else if (mailAdminExists) {
                 url = `${API_BASE_URL}/admin/login`;
             }
-
-            console.log(url);
-            console.log()
-            console.log(userData);
             const response = await fetch(url, {
                 method: 'POST',
                 headers: {
@@ -156,7 +154,7 @@ const Login = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(email), // Enviar email como objeto JSON
+                body: JSON.stringify(email.trim()), // Enviar email como objeto JSON
             });
             if (!responseAdmin.ok) {
                 throw new Error('Error en el registro');
@@ -177,7 +175,7 @@ const Login = () => {
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify(email), // Enviar email como objeto JSON
+                        body: JSON.stringify(email.trim()), // Enviar email como objeto JSON
                     });
                     if (!responseUser.ok) {
                         throw new Error('Error en el registro');
@@ -190,29 +188,8 @@ const Login = () => {
                     } else {
                         setMailUserExists(false);
                         setMailAdminExists(null);
-                        toast.info('El correo electrónico no está registrado..', {
-                            position: "bottom-right",
-                            autoClose: 1500,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                            theme: "light",
-                        });
                     }
                 }
-            } else {
-                toast.info(responseDataAdmin.message, {
-                    position: "bottom-right",
-                    autoClose: 1500,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
             }
         } catch (error) {
             setLoading(false);
@@ -275,15 +252,31 @@ const Login = () => {
             return;
         }
 
+        
+        if(passwordRegister.length < 8){
+            toast.info('La contraseña debe tener como mínimo 8 caracteres..', {
+                position: "bottom-right",
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+
+            return;
+        }
+
         setLoading(true);
 
         try {
             const object = {
-                "name": name,
-                "email": email,
-                "lastName": lastName,
-                "password": passwordRegister,
-                "phone": phoneRegister,
+                "name": name.trim(),
+                "email": email.trim(),
+                "lastName": lastName.trim(),
+                "password": passwordRegister.trim(),
+                "phone": phoneRegister.trim(),
             }
 
             const responseRegister = await fetch(`${API_BASE_URL}/user/create`, {
@@ -360,7 +353,6 @@ const Login = () => {
         setMailUserExists(false);
         setMailAdminExists(false);
         setPassword('');
-        setMessage('');
         setShowLoginForm(false);
     }
 
