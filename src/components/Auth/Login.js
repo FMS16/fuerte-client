@@ -1,6 +1,6 @@
 "use client";
 
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import React from "react";
 import { useEffect, useState, useContext } from "react";
 import logo from "../../assets/images/logoRecortado.png"
@@ -16,6 +16,9 @@ const Login = () => {
     const [ email, setEmail ] = useState('');
     const [ password, setPassword ] = useState('');
 
+    const router = useRouter();
+    const { query } = router;
+
     const [ showLoginForm, setShowLoginForm ] = useState(false);
     const [ mailUserExists, setMailUserExists ] = useState(false);
     const [ mailAdminExists, setMailAdminExists ] = useState(false);
@@ -25,12 +28,10 @@ const Login = () => {
     const { isAuthenticated } = state;
 
     useEffect(() => {
-
         if (isAuthenticated) {
-            redirect('/');
+          router.push('/');
         }
-
-    }, [ isAuthenticated ]);
+      }, [isAuthenticated]);
 
     const handleInputPassword = (e) => {
         setPassword(e.target.value);
@@ -52,7 +53,7 @@ const Login = () => {
             return;
         }
 
-        
+
 
         setLoading(true);
 
@@ -95,8 +96,6 @@ const Login = () => {
                     },
                 });
 
-                const redirectPath = location.state?.from || '/';
-                redirect(redirectPath);
             } else {
                 setPassword('');
                 toast.error(responseData.message, {
@@ -252,8 +251,8 @@ const Login = () => {
             return;
         }
 
-        
-        if(passwordRegister.length < 8){
+
+        if (passwordRegister.length < 8) {
             toast.info('La contraseña debe tener como mínimo 8 caracteres..', {
                 position: "bottom-right",
                 autoClose: 1500,
@@ -316,7 +315,7 @@ const Login = () => {
                     },
                 });
 
-                redirect('/')
+                router.push('/');
 
             } else {
                 toast.info(data.message, {

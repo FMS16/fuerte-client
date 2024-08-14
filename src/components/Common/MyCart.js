@@ -78,7 +78,7 @@ const MyCart = () => {
                                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className='cart-item' key={index}>
                                     <div className='cart-item-image relative'>
                                         <Link onClick={toggleCartVisibility} href={`/product/${item.product.id}`}>
-                                            <Image loader={myLoader} fill src={`${baseImgUrl}/${item.product.image}`} />
+                                            <Image alt={item.product.name} loader={myLoader} fill src={`${baseImgUrl}/${item.product.image}`} />
                                         </Link>
                                     </div>
                                     <div className='cart-item-info'>

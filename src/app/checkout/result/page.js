@@ -13,7 +13,6 @@ const Page = () => {
     const searchParams = useSearchParams();
     const { cart, dispatch } = useCart();
     const { state } = useContext(UserContext);
-    const { isAuthenticated } = state;
     const [ paymentStatus, setPaymentStatus ] = useState(null); // Estados: 'loading', 'success', 'pending', 'failure'
     const paymentId = Number(searchParams.get('payment_id'));
     const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -34,6 +33,7 @@ const Page = () => {
                     const verifyData = await verifyResponse.json();
                     if (verifyData.data == null) {
                         // La orden no existe, crea una nueva
+                        console.log('no existo');
                         let items = [];
                         cart.map(item => {
                             const object = {
@@ -48,7 +48,7 @@ const Page = () => {
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
                                 "orderProductRequests": items,
-                                "userId": isAuthenticated != null ? user.id : -1,
+                                "userId": state.user !== null ? state.user.id : -1,
                                 "name": "nombre",
                                 "lastName": "nombre",
                                 "phone": "092363626",
@@ -64,6 +64,18 @@ const Page = () => {
 
                         // Manejar la respuesta de la creación de la orden aquí
                         const responseAdd = await response.json();
+
+                        toast.info(responseAdd.message, {
+                            position: "bottom-right",
+                            autoClose: 1500,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light",
+                        });
+
                     } else {
                         if(paymentStatus === "pending" && paymentId){
                             const object = { "paymentId": paymentId };

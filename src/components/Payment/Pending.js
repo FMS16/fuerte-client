@@ -86,7 +86,7 @@ const Pending = ({ paymentId }) => {
                     }}
                     transition={{ duration: 0.5, delay: 2 }}
                 >
-                    Agradecemos su paciencia y le notificaremos en cuanto recibamos la confirmación del pago. Si tiene alguna pregunta o necesita asistencia adicional, no dude en contactarnos.
+                    Agradecemos su paciencia y le notificaremos al email proporcionado la informaci&oacute;n de la orden y credenciales para iniciar sesi&oacute;n para ver el estado de la misma. Si tiene alguna pregunta o necesita asistencia adicional, no dude en contactarnos.
                 </motion.p>
 
                 <motion.p
