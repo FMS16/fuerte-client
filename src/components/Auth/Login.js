@@ -7,6 +7,7 @@ import logo from "../../assets/images/logoRecortado.png"
 import Image from 'next/image';
 import { UserContext } from "@/features/UserContext";
 import { toast } from 'react-toastify';
+import { actionTypes } from '@/features/UserContext';
 
 const Login = () => {
     const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -39,15 +40,24 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         if (email === '' || password === '') {
-            setMessage("Los campos no pueden ser vacíos");
+            toast.info('No pueden haber valores vacios.', {
+                position: "bottom-right",
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
             return;
         }
         setLoading(true);
 
         try {
             const userData = {
-                email,
-                password,
+                "email": email,
+                "password": password
             };
 
             let url = '';
@@ -57,6 +67,9 @@ const Login = () => {
                 url = `${API_BASE_URL}/admin/login`;
             }
 
+            console.log(url);
+            console.log()
+            console.log(userData);
             const response = await fetch(url, {
                 method: 'POST',
                 headers: {
@@ -85,14 +98,32 @@ const Login = () => {
                 });
 
                 const redirectPath = location.state?.from || '/';
-                router.push(redirectPath);
+                redirect(redirectPath);
             } else {
                 setPassword('');
-                setMessage(responseData.message);
+                toast.error(responseData.message, {
+                    position: "bottom-right",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
             }
         } catch (error) {
             console.error('Error en el inicio de sesión:', error);
-            setMessage('Error en el inicio de sesión');
+            toast.error(error, {
+                position: "bottom-right",
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
         } finally {
             setLoading(false);
         }
@@ -133,7 +164,7 @@ const Login = () => {
 
             const responseDataAdmin = await responseAdmin.json();
             if (responseDataAdmin.isSuccess) {
-                setInitForm(false); 
+                setInitForm(false);
                 setLoading(false);
                 if (responseDataAdmin.data === true) {
                     // El email existe como admin
@@ -159,16 +190,43 @@ const Login = () => {
                     } else {
                         setMailUserExists(false);
                         setMailAdminExists(null);
-                        setMessage('El correo electrónico no está registrado');
+                        toast.info('El correo electrónico no está registrado..', {
+                            position: "bottom-right",
+                            autoClose: 1500,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light",
+                        });
                     }
                 }
             } else {
-                setMessage(responseDataAdmin.message);
+                toast.info(responseDataAdmin.message, {
+                    position: "bottom-right",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
             }
         } catch (error) {
             setLoading(false);
             console.error('Error en el registro:', error);
-            setMessage('Error en el registro');
+            toast.info(err, {
+                position: "bottom-right",
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
         }
     };
 
@@ -318,9 +376,6 @@ const Login = () => {
                             <input onChange={handleInputChangeEmail} value={email} type="email" required spellCheck="false" />
                             <label>Correo Electrónico</label>
                         </div>
-                        <div className='tof'>
-                            <h2>{message}</h2>
-                        </div>
                         <div className='input-submit'>
                             {loading ? <button className='btn-loader-spin-login'><div className='loader'></div></button> : <button type='submit'>Verificar Email</button>}
                         </div>
@@ -334,12 +389,6 @@ const Login = () => {
                     <h1>¿Cuál es tu contraseña?</h1>
                     <h2 className='change-email'>{email} <button onClick={changeEmailLogin}>Editar</button></h2>
                     <form className='form-login' onSubmit={handleLogin}>
-                        {message !== '' && (
-                            <div className='login-message'>
-
-                            </div>
-                        )}
-
                         <div className="input-field">
                             <input onChange={handleInputPassword} value={password} type="password" required spellCheck="false" />
                             <label>Contraseña</label>
@@ -372,6 +421,7 @@ const Login = () => {
                         </div>
                         <div className="input-field">
                             <input value={dateBornRegister} onChange={handleInputChangeDateBornRegister} type="date" required spellCheck="false" />
+                            <label>Fecha de nacimiento</label>
                         </div>
                         <div className="input-field">
                             <input value={phoneRegister} onChange={handleInputChangePhoneRegister} type="text" required spellCheck="false" />
