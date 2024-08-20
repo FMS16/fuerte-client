@@ -162,10 +162,6 @@ const Page = () => {
         }
     }, [ searchParams, paymentId ]);
 
-    if(paymentId == null){
-        return <PaymentNotFound paymentId={0} />
-    }
-
 
     // Mostrar el resultado basado en el estado del pago
     return (
