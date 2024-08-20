@@ -17,6 +17,11 @@
   --error-color:#dc3545;
   --info-color: #17a2b8;
 }
+
+.info{
+  color: var(--info-color);
+}
+
 .relative{
   position: relative;
 }

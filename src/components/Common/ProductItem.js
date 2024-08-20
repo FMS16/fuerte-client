@@ -47,7 +47,7 @@ const ProductItem = ({ product, isWishlistComponent }) => {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_IMG_URL;
 
     const myLoader = ({ src }) => {
-        return `${baseUrl}/${product.image}`;
+        return src;
     };
 
     useEffect(() => {

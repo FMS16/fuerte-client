@@ -12,7 +12,7 @@ export default function ProductDetails({ params }) {
   const [ product, setProduct ] = useState(null);
   const [ activeSize, setActiveSize ] = useState(null);
   const { dispatch: wishlistDispatch, isInWishlist } = useWishlist();
-  const { dispatch: cartDispatch } = useCart();
+  const { dispatch: cartDispatch, myCartVisible, setMyCartVisible } = useCart();
 
   const [loading, setLoading] = useState(true);
 
@@ -21,16 +21,7 @@ export default function ProductDetails({ params }) {
 
   const addToCart = (product, size) => {
     cartDispatch({ type: 'ADD_TO_CART', payload: { product, size } });
-    toast.success(`${product.name} agregado al carrito!`, {
-      position: "bottom-right",
-      autoClose: 1500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
+    setMyCartVisible(!myCartVisible);
   };
 
   useEffect(() => {

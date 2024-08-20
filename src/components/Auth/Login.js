@@ -29,9 +29,9 @@ const Login = () => {
 
     useEffect(() => {
         if (isAuthenticated) {
-          router.push('/');
+            router.push('/');
         }
-      }, [isAuthenticated]);
+    }, [ isAuthenticated ]);
 
     const handleInputPassword = (e) => {
         setPassword(e.target.value);
@@ -214,8 +214,16 @@ const Login = () => {
     const [ passwordRegister, setPasswordRegister ] = useState('');
     const [ dateBornRegister, setDateBorRegister ] = useState('');
 
+    const [ changePassword, setChangePassword ] = useState('');
+
+    const [ resetCode, setResetCode ] = useState('');
+
     const handleInputChangeName = (e) => {
         setName(e.target.value);
+    }
+
+    const handleInputChangeChangePassword = (e) => {
+        setChangePassword(e.target.value);
     }
 
     const handleInputChangeLastName = (e) => {
@@ -224,6 +232,11 @@ const Login = () => {
 
     const handleInputChangePasswordRegister = (e) => {
         setPasswordRegister(e.target.value);
+    }
+
+
+    const handleInputResetCode = (e) => {
+        setResetCode(e.target.value);
     }
 
     const handleInputChangePhoneRegister = (e) => {
@@ -356,6 +369,152 @@ const Login = () => {
         setShowLoginForm(false);
     }
 
+    const [ showCodeInput, setShowCodeInput ] = useState(false);
+
+    const sendCodeNewPassword = () => {
+        fetch(`${API_BASE_URL}/user/sendCode`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: email.trim(),
+            }),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la solicitud');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Asume que 'data' tiene una estructura como { success: true, message: 'Email enviado' }
+                if (data.isSuccess) {
+                    // Actualiza el estado para mostrar la pantalla donde se ingresa el código
+                    setShowCodeInput(true);
+                    setShowLoginForm(false);
+
+                    toast.info('Se ha enviado un código a tu correo electrónico', {
+                        position: "bottom-right",
+                        autoClose: 1500,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                } else {
+                    toast.info('Ha habido un error', {
+                        position: "bottom-right",
+                        autoClose: 1500,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Hubo un problema con la solicitud:', error);
+            });
+    };
+
+    const [ isVisibleFormNewPassword, setVisibleFormNewPassword ] = useState(false);
+
+    const handleResetCodeSubmit = (e) => {
+        e.preventDefault();
+        const object = {
+            "email": email.trim(),
+            "code": resetCode.trim()
+        }
+        fetch(`${API_BASE_URL}/user/verifyCode`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(object),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la solicitud');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.isSuccess) {
+                    setVisibleFormNewPassword(true);
+                    setShowCodeInput(false);
+                } else {
+                    toast.info('El código no es correcto o ha habido un error.', {
+                        position: "bottom-right",
+                        autoClose: 1500,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Hubo un problema con la solicitud:', error);
+            });
+    }
+
+    const handleNewPassword = (e) =>{
+        e.preventDefault();
+        const object = {
+            "email": email.trim(),
+            "newPassword": changePassword.trim()
+        }
+        fetch(`${API_BASE_URL}/user/setNewPassword`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(object),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la solicitud');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.isSuccess) {
+                    toast.success(data.message, {
+                        position: "bottom-right",
+                        autoClose: 1500,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                } else {
+                    toast.info(data.message, {
+                        position: "bottom-right",
+                        autoClose: 1500,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Hubo un problema con la solicitud:', error);
+            });
+    }
+
+
 
     return (
         <div className='login'>
@@ -380,16 +539,49 @@ const Login = () => {
                     <h1 className='logo-login'><Image src={logo} width={175} height={25} alt='Fuerte logo' /></h1>
                     <h1>¿Cuál es tu contraseña?</h1>
                     <h2 className='change-email'>{email} <button onClick={changeEmailLogin}>Editar</button></h2>
+                    <div className='forgot-password'>
+                        <button onClick={sendCodeNewPassword}>¿Has olvidado la contraseña?</button>
+                    </div>
                     <form className='form-login' onSubmit={handleLogin}>
                         <div className="input-field">
-                            <input onChange={handleInputPassword} value={password} type="password" required spellCheck="false" />
+                            <input onChange={handleInputPassword} value={password} type="password" spellCheck="false" />
                             <label>Contraseña</label>
-                        </div>
-                        <div className='forgot-password'>
-                            <button>¿Has olvidado la contraseña?</button>
                         </div>
                         <div className='input-submit'>
                             {loading ? <button className='btn-loader-spin-login'><div className='loader'></div></button> : <button type='submit'>Iniciar Sesión</button>}
+                        </div>
+                    </form>
+                </div>
+            )}
+
+            {showCodeInput && (
+                <div className='container-login'>
+                    <h1 className='logo-login'><Image src={logo} width={175} height={25} alt='Fuerte logo' /></h1>
+                    <h1>Enviamos un c&oacute;digo de recuperaci&oacute;n</h1>
+                    <h2>A este mail: {email}</h2>
+                    <form className='form-reset-code' onSubmit={handleResetCodeSubmit}>
+                        <div className="input-field">
+                            <input onChange={handleInputResetCode} value={resetCode} type="text" required spellCheck="false" />
+                            <label>C&oacute;digo</label>
+                        </div>
+                        <div className='input-submit'>
+                            {loading ? <button className='btn-loader-spin-login'><div className='loader'></div></button> : <button type='submit'>Verificar c&oacute;digo</button>}
+                        </div>
+                    </form>
+                </div>
+            )}
+
+            {isVisibleFormNewPassword && (
+                <div className='container-login'>
+                    <h1 className='logo-login'><Image src={logo} width={175} height={25} alt='Fuerte logo' /></h1>
+                    <h1>Ingresa tu nueva contrase&ntilde;a</h1>
+                    <form className='form-reset-code' onSubmit={handleNewPassword}>
+                        <div className="input-field">
+                            <input onChange={handleInputChangeChangePassword} value={changePassword} type="password" required spellCheck="false" />
+                            <label>Contrase&ntilde;a</label>
+                        </div>
+                        <div className='input-submit'>
+                            {loading ? <button className='btn-loader-spin-login'><div className='loader'></div></button> : <button type='submit'>Cambiar</button>}
                         </div>
                     </form>
                 </div>

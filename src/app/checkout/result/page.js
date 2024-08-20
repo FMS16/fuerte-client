@@ -7,7 +7,7 @@ import { useCart } from '@/features/CartContext';
 import Success from '@/components/Payment/Success';
 import Pending from '@/components/Payment/Pending';
 import Failure from '@/components/Payment/Failure';
-import PaymentNotFound from '@/components/Payment/PaymentNotFound';
+import { useRouter } from 'next/navigation';
 
 const Page = () => {
     const searchParams = useSearchParams();
@@ -16,6 +16,9 @@ const Page = () => {
     const [ paymentStatus, setPaymentStatus ] = useState(null); // Estados: 'loading', 'success', 'pending', 'failure'
     const paymentId = Number(searchParams.get('payment_id'));
     const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+    const router = useRouter();
+
     useEffect(() => {
         if (paymentStatus === 'success' || paymentStatus == "pending" && paymentId) {
             const verifyAndCreateOrder = async () => {
@@ -33,7 +36,6 @@ const Page = () => {
                     const verifyData = await verifyResponse.json();
                     if (verifyData.data == null) {
                         // La orden no existe, crea una nueva
-                        console.log('no existo');
                         let items = [];
                         cart.map(item => {
                             const object = {
@@ -99,10 +101,10 @@ const Page = () => {
                                 } else if (data.data === "failure") {
                                     setPaymentStatus('failure');
                                 } else {
-                                    setPaymentStatus('not-found');
+                                    router.push('/');
                                 }
                             } catch (error) {
-                                setPaymentStatus('not-found');
+                                router.push('/');
                             }
                         }
                     }
@@ -147,16 +149,16 @@ const Page = () => {
                     } else if(data.data == null) {
                         setPaymentStatus('not-found');
                     }else{
-                        setPaymentStatus('not-found');
+                        router.push('/')
                     }
                 } catch (error) {
-                    setPaymentStatus('not-found');
+                    router.push('/')
                 }
             };
 
             fetchData();
         }else{
-            setPaymentStatus('not-found');
+            router.push('/')
         }
     }, [ searchParams, paymentId ]);
 
@@ -171,7 +173,6 @@ const Page = () => {
             {paymentStatus === 'success' && <Success paymentId={paymentId} />}
             {paymentStatus === 'pending' && <Pending paymentId={paymentId} />}
             {paymentStatus === 'failure' && <Failure paymentId={paymentId} />}
-            {paymentStatus === 'not-found' && <PaymentNotFound paymentId={paymentId} />}
         </div>
     );
 };

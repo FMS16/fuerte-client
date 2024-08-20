@@ -1,80 +1,108 @@
 "use client";
 
-import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
-
 import React, { useEffect, useState, useContext } from 'react';
 import { useCart } from '@/features/CartContext';
-import WebLoader from './WebLoader';
+import Image from 'next/image';
+import logo from "../../assets/images/logoRecortadoFino.png"
 import { UserContext } from '@/features/UserContext';
+import "../../styles/Common.css";
+import CheckoutUserDetails from '../Checkout/CheckoutUserDetails';
+import { motion } from 'framer-motion';
+import CheckoutShipping from '../Checkout/CheckoutShipping';
+import CheckoutPayment from '../Checkout/CheckoutPayment';
 
 const Checkout = () => {
     const { state } = useContext(UserContext);
-    const { isAuthenticated } = state;
-    initMercadoPago('APP_USR-1040f80d-874b-405c-a048-61ba84d055c3');
-    const { cart } = useCart();
-    const [ preferenceId, setPreferenceId ] = useState(null);
-    useEffect(() => {
-        let items = [];
-        cart.map(item => {
-            const object = {
-                "id": item.product.id.toString(),
-                "title": item.product.name,
-                "description": item.size.name,
-                "categoryId": "Ropa deportiva",
-                "quantity": item.quantity,
-                "unitPrice": item.product.price,
-                "currencyId": "UYU",
-                "warranty": true,
-                "eventDate": "2024-08-12T20:30:30.266Z"
+    const [ currentStep, setCurrentStep ] = useState('USER_DETAILS');
+    const [ checkoutData, setCheckoutData ] = useState({
+        userDetails: {},
+        shippingDetails: {},
+        paymentDetails: {},
+    });
+    const [ isOrderSummaryVisible, setOrderSummaryVisible ] = useState(false);
+
+    const handleNextStep = () => {
+        setCurrentStep(prevStep => {
+            switch (prevStep) {
+                case 'USER_DETAILS': return 'SHIPPING';
+                case 'SHIPPING': return 'PAYMENT';
+                case 'PAYMENT': return 'SUMMARY';
+                default: return prevStep;
             }
-            items.push(object);
         });
+    };
 
-        const fetchData = async () => {
-            try {
-                const response = await fetch(`https://localhost:7207/MercadoPago/create-preference`, {
-                    method: 'POST',
-                    headers: new Headers({ 'Content-type': 'application/json' }),
-                    body: JSON.stringify(items)
-                });
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-                setPreferenceId(data.id);
-            } catch (error) {
-                console.error('Error fetching products:', error);;
+    const handlePreviousStep = () => {
+        setCurrentStep(prevStep => {
+            switch (prevStep) {
+                case 'SHIPPING': return 'USER_DETAILS';
+                case 'PAYMENT': return 'SHIPPING';
+                case 'SUMMARY': return 'PAYMENT';
+                default: return prevStep;
             }
-        };
+        });
+    };
 
-        fetchData();
+    const updateCheckoutData = (newData) => {
+        setCheckoutData(prevData => ({
+            ...prevData,
+            ...newData
+        }));
+    };
 
-    }, []);
+    useEffect(() => {
+
+    }, [ checkoutData ]);
 
     return (
         <>
-            {preferenceId != null && (
-                <div className='checkout'>
-                    <form className='form-checkout'>
-                        <div className='form-checkout-input-container'>
-                            <input type='text' placeholder='Nombre' />
-                            <input type='text' placeholder='Apellido' />
-                        </div>
-                        <div className='form-checkout-input-container'>
-                            <input type='text' placeholder='Teléfono' />
-                            {isAuthenticated ? (
-                                <input type='text' placeholder='Email' value={state.user.email} readOnly />
-                            ) : (
-                                <input type='text' placeholder='Email' />
-                            )}
-                        </div>
-                    </form>
-                    <Wallet 
-                        initialization={{ preferenceId }}
-                        customization={{ texts: { valueProp: 'smart_option' } }}
-                    />
+            <div className='checkout container-90'>
+                {isOrderSummaryVisible && (
+                    <div className='checkout-order-summary'>
+                        {/* Add order summary details here */}
+                    </div>
+                )}
+                <Image src={logo} width={160} height={20} alt='Logo' />
+                <div className='checkout-process-info'>
+                    <ol className='relative'>
+                        <li className={currentStep === 'USER_DETAILS' ? 'active' : ''}>
+                            Datos
+                            {currentStep === 'USER_DETAILS' ? <motion.div layoutId="tab-indicator" className="product-details-active-size"></motion.div> : null}
+                        </li>
+                        <li className={currentStep === 'SHIPPING' ? 'active' : ''}>
+                            Env&iacute;o
+                            {currentStep === 'SHIPPING' ? <motion.div layoutId="tab-indicator" className="product-details-active-size"></motion.div> : null}
+                        </li>
+                        <li className={currentStep === 'PAYMENT' ? 'active' : ''}>
+                            Pago
+                            {currentStep === 'PAYMENT' ? <motion.div layoutId="tab-indicator" className="product-details-active-size"></motion.div> : null}
+                        </li>
+                        <li className={currentStep === 'SUMMARY' ? 'active' : ''}>Confirmaci&oacute;n</li>
+                    </ol>
                 </div>
-            )}
+                {currentStep === 'USER_DETAILS' && (
+                    <CheckoutUserDetails
+                        userDetails={checkoutData.userDetails ?? {}} // Proporciona un objeto vacío por defecto
+                        onNextStep={handleNextStep}
+                        updateData={updateCheckoutData}
+                    />
+                )}
+                {currentStep === 'SHIPPING' && (
+                    <CheckoutShipping
+                        onNextStep={handleNextStep}
+                        onPrevStep={handlePreviousStep}
+                        updateData={updateCheckoutData}
+                    />
+                )}
+                {currentStep === 'PAYMENT' && (
+                    <CheckoutPayment
+                        onPrevStep={handlePreviousStep}
+                        currency="UYU"
+                        shippingPrice={250}
+                    />
+                )}
+            </div>
+
         </>
     );
 };
