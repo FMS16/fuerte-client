@@ -1002,7 +1002,6 @@
     border: 1px solid #000;
     padding: 12px 24px;
     border-radius: 10px;
-    margin-top: 15px;
     display: flex;
     align-items: center;
 }
@@ -1128,7 +1127,7 @@
 }
 
 .form-login .input-field,
-.form-register .input-field {
+.form-register .input-field, .form-reset-code .input-field {
     margin: 10px;
     margin-left: 0;
 }
@@ -1257,6 +1256,20 @@ input:valid~label {
     align-items: center;
 }
 
+.btn-send-code-again{
+    background-color: transparent;
+    border: none;
+    text-decoration: none;
+    text-decoration: underline;
+    margin-top: 15px;
+    font-size: var(--size-title-small);
+}
+
+.message-login{
+    margin-top: 15px;
+    color: var(--info-color) !important;
+}
+
 .btn-loader-spin-login {
     display: flex;
     justify-content: center;
@@ -1283,3 +1296,43 @@ input:valid~label {
         transform: rotate(1turn)
     }
 }
+
+
+.user-details{
+    margin: 20px auto;
+}
+
+
+.user-details h1{
+    font-size: var(--size-title-medium);
+    font-weight: normal;
+    text-align: center;
+}
+
+.user-details-info p{
+    margin: 10px 0;
+    font-size: var(--size-normal);
+}
+
+.user-details-info h1{
+    font-weight: normal;
+    font-size: var(--size-title-medium);
+}
+
+.user-nav-details ul li{
+    padding: 25px;
+    border-bottom: 1px solid lightgray;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.user-details-info ul li svg{
+    width: 25px;
+    height: 25px;
+}
+
+.title-small {
+    font-size: var(--size-title-small);
+}
+

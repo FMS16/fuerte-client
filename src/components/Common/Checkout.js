@@ -13,7 +13,7 @@ import CheckoutPayment from '../Checkout/CheckoutPayment';
 
 const Checkout = () => {
     const { state } = useContext(UserContext);
-    const [ currentStep, setCurrentStep ] = useState('USER_DETAILS');
+    const [ currentStep, setCurrentStep ] = useState('PAYMENT');
     const [ checkoutData, setCheckoutData ] = useState({
         userDetails: {},
         shippingDetails: {},
@@ -80,7 +80,7 @@ const Checkout = () => {
                         <li className={currentStep === 'SUMMARY' ? 'active' : ''}>Confirmaci&oacute;n</li>
                     </ol>
                 </div>
-                {currentStep === 'USER_DETAILS' && (
+                {/* {currentStep === 'USER_DETAILS' && (
                     <CheckoutUserDetails
                         userDetails={checkoutData.userDetails ?? {}} // Proporciona un objeto vacío por defecto
                         onNextStep={handleNextStep}
@@ -93,7 +93,7 @@ const Checkout = () => {
                         onPrevStep={handlePreviousStep}
                         updateData={updateCheckoutData}
                     />
-                )}
+                )} */}
                 {currentStep === 'PAYMENT' && (
                     <CheckoutPayment
                         onPrevStep={handlePreviousStep}

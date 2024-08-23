@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { UserContext } from "@/features/UserContext";
 import { toast } from 'react-toastify';
 import { actionTypes } from '@/features/UserContext';
+import WebLoader from '../Common/WebLoader';
 
 const Login = () => {
     const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -98,7 +99,7 @@ const Login = () => {
 
             } else {
                 setPassword('');
-                toast.error(responseData.message, {
+                toast.info(responseData.message, {
                     position: "bottom-right",
                     autoClose: 1500,
                     hideProgressBar: false,
@@ -216,6 +217,8 @@ const Login = () => {
 
     const [ changePassword, setChangePassword ] = useState('');
 
+    const [ changePasswordConfirm, setChangePasswordConfirm ] = useState('');
+
     const [ resetCode, setResetCode ] = useState('');
 
     const handleInputChangeName = (e) => {
@@ -224,6 +227,10 @@ const Login = () => {
 
     const handleInputChangeChangePassword = (e) => {
         setChangePassword(e.target.value);
+    }
+
+    const handleInputChangeChangePasswordConfirm = (e) => {
+        setChangePasswordConfirm(e.target.value);
     }
 
     const handleInputChangeLastName = (e) => {
@@ -369,9 +376,13 @@ const Login = () => {
         setShowLoginForm(false);
     }
 
+    const [ messageError, setMessageError ] = useState(null);
+
     const [ showCodeInput, setShowCodeInput ] = useState(false);
 
     const sendCodeNewPassword = () => {
+        setMessageError('');
+        setLoading(true);
         fetch(`${API_BASE_URL}/user/sendCode`, {
             method: 'POST',
             headers: {
@@ -388,6 +399,7 @@ const Login = () => {
                 return response.json();
             })
             .then(data => {
+                setLoading(false);
                 // Asume que 'data' tiene una estructura como { success: true, message: 'Email enviado' }
                 if (data.isSuccess) {
                     // Actualiza el estado para mostrar la pantalla donde se ingresa el código
@@ -405,20 +417,11 @@ const Login = () => {
                         theme: "light",
                     });
                 } else {
-                    toast.info('Ha habido un error', {
-                        position: "bottom-right",
-                        autoClose: 1500,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
-                    });
+                    setMessageError(data.message);
                 }
             })
             .catch(error => {
-                console.error('Hubo un problema con la solicitud:', error);
+                setMessageError(error);
             });
     };
 
@@ -426,6 +429,7 @@ const Login = () => {
 
     const handleResetCodeSubmit = (e) => {
         e.preventDefault();
+        setMessageError('');
         const object = {
             "email": email.trim(),
             "code": resetCode.trim()
@@ -465,8 +469,21 @@ const Login = () => {
             });
     }
 
-    const handleNewPassword = (e) =>{
+    const handleNewPassword = (e) => {
         e.preventDefault();
+        if (changePassword !== changePasswordConfirm) {
+            toast.info('Las contraseñas deben coincidir.', {
+                position: "bottom-right",
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            return;
+        }
         const object = {
             "email": email.trim(),
             "newPassword": changePassword.trim()
@@ -496,6 +513,8 @@ const Login = () => {
                         progress: undefined,
                         theme: "light",
                     });
+
+                    router.push('/');
                 } else {
                     toast.info(data.message, {
                         position: "bottom-right",
@@ -541,6 +560,7 @@ const Login = () => {
                     <h2 className='change-email'>{email} <button onClick={changeEmailLogin}>Editar</button></h2>
                     <div className='forgot-password'>
                         <button onClick={sendCodeNewPassword}>¿Has olvidado la contraseña?</button>
+                        {messageError && (<p className='message-login'>{messageError}</p>)}
                     </div>
                     <form className='form-login' onSubmit={handleLogin}>
                         <div className="input-field">
@@ -559,6 +579,8 @@ const Login = () => {
                     <h1 className='logo-login'><Image src={logo} width={175} height={25} alt='Fuerte logo' /></h1>
                     <h1>Enviamos un c&oacute;digo de recuperaci&oacute;n</h1>
                     <h2>A este mail: {email}</h2>
+                    <button className='btn-send-code-again' onClick={sendCodeNewPassword}>Enviar de nuevo el c&oacute;digo</button>
+                    {messageError && (<p className='message-login'>{messageError}</p>)}
                     <form className='form-reset-code' onSubmit={handleResetCodeSubmit}>
                         <div className="input-field">
                             <input onChange={handleInputResetCode} value={resetCode} type="text" required spellCheck="false" />
@@ -578,7 +600,11 @@ const Login = () => {
                     <form className='form-reset-code' onSubmit={handleNewPassword}>
                         <div className="input-field">
                             <input onChange={handleInputChangeChangePassword} value={changePassword} type="password" required spellCheck="false" />
-                            <label>Contrase&ntilde;a</label>
+                            <label>Nueva contrase&ntilde;a</label>
+                        </div>
+                        <div className="input-field">
+                            <input onChange={handleInputChangeChangePasswordConfirm} value={changePasswordConfirm} type="password" required spellCheck="false" />
+                            <label>Confirma la nueva contrase&ntilde;a</label>
                         </div>
                         <div className='input-submit'>
                             {loading ? <button className='btn-loader-spin-login'><div className='loader'></div></button> : <button type='submit'>Cambiar</button>}

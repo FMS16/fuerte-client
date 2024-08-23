@@ -1,76 +1,56 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
+import {
+    initMercadoPago,
+    createCardToken,
+    CardNumber,
+    SecurityCode,
+    ExpirationDate,
+} from '@mercadopago/sdk-react';
+import {
+    getIdentificationTypes,
+    getPaymentMethods,
+    getIssuers,
+    getInstallments,
+} from '@mercadopago/sdk-react';
+
+import { useRouter } from 'next/navigation';
+
+import { toast } from 'react-toastify';
+
+
+import Card, { useCardPaymentBrick } from '@mercadopago/sdk-react/bricks/cardPayment';
+
 import { useCart } from '@/features/CartContext';
-import ProductList from '../Common/ProductList';
-import ProductItem from '../Common/ProductItem';
-import Image from 'next/image';
-import { motion } from 'framer-motion';
+import "../../styles/Common.css"
+import Success from '../Payment/Success';
+initMercadoPago('APP_USR-1040f80d-874b-405c-a048-61ba84d055c3', { locale: 'es-UY' });
+
 
 const CheckoutPayment = ({ onPrevStep, currency, shippingPrice }) => {
-    initMercadoPago('APP_USR-1040f80d-874b-405c-a048-61ba84d055c3');
+
     const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-    const API_IMG_URL = process.env.NEXT_PUBLIC_BASE_IMG_URL;
 
     const [ subtotal, setSubtotal ] = useState(0);
+    const { cart } = useCart()
 
-    const { cart } = useCart();
-    const [ preferenceId, setPreferenceId ] = useState(null);
-    const currentDate = new Date();
-    const isoString = currentDate.toISOString();
+    const router = useRouter();
+
     useEffect(() => {
-        const fetchData = async () => {
-            let items = cart.map(item => ({
-                id: item.product.id.toString(),
-                title: item.product.name,
-                description: item.size.name,
-                categoryId: "Ropa deportiva",
-                quantity: item.quantity,
-                unitPrice: item.product.price,
-                currencyId: currency,
-                warranty: true,
-                eventDate: isoString
-            }));
-
-            try {
-                const response = await fetch(`${API_BASE_URL}/MercadoPago/create-preference`, {
-                    method: 'POST',
-                    headers: new Headers({ 'Content-type': 'application/json' }),
-                    body: JSON.stringify(items)
-                });
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-                setPreferenceId(data.id);
-            } catch (error) {
-                console.error('Error fetching products:', error);
-            }
-        };
-
         const getSubTotal = async () => {
             let subtotal = 0;
             cart.forEach(element => {
                 subtotal += element.product.price * element.quantity;
             });
             setSubtotal(subtotal);
-        }
-
-
-        fetchData();
+        };
         getSubTotal();
     }, [ cart ]);
 
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: { opacity: 1, transition: { staggerChildren: 0.2 } }
-    };
 
-    const childVariants = {
-        hidden: { opacity: 0 },
-        visible: { opacity: 1 }
-    };
+    const [paymentResponse, setPaymentResponse] = useState(null);
+
 
     return (
         <div className='checkout-payment'>
@@ -80,14 +60,38 @@ const CheckoutPayment = ({ onPrevStep, currency, shippingPrice }) => {
                 <h2>Env&iacute;o: <span className='price'>${shippingPrice}</span></h2>
                 <h1>Total: <span className='price bold'>${subtotal + shippingPrice}</span></h1>
             </div>
-            {preferenceId && (
-                <>
-                    <Wallet initialization={{ preferenceId: preferenceId }} customization={{ texts: { valueProp: 'smart_option' } }} />
-                    <p className='info'>No es necesario tener una cuenta de MercadoPago para pagar, se puede pagar con tarjeta de cr&eacute;dito y d&eacute;bito sin tener una cuenta.</p>
-                </>
+            <Card
+                initialization={{ amount: subtotal + shippingPrice }}
+                onSubmit={async (param) => {
+                    const response = await fetch(`${API_BASE_URL}/MercadoPago/process-payment`, {
+                        method: 'POST',
+                        headers: new Headers({ 'Content-type': 'application/json' }),
+                        body: JSON.stringify({
+                            transactionAmount: subtotal + shippingPrice,
+                            token: param.token,
+                            description: "Descripción de la transacción",  // Asegúrate de que este campo esté presente y con un valor
+                            installments: param.installments,
+                            paymentMethodId: param.payment_method_id,
+                            payerEmail: param.payer.email,
+                            issuerId: param.issuer_id
+                        }),
+                    });
+                    const data = await response.json();
+                    console.log(data);
 
-            )}
-            <button className='btn-prev-step' onClick={onPrevStep}><svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M21 11L6.414 11 11.707 5.707 10.293 4.293 2.586 12 10.293 19.707 11.707 18.293 6.414 13 21 13z"></path></svg> Env&iacute;o</button>
+                    if(data.data.status == 'rejected'){
+                        
+                    }else if(data.data.status == 'pending'){
+                        
+                    }
+                    setPaymentResponse(data.data);
+                }}
+            />
+            <button className='btn-prev-step' onClick={onPrevStep}>
+                <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 11L6.414 11 11.707 5.707 10.293 4.293 2.586 12 10.293 19.707 11.707 18.293 6.414 13 21 13z"></path>
+                </svg> Env&iacute;o
+            </button>
         </div>
     );
 }
