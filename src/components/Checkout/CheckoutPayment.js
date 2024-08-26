@@ -39,7 +39,6 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
 
     // Fetch order data once on mount
     useEffect(() => {
-        console.log('me ejecute jeje')
         if (shippingDetails.country === "Ecuador") {
             const fetchData = async () => {
                 try {

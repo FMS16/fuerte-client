@@ -21,13 +21,9 @@ const CheckoutShipping = ({ onNextStep, updateData, onPrevStep, shippingDetails,
         ...shippingDetails
     });
 
-    const [order, setOrder] = useState(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Local shipping details:', localShippingDetails);
-        console.log('User details:', userDetails);
-    
         if (localShippingDetails.department === '' || localShippingDetails.street === '' || localShippingDetails.doorNumber === '') {
             toast.info(`Complete el formulario antes de avanzar.`, {
                 position: "bottom-right",
@@ -43,55 +39,6 @@ const CheckoutShipping = ({ onNextStep, updateData, onPrevStep, shippingDetails,
         }
     
         updateData({ shippingDetails: localShippingDetails });
-    /* 
-        if (localShippingDetails.country === "Ecuador") {
-            try {
-                let items = cart.map(item => ({
-                    "productId": item.product.id,
-                    "sizeId": item.size.id,
-                    "quantity": item.quantity
-                }));
-    
-                console.log('Items to be sent:', items);
-    
-                const response = await fetch(`${API_BASE_URL}/order/add`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        "orderProductRequests": items,
-                        "userId": state.user !== null ? state.user.id : -1,
-                        "name": userDetails.name,
-                        "lastName": userDetails.lastName,
-                        "phone": userDetails.phone,
-                        "email": userDetails.email,
-                        "paymentId": null,
-                        "paymentStatus": "pending",
-                        "address": localShippingDetails
-                    })
-                });
-    
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-    
-                const responseAdd = await response.json();
-                console.log('Order response:', responseAdd);
-                setOrder(responseAdd.data);
-    
-            } catch (error) {
-                console.error('Fetch error:', error);
-                toast.error('Ocurrió un error al procesar el pedido', {
-                    position: "bottom-right",
-                    autoClose: 1500,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
-            }
-        } */
     
         onNextStep();
     };
