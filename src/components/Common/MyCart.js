@@ -6,39 +6,41 @@ import WebLoader from './WebLoader';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import { useCurrency } from '@/features/CurrencyContext';
 
 const MyCart = () => {
     const { cart, myCartVisible, setMyCartVisible, dispatch } = useCart();
-    const [ subtotal, setSubTotal ] = useState(0);
-    const [ loading, setLoading ] = useState(false);
+    const [subtotal, setSubTotal] = useState(0);
+    const [loading, setLoading] = useState(false);
+
+    const { currency } = useCurrency();
+    
     const baseImgUrl = process.env.NEXT_PUBLIC_BASE_IMG_URL;
+
+
 
     useEffect(() => {
         const calculatedSubtotal = cart.reduce((total, item) => {
-            const itemTotal = item.product.price * item.quantity;
+            const itemTotal = currency === 'USD'
+                ? item.product.priceUSD * item.quantity
+                : item.product.priceUYU * item.quantity;
             return total + itemTotal;
         }, 0);
 
         setSubTotal(calculatedSubtotal);
-    }, [ cart ]);
+    }, [cart, currency]);
 
     useEffect(() => {
         if (myCartVisible) {
             document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
         }
-    }, [ myCartVisible ]);
+    }, [myCartVisible]);
 
     const toggleCartVisibility = () => {
-        if (myCartVisible) {
-            setMyCartVisible(false);
-            document.body.style.overflow = 'auto';
-        } else {
-            setMyCartVisible(true);
-            document.body.style.overflow = 'hidden';
-        }
-
+        setMyCartVisible(!myCartVisible);
     };
-
 
     const handleQuantity = (number, item) => {
         dispatch({ type: number === 0 ? 'DECREMENT_QUANTITY' : 'INCREMENT_QUANTITY', payload: { id: item.product.id, size: item.size } });
@@ -62,12 +64,14 @@ const MyCart = () => {
                 id='my-cart'
                 initial={{ x: '100%' }}
                 animate={{ x: '0' }}
-                exit={{ x: '100%' }} 
+                exit={{ x: '100%' }}
                 transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                >
+            >
                 <div className='cart-header'>
                     <button onClick={toggleCartVisibility}>
-                        <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M21 11L6.414 11 11.707 5.707 10.293 4.293 2.586 12 10.293 19.707 11.707 18.293 6.414 13 21 13z"></path></svg>
+                        <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 11L6.414 11 11.707 5.707 10.293 4.293 2.586 12 10.293 19.707 11.707 18.293 6.414 13 21 13z"></path>
+                        </svg>
                     </button>
                     <h1>TU CARRITO</h1>
                 </div>
@@ -87,7 +91,9 @@ const MyCart = () => {
                                     </div>
                                     <div className='cart-item-info'>
                                         <h1>{item.product.name}</h1>
-                                        <h2 className='price'>${item.product.price}</h2>
+                                        <h2 className='price'>
+                                            ${currency === 'USD' ? item.product.priceUSD : item.product.priceUYU}
+                                        </h2>
                                         <h2>{item.size.name}</h2>
                                         <div className='cart-item-options-container'>
                                             <div className='quantity-container'>
@@ -120,8 +126,7 @@ const MyCart = () => {
                             </div>
                             <div className='cart-navigate'>
                                 <button className='cart-checkout'>
-                                    <Link onClick={toggleCartVisibility} href='/checkout'>LO QUIERO <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M869 487.8L491.2 159.9c-2.9-2.5-6.6-3.9-10.5-3.9h-88.5c-7.4 0-10.8 9.2-5.2 14l350.2 304H152c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h585.1L386.9 854c-5.6 4.9-2.2 14 5.2 14h91.5c1.9 0 3.8-.7 5.2-2L869 536.2a32.07 32.07 0 0 0 0-48.4z"></path></svg>
-                                    </Link>
+                                    <Link onClick={toggleCartVisibility} href='/checkout'>LO QUIERO <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M869 487.8L491.2 159.9c-2.9-2.5-6.6-3.9-10.5-3.9h-88.5c-7.4 0-10.8 9.2-5.2 14l350.2 304H152c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h585.1L386.9 854c-5.6 4.9-2.2 14 5.2 14h91.5c1.9 0 3.8-.7 5.2-2L869 536.2a32.07 32.07 0 0 0 0-48.4z"></path></svg></Link>
                                 </button>
                             </div>
                         </div>

@@ -9,6 +9,8 @@ import { WishlistProvider } from "@/features/WishlistContext";
 import Footer from "@/components/Common/Footer";
 import { LayoutProvider } from "./LayoutProvider";
 import { ToastContainer } from "react-toastify";
+import ModalCurrency from "@/components/Common/ModalCurrency";
+import { CurrencyProvider } from "@/features/CurrencyContext";
 
 const montserrat = Montserrat({ subsets: [ "latin" ] });
 
@@ -21,17 +23,20 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={montserrat.className}>
-        <ProductProvider>
-          <UserProvider>
-            <WishlistProvider>
-              <CartProvider>
-                <LayoutProvider>
-                  <main>{children}</main>
-                </LayoutProvider>
-              </CartProvider>
-            </WishlistProvider>
-          </UserProvider>
-        </ProductProvider>
+        <CurrencyProvider>
+          <ProductProvider>
+            <UserProvider>
+              <WishlistProvider>
+                <CartProvider>
+                  <LayoutProvider>
+                    <ModalCurrency />
+                    <main>{children}</main>
+                  </LayoutProvider>
+                </CartProvider>
+              </WishlistProvider>
+            </UserProvider>
+          </ProductProvider>
+        </CurrencyProvider>
       </body>
     </html>
   );

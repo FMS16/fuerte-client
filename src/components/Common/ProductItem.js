@@ -6,12 +6,17 @@ import { useCart } from '@/features/CartContext';
 import { useWishlist } from '@/features/WishlistContext';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useCurrency } from '@/features/CurrencyContext';
 
 const ProductItem = ({ product, isWishlistComponent }) => {
     const [ hovered, setHovered ] = useState(false);
     const { dispatch: wishlistDispatch, isInWishlist } = useWishlist();
     const { dispatch: cartDispatch } = useCart();
     const [ isMobileOrTablet, setIsMobileOrTablet ] = useState(false);
+
+    const {currency} = useCurrency();
+
+    const baseImgUrl = process.env.NEXT_PUBLIC_BASE_IMG_URL;
 
     // Verificar si el producto actual está en la wishlist
     const inWishlist = isInWishlist(product.id);
@@ -87,7 +92,7 @@ const ProductItem = ({ product, isWishlistComponent }) => {
                     </motion.button>}
                 <div className='product-item-details'>
                     <h2>{product.name}</h2>
-                    <h2 className='price'>${product.price}</h2>
+                    <h2 className='price'>${currency === 'USD' ? product.priceUSD : product.priceUYU}</h2>
                 </div>
             </>
         ) : (<div>
