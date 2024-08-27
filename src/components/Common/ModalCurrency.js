@@ -10,7 +10,7 @@ const ModalCurrency = () => {
     const { currency, updateCurrency } = useCurrency();
 
     useEffect(() => {
-        const selectedCurrency = sessionStorage.getItem('currency'); // Cambiado de 'selectedCurrency' a 'currency'
+        const selectedCurrency = localStorage.getItem('currency'); // Cambiado de 'selectedCurrency' a 'currency'
         if (!selectedCurrency) {
             setShouldRender(true);
             setIsModalOpen(true);

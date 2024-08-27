@@ -532,9 +532,9 @@
 }
 
 .form-newsletter .input-email{
-    padding: 10px 20px;
-    border: 1px solid #000;
+    padding: 12px 24px;
     width: 100%;
+    border: none;
 }
 
 .form-newsletter .input-email:focus{
@@ -544,9 +544,9 @@
 
 .btn-join{
     background-color: #000;
-    border: 1px solid #000;
     color: #fff;
-    padding: 10px 20px;
+    padding: 12px 24px;
+    border: none;
     letter-spacing: 1.25px;
     text-transform: uppercase;
 }
@@ -1488,7 +1488,7 @@ input:valid~label {
 
 .checkout-transfer h2{
     font-size: var(--size-title-medium);
-    text-align: center;
+    text-align: left;
     font-weight: normal;
 }
 
@@ -1499,7 +1499,8 @@ input:valid~label {
 .transfer-steps{
     list-style-position: inside;
     margin-top: 10px;
-    background-color: lightgray;
+    background-color: #ffe4f5;
+    border-radius: 5px;
     padding: 15px;
     font-size: var(--size-normal);
 }
@@ -1512,4 +1513,73 @@ input:valid~label {
 .transfer-bank-information li{
     padding: 5px 0;
     padding-left: 25px;
+    list-style:  none;
+    text-transform: uppercase;
+}
+
+
+
+
+
+
+
+
+.about-us .container-80 .relative{
+    height: 650px;
+    width: 100%;
+}
+
+.about-us .container-80 .relative img{
+    object-fit: cover;
+}
+
+.about-us{
+    padding: 50px 0;
+}
+
+.about-us h1{
+    font-size: var(--size-title-medium);
+    letter-spacing: 1.25px;
+    text-transform: uppercase;
+    text-align: left;
+}
+
+.about-us p{
+    margin: 10px 0;
+    font-size: var(--size-normal);
+    letter-spacing: 1.10px;
+}
+
+.faqs{
+    padding: 15px 0;
+    min-height: 250px;
+}
+
+.acordion-item{
+    background-color: #ffe4f5;
+    padding: 15px;
+    margin: 5px 0;
+}
+
+.acordion-title{
+    font-size: var(--size-title-small);
+}
+
+.acordion-item-content{
+    padding: 15px;
+}
+
+
+
+.acordion-item-content ul{
+    padding-left: 25px;
+}
+
+.acordion-item-content ul li{
+    padding: 5px 0;
+}
+
+.acordion-item-content p{
+    margin-bottom: 10px;
+    padding-left: 15px;
 }

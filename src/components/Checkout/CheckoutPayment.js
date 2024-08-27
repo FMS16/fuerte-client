@@ -9,12 +9,13 @@ import { useCart } from '@/features/CartContext';
 import { UserContext } from '@/features/UserContext';
 import { useCurrency } from '@/features/CurrencyContext';
 import "../../styles/Common.css";
+import WebLoader from '../Common/WebLoader';
 
 initMercadoPago('APP_USR-1040f80d-874b-405c-a048-61ba84d055c3', { locale: 'es-UY' });
 
 const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
     const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
+    const [loading, setLoading] = useState(true);
     const { state } = useContext(UserContext);
     const { cart } = useCart();
     const { currency } = useCurrency();
@@ -74,8 +75,9 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                     
                     const responseAdd = await response.json();
                     setOrder(responseAdd.data);
-
+                    setLoading(false);
                 } catch (error) {
+                    setLoading(false);
                     toast.error(error.message, {
                         position: "bottom-right",
                         autoClose: 1500,
@@ -92,6 +94,10 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
             fetchData();
         }
     }, []); // Depend on variables used in fetchData
+
+    if(loading){
+        return <WebLoader />
+    }
 
     return (
         <div className='checkout-payment'>
@@ -220,13 +226,13 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                 <div className='checkout-transfer'>
                     <h1>Tu Id de compra es: <span>{order.id}</span></h1>
                     <ol className='transfer-steps'>
-                        <h2>¿Qu&eacute; debo hacer?</h2>
+                        <h2>Qu&eacute; debo hacer?</h2>
                         <li>Transferir el monto total a la siguiente cuenta:</li>
                         <ul className='transfer-bank-information'>
-                            <li>Banco Pichincha</li>
-                            <li>Caja de ahorro <span className='bold'>2207816263</span></li>
+                            <li>Banco: Banco Pichincha</li>
+                            <li>Caja de ahorro: <span className='bold'>2207816263</span></li>
                             <li>Referencia de la transferencia: <span className='bold'>{order.id}</span></li>
-                            <li>Viktoriya Turusha</li>
+                            <li>Titular: Viktoriya Turusha</li>
                             <li>Pasaporte: CD098553</li>
                         </ul>
                         <li>Env&iacute;as tu comprobante <a href=''>aqu&iacute;</a></li>

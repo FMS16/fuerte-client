@@ -6,6 +6,7 @@ import { useCart } from "@/features/CartContext";
 import { useWishlist } from "@/features/WishlistContext";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast, Bounce } from 'react-toastify';
+import { useCurrency } from "@/features/CurrencyContext";
 import WebLoader from "@/components/Common/WebLoader";
 
 export default function ProductDetails({ params }) {
@@ -19,13 +20,7 @@ export default function ProductDetails({ params }) {
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
   const baseImgUrl = process.env.NEXT_PUBLIC_BASE_IMG_URL;
 
-  const [currency, setCurrency] = useState('USD'); // Estado para la moneda
-
-    // Leer la moneda desde sessionStorage y actualizar el estado
-    useEffect(() => {
-        const savedCurrency = sessionStorage.getItem('currency') || 'USD';
-        setCurrency(savedCurrency);
-    }, []);
+  const { currency } = useCurrency();
 
   const addToCart = (product, size) => {
     cartDispatch({ type: 'ADD_TO_CART', payload: { product, size } });
@@ -54,7 +49,7 @@ export default function ProductDetails({ params }) {
     };
 
     fetchProduct();
-  }, [ params.id ]);
+  }, [ params.id,  currency ]);
 
   if(loading){return <WebLoader />}
 

@@ -11,7 +11,7 @@ export const CurrencyProvider = ({ children }) => {
 
     useEffect(() => {
         // Load currency from sessionStorage
-        const storedCurrency = sessionStorage.getItem('currency');
+        const storedCurrency = localStorage.getItem('currency');
         if (storedCurrency) {
             setCurrency(storedCurrency);
         }
@@ -19,7 +19,7 @@ export const CurrencyProvider = ({ children }) => {
 
     const updateCurrency = (newCurrency) => {
         setCurrency(newCurrency);
-        sessionStorage.setItem('currency', newCurrency);
+        localStorage.setItem('currency', newCurrency);
     };
 
     return (

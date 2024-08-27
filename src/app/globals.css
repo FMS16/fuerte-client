@@ -4,6 +4,14 @@
   box-sizing: border-box;
 }
 
+button {
+  -webkit-appearance: none; /* Desactiva el estilo predeterminado en iOS */
+  appearance: none; /* Desactiva el estilo predeterminado en otros navegadores */
+  background: none; /* Asegura que no haya un fondo azul predeterminado */
+  border: none; /* Asegura que no haya un borde predeterminado */
+  color: inherit; /* Hereda el color del texto del contenedor */
+}
+
 :root{
   --pink-color: #ffe4f5;
   --size-title-small: 16px;
@@ -35,3 +43,11 @@
 }
 
 
+.container-80{
+  max-width: 80%;
+  margin: auto;
+}
+
+.italic{
+  font-style: italic;
+}
