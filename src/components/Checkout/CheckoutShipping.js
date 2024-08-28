@@ -134,7 +134,7 @@ const CheckoutShipping = ({ onNextStep, updateData, onPrevStep, shippingDetails 
                                     spellCheck="false"
                                     onChange={handleInputChange}
                                 />
-                                <label>Departamento / Regi&oacute;n</label>
+                                <label>Ciudad</label>
                             </div>
                             <div className='input-field'>
                                 <input
@@ -145,7 +145,7 @@ const CheckoutShipping = ({ onNextStep, updateData, onPrevStep, shippingDetails 
                                     spellCheck="false"
                                     onChange={handleInputChange}
                                 />
-                                <label>Calle</label>
+                                <label>Direcci&oacute;n detallada</label>
                             </div>
                             <div className='input-field'>
                                 <input
@@ -156,7 +156,7 @@ const CheckoutShipping = ({ onNextStep, updateData, onPrevStep, shippingDetails 
                                     spellCheck="false"
                                     onChange={handleInputChange}
                                 />
-                                <label>N&uacute;mero de puerta</label>
+                                <label>N&uacute;mero de casa</label>
                             </div>
                             <div className='input-field'>
                                 <input
@@ -166,7 +166,7 @@ const CheckoutShipping = ({ onNextStep, updateData, onPrevStep, shippingDetails 
                                     spellCheck="false"
                                     onChange={handleInputChange}
                                 />
-                                <label>Comentarios</label>
+                                <label>Comentarios adicionales</label>
                             </div>
                         </div>
                     )}

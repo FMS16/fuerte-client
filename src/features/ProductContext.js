@@ -12,7 +12,6 @@ export const ProductContext = createContext();
 export const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,11 +26,10 @@ export const ProductProvider = ({ children }) => {
         const data = await response.json();
         setProducts(data.data);
       } catch (error) {
-        console.error('Error fetching products:', error);
-        setError(error.message);
-      } finally {
-        setLoading(false); 
-      }
+        console.error('Error:', error);
+      } 
+
+      setLoading(false);
     };
 
     fetchData();
@@ -39,10 +37,6 @@ export const ProductProvider = ({ children }) => {
 
   if (loading) {
     return <WebLoader />;
-  }
-
-  if (error) {
-    return <div>Error al cargar productos: {error}</div>;
   }
 
   return (

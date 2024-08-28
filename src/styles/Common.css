@@ -149,6 +149,9 @@
 .currency-container{
     position: relative;
     color: #000;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
 
 .currency-container p{
@@ -585,6 +588,7 @@
     padding-left: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
+    
 }
 
 .footer-list ul li a {
@@ -1585,6 +1589,10 @@ input:valid~label {
 .faqs{
     padding: 15px 0;
     min-height: 250px;
+}
+
+.faqs .container-90 p{
+    margin-top: 25px;
 }
 
 .acordion-item{

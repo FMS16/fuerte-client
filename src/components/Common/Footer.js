@@ -1,8 +1,24 @@
+"use client";
+
 import React from 'react'
+import { useRouter } from 'next/navigation'
 import Newsletter from './Newsletter'
+import { useContext } from 'react'
+import { UserContext } from '@/features/UserContext'
+import Link from 'next/link';
+
 
 
 const Footer = () => {
+    const {state} = useContext(UserContext);
+    const router = useRouter();
+    const toggleHrefUser = () => {
+        if (state.user == null) {
+            router.push('/login')
+        } else {
+            router.push('/user')
+        }
+    }
     return (
         <footer>
             <div className='footer-container'>
@@ -13,26 +29,26 @@ const Footer = () => {
                     <div className='footer-list'>
                         <h1 className='footer-list-title'>Cuenta</h1>
                         <ul>
-                            <li><a href=''>Mi cuenta</a></li>
-                            <li><a href=''>Mis favoritos</a></li>
-                            <li><a href=''>Mis compras</a></li>
+                            <li onClick={toggleHrefUser}><a>Mi cuenta</a></li>
+                            <li><Link href='/wishlist'>Mis favoritos</Link></li>
+                            <li onClick={toggleHrefUser}><a >Mis compras</a></li>
                         </ul>
                     </div>
                     <div className='footer-list'>
                         <h1 className='footer-list-title'>Sobre FUERTE</h1>
                         <ul>
-                            <li><a href=''>Nosotros</a></li>
-                            <li><a href=''>Prop&oacute;sito</a></li>
+                            <li><Link href='/about'>Nosotros</Link></li>
+                            <li><Link href='/about'>Prop&oacute;sito</Link></li>
                         </ul>
                     </div>
                     <div className='footer-list'>
                         <h1 className='footer-list-title'>Informaci&oacute;n</h1>
                         <ul>
-                            <li><a href=''>Preguntas frecuentes</a></li>
-                            <li><a href=''>Env&iacute;os</a></li>
-                            <li><a href=''>Devoluciones</a></li>
-                            <li><a href=''>Gu&iacute;a de tallas</a></li>
-                            <li><a href=''>Contacto</a></li>
+                            <li><Link href='/faqs'>Preguntas frecuentes</Link></li>
+                            <li><Link href='/faqs'>Env&iacute;os</Link></li>
+                            <li><Link href='/faqs'>Devoluciones</Link></li>
+                            <li><Link href='/faqs'>Gu&iacute;a de tallas</Link></li>
+                            <li><Link href='/faqs'>Contacto</Link></li>
                         </ul>
                     </div>
                     <div className='footer-social-media'>
