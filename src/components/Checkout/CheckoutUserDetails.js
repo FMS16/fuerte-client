@@ -13,10 +13,12 @@ const CheckoutUserDetails = ({ onNextStep, updateData, userDetails }) => {
     const [ emailExists, setEmailExists ] = useState(false);
     const { state } = useContext(UserContext);
     const [ localUserDetails, setLocalUserDetails ] = useState({
-        name: state.user?.name || '',
-        lastName: state.user?.lastName || '',
-        phone: state.user?.phone || '',
-        email: state.user?.email || '',
+        name: state.user?.logged.name || '',
+        lastName: state.user?.logged.lastName || '',
+        phone: state.user?.logged.phone || '',
+        email: state.user?.logged.email || '',
+        dateBorn: state.user?.logged.dateBorn || '',
+        idCard: state.user?.logged.idCard || '',
         ...userDetails
     });
     const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -126,10 +128,12 @@ const CheckoutUserDetails = ({ onNextStep, updateData, userDetails }) => {
         if (state && state.user) {
             setLocalUserDetails(prevDetails => ({
                 ...prevDetails,
-                name: state.user.name || prevDetails.name,
-                lastName: state.user.lastName || prevDetails.lastName,
-                phone: state.user.phone || prevDetails.phone,
-                email: state.user.email || prevDetails.email,
+                name: state.user.logged.name || prevDetails.name,
+                lastName: state.user.logged.lastName || prevDetails.lastName,
+                phone: state.user.logged.phone || prevDetails.phone,
+                email: state.user.logged.email || prevDetails.email,
+                dateBorn: state.user.logged.dateBorn || prevDetails.dateBorn,
+                idCard: state.user.logged.idCard || prevDetails.idCard,
                 ...userDetails
             }));
         } else {
@@ -138,8 +142,8 @@ const CheckoutUserDetails = ({ onNextStep, updateData, userDetails }) => {
                 ...userDetails
             }));
         }
-    }, [userDetails, state]); 
-    
+    }, [ userDetails, state ]);
+
 
     const handleToRoot = () => {
         router.push('/');
@@ -162,7 +166,7 @@ const CheckoutUserDetails = ({ onNextStep, updateData, userDetails }) => {
                             required
                             readOnly={true}
                             disabled={true}
-                            value={state.user.email}
+                            value={state.user.logged.email}
                             spellCheck="false"
                             onChange={handleInputChange}
                         /></>)
@@ -186,7 +190,7 @@ const CheckoutUserDetails = ({ onNextStep, updateData, userDetails }) => {
                             required
                             readOnly={true}
                             disabled={true}
-                            value={state.user.name} // Valor predeterminado vacío
+                            value={state.user.logged.name} // Valor predeterminado vacío
                             spellCheck="false"
                             onChange={handleInputChange}
                         /></>)
@@ -209,7 +213,7 @@ const CheckoutUserDetails = ({ onNextStep, updateData, userDetails }) => {
                             required
                             readOnly={true}
                             disabled={true}
-                            value={state.user.lastName} // Valor predeterminado vacío
+                            value={state.user.logged.lastName} // Valor predeterminado vacío
                             spellCheck="false"
                             onChange={handleInputChange}
                         /></>)
@@ -233,7 +237,7 @@ const CheckoutUserDetails = ({ onNextStep, updateData, userDetails }) => {
                             required
                             readOnly={true}
                             disabled={true}
-                            value={state.user.phone}
+                            value={state.user.logged.phone}
                             spellCheck="false"
                             onChange={handleInputChange}
                         /></>)
@@ -246,6 +250,43 @@ const CheckoutUserDetails = ({ onNextStep, updateData, userDetails }) => {
                             onChange={handleInputChange}
                         />
                             <label>Tel&eacute;fono</label></>
+                    }
+                </motion.div>
+                <motion.div className="input-field" variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}>
+                    {state.user != null
+                        ? (<><input
+                            name="dateBorn"
+                            type="text"
+                            required
+                            readOnly={true}
+                            disabled={true}
+                            value={state.user.logged.dateBorn}
+                            spellCheck="false"
+                            onChange={handleInputChange}
+                        /></>)
+                        : <><input
+                            name="dateBorn"
+                            type="date"
+                            required
+                            value={localUserDetails.dateBorn ?? ''} // Valor predeterminado vacío
+                            spellCheck="false"
+                            onChange={handleInputChange}
+                        />
+                            <label>Fecha de nacimiento</label></>
+                    }
+                </motion.div>
+                <motion.div className="input-field" variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}>
+                    {state.user == null
+                        ? (<><input
+                            name="idCard"
+                            type="text"
+                            required
+                            value={localUserDetails.idCard ?? ''}
+                            spellCheck="false"
+                            onChange={handleInputChange}
+                        />
+                            <label>C&eacute;dula</label></>)
+                        : null
                     }
                 </motion.div>
                 {state.user != null && (<motion.p className='info' variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}>La informaci&oacute;n de contacto est&aacute; sujeta al usuario y no se puede modificar.</motion.p>)}

@@ -15,15 +15,15 @@ initMercadoPago('APP_USR-1040f80d-874b-405c-a048-61ba84d055c3', { locale: 'es-UY
 
 const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
     const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-    const [loading, setLoading] = useState(true);
+    const [ loading, setLoading ] = useState(true);
     const { state } = useContext(UserContext);
     const { cart } = useCart();
     const { currency } = useCurrency();
     const router = useRouter();
 
-    const [subtotal, setSubtotal] = useState(0);
-    const [order, setOrder] = useState(null);
-    const [paymentResponse, setPaymentResponse] = useState(null);
+    const [ subtotal, setSubtotal ] = useState(0);
+    const [ order, setOrder ] = useState(null);
+    const [ paymentResponse, setPaymentResponse ] = useState(null);
 
     // Calculate subtotal once on mount
     useEffect(() => {
@@ -35,8 +35,9 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
             setSubtotal(subtotal);
         };
         getSubTotal();
-    }, [cart, currency]); // Depend on cart and currency
-    
+
+    }, [ cart, currency ]); // Depend on cart and currency
+
 
     // Fetch order data once on mount
     useEffect(() => {
@@ -65,14 +66,16 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                             "email": userDetails.email,
                             "paymentId": null,
                             "paymentStatus": "pending",
-                            "address": shippingDetails
+                            "address": shippingDetails,
+                            "dateBorn": userDetails.dateBorn,
+                            "idCard": userDetails.idCard
                         })
                     });
 
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
-                    
+
                     const responseAdd = await response.json();
                     setOrder(responseAdd.data);
                     setLoading(false);
@@ -92,19 +95,34 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
             };
 
             fetchData();
+        } else {
+            setLoading(false);
         }
-    }, []); // Depend on variables used in fetchData
 
-    if(loading){
+    }, []);
+
+    
+    const [ shippingPrice, setShippingPrice ] = useState(
+        (shippingDetails && shippingDetails.country === "Ecuador") ? 15 : 250
+    );
+
+    useEffect(() => {
+        if (shippingDetails && shippingDetails.country) {
+          setShippingPrice(shippingDetails.country === "Ecuador" ? 15 : 250);
+        }
+      }, [shippingDetails]);
+
+    if (loading) {
         return <WebLoader />
     }
+
 
     return (
         <div className='checkout-payment'>
             <h1 className='checkout-title'>Resumen Pago:</h1>
             <div className='checkout-payment-summary'>
                 <ul className='checkout-items'>
-                    {cart.map((item, index) => 
+                    {cart.map((item, index) =>
                         <li key={index}>
                             <div>
                                 <span>{item.product.name}</span>
@@ -121,13 +139,13 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
             </div>
             {shippingDetails.country === 'Uruguay' && (
                 <Card
-                    initialization={{ amount: 1 }}
+                    initialization={{ amount: subtotal * shippingPrice }}
                     onSubmit={async (param) => {
                         const response = await fetch(`${API_BASE_URL}/MercadoPago/process-payment`, {
                             method: 'POST',
                             headers: new Headers({ 'Content-type': 'application/json' }),
                             body: JSON.stringify({
-                                transactionAmount: 1,
+                                transactionAmount: subtotal * shippingPrice,
                                 token: param.token,
                                 description: "Pago FUERTE.",
                                 installments: param.installments,
@@ -159,8 +177,11 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                                         "lastName": userDetails.lastName,
                                         "phone": userDetails.phone,
                                         "email": userDetails.email,
-                                        "paymentId": data.data.id,
-                                        "paymentStatus": data.data.status
+                                        "paymentId": null,
+                                        "paymentStatus": "pending",
+                                        "address": shippingDetails,
+                                        "dateBorn": userDetails.dateBorn,
+                                        "idCard": userDetails.idCard
                                     })
                                 });
 

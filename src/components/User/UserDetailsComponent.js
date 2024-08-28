@@ -22,7 +22,7 @@ const UserDetailsComponent = () => {
     const fetchOrders = async () => {
       if (state.user) {
         try {
-          const response = await fetch(`${baseUrl}/order/getByCustomerId/${state.user.id}`);
+          const response = await fetch(`${baseUrl}/order/getByCustomerId/${state.user.logged.id}`);
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
@@ -120,10 +120,10 @@ const UserDetailsComponent = () => {
             )}
             {activeIndex === 2 && (
               <div className='user-acount-details'>
-                <p>Nombre: {state.user.name}</p>
-                <p>Apellido: {state.user.lastName}</p>
-                <p>Email: {state.user.email}</p>
-                <p>Tel&eacute;fono: {state.user.phone}</p>
+                <p>Nombre: {state.user.logged.name}</p>
+                <p>Apellido: {state.user.logged.lastName}</p>
+                <p>Email: {state.user.logged.email}</p>
+                <p>Tel&eacute;fono: {state.user.logged.phone}</p>
               </div>
             )}
           </div>

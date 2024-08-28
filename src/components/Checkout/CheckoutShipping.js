@@ -1,30 +1,44 @@
 "use client";
 
+import React, { useState, useContext } from "react";
+import { UserContext } from "@/features/UserContext";
+import { toast } from "react-toastify";
 
-import React, { useState, useEffect, useCallback, useContext } from 'react';
-import { toast } from 'react-toastify';
-import { UserContext } from '@/features/UserContext';
-import { useCart } from '@/features/CartContext';
-
-const CheckoutShipping = ({ onNextStep, updateData, onPrevStep, shippingDetails, userDetails }) => {
-    const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-    const {cart} = useCart();
-
+const CheckoutShipping = ({ onNextStep, updateData, onPrevStep, shippingDetails }) => {
     const { state } = useContext(UserContext);
-    const [ localShippingDetails, setLocalShippingDetails ] = useState({
+    const [selectedAddressIndex, setSelectedAddressIndex] = useState(null);
+    const [newAddress, setNewAddress] = useState(false);
+
+    const [localShippingDetails, setLocalShippingDetails] = useState({
         department: '',
         street: '',
         doorNumber: '',
         comments: '',
         country: '',
+        id: -1,
         ...shippingDetails
     });
 
+    const [country, setCountry] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (localShippingDetails.department === '' || localShippingDetails.street === '' || localShippingDetails.doorNumber === '') {
+
+        let finalShippingDetails = { ...localShippingDetails };
+
+        if (selectedAddressIndex !== null) {
+            const selectedAddress = state.user.addresses[selectedAddressIndex];
+            finalShippingDetails = {
+                department: selectedAddress.department,
+                street: selectedAddress.street,
+                doorNumber: selectedAddress.doorNumber,
+                country: selectedAddress.country,
+                comments: selectedAddress.comments || '',
+                id: selectedAddress.id || -1,
+            };
+        }
+
+        if (!finalShippingDetails.department || !finalShippingDetails.street || !finalShippingDetails.doorNumber) {
             toast.info(`Complete el formulario antes de avanzar.`, {
                 position: "bottom-right",
                 autoClose: 1500,
@@ -37,142 +51,137 @@ const CheckoutShipping = ({ onNextStep, updateData, onPrevStep, shippingDetails,
             });
             return;
         }
-    
-        updateData({ shippingDetails: localShippingDetails });
-    
+
+        updateData({ shippingDetails: finalShippingDetails });
         onNextStep();
     };
-    
-
-    const [ country, setCountry ] = useState('');
-
-    const onChangeSelectCountry = (e) => {
-        const { value } = e.target;
-        setCountry(value);
-        setLocalShippingDetails(prevDetails => ({
-            ...prevDetails,
-            country: value,
-        }));
-    };
-    
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setLocalShippingDetails(prevDetails => ({
             ...prevDetails,
-            [ name ]: value,
+            [name]: value,
         }));
     };
 
+    const handleNewAddressClick = () => {
+        setSelectedAddressIndex(null);
+        setNewAddress(true);
+        setLocalShippingDetails({
+            department: '',
+            street: '',
+            doorNumber: '',
+            comments: '',
+            country: '',
+            id: -1
+        });
+    };
+
+    const handleCountryChange = (e) => {
+        const selectedCountry = e.target.value;
+        setCountry(selectedCountry);
+        setLocalShippingDetails(prevDetails => ({
+            ...prevDetails,
+            country: selectedCountry,
+        }));
+    };
 
     return (
         <div className='checkout-shipping'>
             <h1 className='checkout-title'>Env&iacute;o</h1>
-            <form className='checkout-form' onSubmit={handleSubmit}>
-                <div className='input-field'>
-                    <select value={country} onChange={onChangeSelectCountry}>
-                        <option value="" disabled>Seleccione el pa&iacute;s</option>
-                        <option value="Ecuador">Ecuador</option>
-                        <option value="Uruguay">Uruguay</option>
-                    </select>
-                </div>
-                {country == "Ecuador" && (
-                    <>
-                        <div className='input-field'>
+            <div className='addresses-user'>
+                {state.user?.addresses && state.user?.addresses.length > 0 && (
+                    state.user.addresses.map((address, index) => (
+                        <div key={index} className={`address-user ${selectedAddressIndex === index ? 'selected' : ''}`}>
                             <input
-                                name="department"
-                                type="text"
-                                required
-                                value={localShippingDetails.department ?? ''}
-                                spellCheck="false"
-                                onChange={handleInputChange}
+                                type="radio"
+                                id={`address-${index}`}
+                                name="selectedAddress"
+                                value={index}
+                                checked={selectedAddressIndex === index}
+                                onChange={() => {
+                                    setSelectedAddressIndex(index);
+                                    setNewAddress(false);
+                                }}
                             />
-                            <label>Departamento / Regi&oacute;n</label>
+                            <label htmlFor={`address-${index}`}>
+                                <p>Pa&iacute;s: {address.country}</p>
+                                <p>Departamento / Regi&oacute;n: {address.department}</p>
+                                <p>Direcci&oacute;n: {address.street} {address.doorNumber}</p>
+                            </label>
                         </div>
-                        <div className='input-field'>
-                            <input
-                                name="street"
-                                type="text"
-                                required
-                                value={localShippingDetails.street ?? ''}
-                                spellCheck="false"
-                                onChange={handleInputChange}
-                            />
-                            <label>Calle</label>
-                        </div>
-                        <div className='input-field'>
-                            <input
-                                name="doorNumber"
-                                type="text"
-                                required
-                                value={localShippingDetails.doorNumber ?? ''}
-                                spellCheck="false"
-                                onChange={handleInputChange}
-                            />
-                            <label>N&uacute;mero de puerta</label>
-                        </div>
-                        <div className='input-field'>
-                            <input
-                                name="comments"
-                                type="text"
-                                value={localShippingDetails.comments ?? ''}
-                                spellCheck="false"
-                                onChange={handleInputChange}
-                            />
-                            <label>Comentarios</label>
-                        </div>
-                    </>
+                    ))
                 )}
-                {country == "Uruguay" && (<>
-                        <div className='input-field'>
-                            <input
-                                name="department"
-                                type="text"
-                                required
-                                value={localShippingDetails.department ?? ''}
-                                spellCheck="false"
-                                onChange={handleInputChange}
-                            />
-                            <label>Departamento / Regi&oacute;n</label>
+            </div>
+            <button className="btn-new-address" onClick={handleNewAddressClick}>Agregar nueva direcci&oacute;n</button>
+            {newAddress && (
+                <>
+                    <div className='input-field'>
+                        <select value={country} className="select-country-shipping" onChange={handleCountryChange}>
+                            <option value="" disabled>Seleccione el pa&iacute;s</option>
+                            <option value="Ecuador">Ecuador</option>
+                            <option value="Uruguay">Uruguay</option>
+                        </select>
+                    </div>
+                    {country && (
+                        <div className="checkout-form">
+                            <div className='input-field'>
+                                <input
+                                    name="department"
+                                    type="text"
+                                    required
+                                    value={localShippingDetails.department}
+                                    spellCheck="false"
+                                    onChange={handleInputChange}
+                                />
+                                <label>Departamento / Regi&oacute;n</label>
+                            </div>
+                            <div className='input-field'>
+                                <input
+                                    name="street"
+                                    type="text"
+                                    required
+                                    value={localShippingDetails.street}
+                                    spellCheck="false"
+                                    onChange={handleInputChange}
+                                />
+                                <label>Calle</label>
+                            </div>
+                            <div className='input-field'>
+                                <input
+                                    name="doorNumber"
+                                    type="text"
+                                    required
+                                    value={localShippingDetails.doorNumber}
+                                    spellCheck="false"
+                                    onChange={handleInputChange}
+                                />
+                                <label>N&uacute;mero de puerta</label>
+                            </div>
+                            <div className='input-field'>
+                                <input
+                                    name="comments"
+                                    type="text"
+                                    value={localShippingDetails.comments}
+                                    spellCheck="false"
+                                    onChange={handleInputChange}
+                                />
+                                <label>Comentarios</label>
+                            </div>
                         </div>
-                        <div className='input-field'>
-                            <input
-                                name="street"
-                                type="text"
-                                required
-                                value={localShippingDetails.street ?? ''}
-                                spellCheck="false"
-                                onChange={handleInputChange}
-                            />
-                            <label>Calle</label>
-                        </div>
-                        <div className='input-field'>
-                            <input
-                                name="doorNumber"
-                                type="text"
-                                required
-                                value={localShippingDetails.doorNumber ?? ''}
-                                spellCheck="false"
-                                onChange={handleInputChange}
-                            />
-                            <label>N&uacute;mero de puerta</label>
-                        </div>
-                        <div className='input-field'>
-                            <input
-                                name="comments"
-                                type="text"
-                                value={localShippingDetails.comments ?? ''}
-                                spellCheck="false"
-                                onChange={handleInputChange}
-                            />
-                            <label>Comentarios</label>
-                        </div>
-                    </>)}
+                    )}
+                </>
+            )}
+            <form className='checkout-form' onSubmit={handleSubmit}>
                 <input className='btn-form' type='submit' value='Ir a pagar' />
-                <button className='btn-prev-step' onClick={onPrevStep}><svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M21 11L6.414 11 11.707 5.707 10.293 4.293 2.586 12 10.293 19.707 11.707 18.293 6.414 13 21 13z"></path></svg> Mis datos</button>
+                <button className='btn-prev-step' onClick={onPrevStep}>
+                    <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21 11L6.414 11 11.707 5.707 10.293 4.293 2.586 12 10.293 19.707 11.707 18.293 6.414 13 21 13z"></path>
+                    </svg> Mis datos
+                </button>
             </form>
-        </div >
+        </div>
     );
-}
+};
 
 export default CheckoutShipping;

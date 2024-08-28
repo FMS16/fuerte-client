@@ -215,6 +215,8 @@ const Login = () => {
     const [ passwordRegister, setPasswordRegister ] = useState('');
     const [ dateBornRegister, setDateBorRegister ] = useState('');
 
+    const [ idCardRegister, setIdCardRegister ] = useState('');
+
     const [ changePassword, setChangePassword ] = useState('');
 
     const [ changePasswordConfirm, setChangePasswordConfirm ] = useState('');
@@ -254,10 +256,14 @@ const Login = () => {
         setDateBorRegister(e.target.value);
     }
 
+    const handleInputChangeIdCardRegister = (e) => {
+        setIdCardRegister(e.target.value);
+    }
+
     const handleRegister = async (e) => {
         e.preventDefault();
 
-        if (passwordRegister == '' || name == '' || lastName == '' || email == '' || phoneRegister == '') {
+        if (passwordRegister == '' || name == '' || lastName == '' || email == '' || phoneRegister == '' || idCardRegister == '') {
             toast.info('No pueden haber valores vacios.', {
                 position: "bottom-right",
                 autoClose: 1500,
@@ -296,7 +302,8 @@ const Login = () => {
                 "lastName": lastName.trim(),
                 "password": passwordRegister.trim(),
                 "phone": phoneRegister.trim(),
-                "dateBorn": dateBornRegister
+                "dateBorn": dateBornRegister,
+                "idCard": idCardRegister
             }
 
 
@@ -632,6 +639,10 @@ const Login = () => {
                         <div className="input-field">
                             <input value={dateBornRegister} onChange={handleInputChangeDateBornRegister} type="date" required spellCheck="false" />
                             <label>Fecha de nacimiento</label>
+                        </div>
+                        <div className="input-field">
+                            <input value={idCardRegister} onChange={handleInputChangeIdCardRegister} type="text" required spellCheck="false" />
+                            <label>C&eacute;dula</label>
                         </div>
                         <div className="input-field">
                             <input value={phoneRegister} onChange={handleInputChangePhoneRegister} type="text" required spellCheck="false" />
