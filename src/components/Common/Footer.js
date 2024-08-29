@@ -48,7 +48,7 @@ const Footer = () => {
                             <li><Link href='/faqs'>Env&iacute;os</Link></li>
                             <li><Link href='/faqs'>Devoluciones</Link></li>
                             <li><Link href='/faqs'>Gu&iacute;a de tallas</Link></li>
-                            <li><Link href='/faqs'>Contacto</Link></li>
+                            <li><Link href='/contact'>Contacto</Link></li>
                         </ul>
                     </div>
                     <div className='footer-social-media'>

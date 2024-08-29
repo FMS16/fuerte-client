@@ -26,6 +26,10 @@ button {
   --info-color: #17a2b8;
 }
 
+.title-medium{
+  font-size: var(--size-title-medium);
+}
+
 .info{
   color: var(--info-color);
 }
