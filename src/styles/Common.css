@@ -59,8 +59,7 @@
     padding: 5px;
     text-align: center;
     overflow: hidden;
-    white-space: nowrap;
-    font-size: var(--size-normal)
+    /* white-space: nowrap; */
 }
 
 .header-logo {
@@ -1710,7 +1709,7 @@ input:valid~label {
 
 .ticker-item {
     padding: 0 2rem; /* Espaciado entre elementos, ajusta según sea necesario */
-    font-size: 10px;
+    font-size: 10px !important;
 }
 
 @keyframes ticker-animation {

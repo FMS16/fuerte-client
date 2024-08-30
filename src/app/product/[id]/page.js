@@ -45,7 +45,6 @@ export default function ProductDetails({ params }) {
         // Seleccionar el primer tamaño disponible por defecto
         const defaultSize = data.data.productSizes.find(ps => ps.stock > 0);
         setActiveSize(defaultSize ? defaultSize.sizeId : null);
-        console.log(data.data);
       } catch (err) {
         console.log(err);
       } finally {
