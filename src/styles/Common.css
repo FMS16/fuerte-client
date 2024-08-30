@@ -1711,11 +1711,16 @@ input:valid~label {
 .ticker-inner {
     display: flex;
     animation: ticker-animation 15s linear infinite;
+    font-size: var(--size-small);
 }
 
 .ticker-item {
     padding: 0 2rem; /* Espaciado entre elementos, ajusta según sea necesario */
-    font-size: 10px !important;
+    font-size: var(--size-small);
+}
+
+.size-small{
+    font-size: var(--size-small);
 }
 
 @keyframes ticker-animation {
