@@ -60,8 +60,8 @@ const Header = () => {
                 <div className="ticker-wrapper">
                     <div className="ticker">
                         <div className="ticker-inner">
-                            <div className="ticker-item">¡Hola preciosa! ¡Te regalamos 10% de descuento usando el código <span className='bold'>MOTIVACIÓN</span> para celebrar juntas nuestro lanzamiento!</div>
-                            <div className="ticker-item">¡Hola preciosa! ¡Te regalamos 10% de descuento usando código <span className='bold'>MOTIVACIÓN</span> para celebrar juntas nuestro lanzamiento!</div>
+                            <div className="ticker-item">¡Hola preciosa! ¡Te regalamos 10% de descuento usando el código <span className='bold'>MOTIVACIÓN</span> para celebrar juntas nuestro lanzamiento 🎉</div>
+                            <div className="ticker-item">¡Hola preciosa! ¡Te regalamos 10% de descuento usando código <span className='bold'>MOTIVACIÓN</span> para celebrar juntas nuestro lanzamiento 🎉</div>
                         </div>
                     </div>
                 </div>
