@@ -35,9 +35,9 @@ const ProductItem = ({ product, isWishlistComponent }) => {
 
     const toggleWishlist = () => {
         if (inWishlist) {
-            removeFromWishlist(product); // Si está en la wishlist, lo remueve
+            removeFromWishlist(product); 
         } else {
-            addToWishlist(product); // Si no está en la wishlist, lo añade
+            addToWishlist(product); 
         }
     };
 

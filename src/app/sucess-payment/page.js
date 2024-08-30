@@ -54,7 +54,7 @@ const SuccessPayment = () => {
         <>
             {isValidPaymentId && (
                 <div>
-                    <h1>Payment Successful</h1>
+                    <h1>Orden confirmada</h1>
                     <p>Your payment ID is: {paymentId}</p>
                 </div>
             )}
