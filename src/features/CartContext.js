@@ -75,7 +75,6 @@ export const CartProvider = ({ children }) => {
   const [ cart, dispatch ] = useReducer(cartReducer, {
     items: [],
   }, () => {
-    localStorage.removeItem('cart');
     const localData = localStorage.getItem('cart');
     return localData ? JSON.parse(localData) : { items: [] };
   });

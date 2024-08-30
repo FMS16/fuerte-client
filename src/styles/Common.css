@@ -58,6 +58,8 @@
     background-color: var(--pink-color);
     padding: 5px;
     text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
     font-size: var(--size-normal)
 }
 
@@ -1688,14 +1690,6 @@ input:valid~label {
 }
 
 
-.header-pre {
-    background-color: #ffe4f5;
-    overflow: hidden;
-    white-space: nowrap;
-    padding: 10px 0;
-    position: relative;
-}
-
 .ticker-wrapper {
     width: 100%;
     overflow: hidden;
@@ -1716,6 +1710,7 @@ input:valid~label {
 
 .ticker-item {
     padding: 0 2rem; /* Espaciado entre elementos, ajusta según sea necesario */
+    font-size: var(--size-normal);
 }
 
 @keyframes ticker-animation {
