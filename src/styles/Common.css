@@ -66,6 +66,8 @@
     overflow: hidden;
     height: 3vh;
     white-space: nowrap;
+    display: flex;
+    align-items: center;
 }
 
 .header-logo {

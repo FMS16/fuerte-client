@@ -383,7 +383,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                     </form>
                     {usingCoupon && (
                         <div className='flex justify-between remove-coupon'>
-                            <p><span className='saved'>${couponDiscount}% descuento aplicado</span></p>
+                            <p><span className='saved'>{couponDiscount}% descuento aplicado</span></p>
                             <button onClick={handleRemoveCoupon} className='remove-coupon-btn'>Eliminar</button>
                         </div>
                     )}
