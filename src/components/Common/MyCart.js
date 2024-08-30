@@ -10,17 +10,17 @@ import { useCurrency } from '@/features/CurrencyContext';
 
 const MyCart = () => {
     const { cart, myCartVisible, setMyCartVisible, dispatch } = useCart();
-    const [subtotal, setSubTotal] = useState(0);
-    const [loading, setLoading] = useState(false);
+    const [ subtotal, setSubTotal ] = useState(0);
+    const [ loading, setLoading ] = useState(false);
 
     const { currency } = useCurrency();
-    
+
     const baseImgUrl = process.env.NEXT_PUBLIC_BASE_IMG_URL;
 
 
 
     useEffect(() => {
-        const calculatedSubtotal = cart.reduce((total, item) => {
+        const calculatedSubtotal = cart.items.reduce((total, item) => {
             const itemTotal = currency === 'USD'
                 ? item.product.priceUSD * item.quantity
                 : item.product.priceUYU * item.quantity;
@@ -28,7 +28,7 @@ const MyCart = () => {
         }, 0);
 
         setSubTotal(calculatedSubtotal);
-    }, [cart, currency]);
+    }, [ cart.items, currency ]);
 
     useEffect(() => {
         if (myCartVisible) {
@@ -36,15 +36,28 @@ const MyCart = () => {
         } else {
             document.body.style.overflow = 'auto';
         }
-    }, [myCartVisible]);
+    }, [ myCartVisible ]);
 
     const toggleCartVisibility = () => {
         setMyCartVisible(!myCartVisible);
     };
 
     const handleQuantity = (number, item) => {
-        dispatch({ type: number === 0 ? 'DECREMENT_QUANTITY' : 'INCREMENT_QUANTITY', payload: { id: item.product.id, size: item.size } });
+        console.log(item);
+        if (number === 1 && item.quantity >= item.productSize.stock) {
+            return; // No incrementa si la cantidad es igual o mayor al stock disponible
+        }
+    
+        dispatch({
+            type: number === 0 ? 'DECREMENT_QUANTITY' : 'INCREMENT_QUANTITY',
+            payload: {
+                product: item.product,
+                productSize: item.productSize
+            }
+        });
     };
+    
+
 
     const removeFromCart = (item) => {
         dispatch({ type: 'REMOVE_FROM_CART', payload: item });
@@ -75,15 +88,17 @@ const MyCart = () => {
                     </button>
                     <h1>TU CARRITO</h1>
                 </div>
-                {cart.length === 0 ? (
+                {cart.items.length === 0 ? (
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className='cart-body'>
                         <h1 className='cart-no-items'>Aún no tienes elementos en el carrito.</h1>
                     </motion.div>
                 ) : (
                     <div className='cart-body'>
                         <AnimatePresence>
-                            {cart.map((item, index) => (
+                            {cart.items.map((item, index) => (
+                                
                                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className='cart-item' key={index}>
+                                    
                                     <div className='cart-item-image relative'>
                                         <Link onClick={toggleCartVisibility} href={`/product/${item.product.id}`}>
                                             <Image alt={item.product.name} loader={myLoader} fill src={`${baseImgUrl}/${item.product.image}`} />
@@ -94,7 +109,7 @@ const MyCart = () => {
                                         <h2 className='price'>
                                             ${currency === 'USD' ? item.product.priceUSD : item.product.priceUYU}
                                         </h2>
-                                        <h2>{item.size.name}</h2>
+                                        <h2>{item.productSize.size.name}</h2>
                                         <div className='cart-item-options-container'>
                                             <div className='quantity-container'>
                                                 <button
@@ -106,7 +121,7 @@ const MyCart = () => {
                                                 </button>
                                                 <button className='cart-quantity'>{item.quantity}</button>
                                                 <button
-                                                    disabled={item.quantity >= 5}
+                                                    disabled={item.quantity >= item.product.stock}
                                                     onClick={() => handleQuantity(1, item)}
                                                     className='cart-quantity-increment'
                                                 >

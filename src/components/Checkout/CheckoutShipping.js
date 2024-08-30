@@ -38,7 +38,21 @@ const CheckoutShipping = ({ onNextStep, updateData, onPrevStep, shippingDetails 
             };
         }
 
-        if (!finalShippingDetails.department || !finalShippingDetails.street || !finalShippingDetails.doorNumber) {
+        if (!newAddress && selectedAddressIndex == null) {
+            toast.info(`Seleccione una dirección existente o agregue una nueva dirección.`, {
+                position: "bottom-right",
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+            return;
+        }
+
+        if (newAddress && (country === '' || !finalShippingDetails.department || !finalShippingDetails.street || !finalShippingDetails.doorNumber)) {
             toast.info(`Complete el formulario antes de avanzar.`, {
                 position: "bottom-right",
                 autoClose: 1500,

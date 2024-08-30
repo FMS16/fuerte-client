@@ -15,43 +15,48 @@ export default function ProductDetails({ params }) {
   const { dispatch: wishlistDispatch, isInWishlist } = useWishlist();
   const { dispatch: cartDispatch, myCartVisible, setMyCartVisible } = useCart();
 
-  const [loading, setLoading] = useState(true);
+  const [ loading, setLoading ] = useState(true);
 
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
   const baseImgUrl = process.env.NEXT_PUBLIC_BASE_IMG_URL;
 
   const { currency } = useCurrency();
 
-  const addToCart = (product, size) => {
-    cartDispatch({ type: 'ADD_TO_CART', payload: { product, size } });
-    setMyCartVisible(!myCartVisible);
+  const addToCart = (product, productSize) => {
+    if (productSize) {
+      cartDispatch({ type: 'ADD_TO_CART', payload: { product, productSize } });
+      setMyCartVisible(!myCartVisible);
+    } else {
+      toast.error("Por favor, selecciona un tamaño disponible.", { transition: Bounce });
+    }
   };
+  
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const response = await fetch(`${baseUrl}/product/getById/${Number(params.id)}`);
-        if (!response.ok) {
+        /* if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        } */
         const data = await response.json();
         setProduct(data.data);
 
         // Seleccionar el primer tamaño disponible por defecto
         const defaultSize = data.data.productSizes.find(ps => ps.stock > 0);
         setActiveSize(defaultSize ? defaultSize.sizeId : null);
-
+        console.log(data.data);
       } catch (err) {
         console.log(err);
-      }finally{
+      } finally {
         setLoading(false);
       }
     };
 
     fetchProduct();
-  }, [ params.id,  currency ]);
+  }, [ params.id, currency ]);
 
-  if(loading){return <WebLoader />}
+  if (loading) { return <WebLoader /> }
 
   const myLoader = ({ src }) => {
     return `${baseImgUrl}/${src}`;
@@ -103,11 +108,22 @@ export default function ProductDetails({ params }) {
               {product.productSizes.map(ps => (
                 <li
                   key={ps.sizeId}
-                  className={`product-details-size`}
-                  onClick={() => setActiveSize(ps.sizeId)}
+                  className="product-details-size"
+                  onClick={() => {
+                    if (ps.stock > 0) {
+                      setActiveSize(ps.sizeId);
+                    }
+                  }}
                 >
-                  <button className={`${ps.stock === 0 ? 'disabled' : ''}`}>{ps.size.name}</button>
-                  {activeSize == ps.sizeId ? <motion.div layoutId="tab-indicator" className="product-details-active-size"></motion.div> : null}
+                  <button
+                    className={`${ps.stock === 0 ? 'disabled' : ''}`}
+                    disabled={ps.stock === 0}
+                  >
+                    {ps.size.name}
+                  </button>
+                  {activeSize == ps.sizeId ? (
+                    <motion.div layoutId="tab-indicator" className="product-details-active-size"></motion.div>
+                  ) : null}
                 </li>
               ))}
             </ul>
@@ -124,8 +140,13 @@ export default function ProductDetails({ params }) {
             <button
               className="btn-add-to-cart"
               onClick={() => {
-                const selectedSize = product.productSizes.find(ps => ps.sizeId === activeSize);
-                addToCart(product, selectedSize.size);
+                const selectedProductSize = product.productSizes.find(ps => ps.sizeId === activeSize);
+                if (selectedProductSize) {
+                  addToCart(product, selectedProductSize);
+                } else {
+                  // Manejar el caso donde no hay un tamaño seleccionado
+                  toast.error("Por favor, selecciona un tamaño disponible.", { transition: Bounce });
+                }
               }}
             >
               <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">

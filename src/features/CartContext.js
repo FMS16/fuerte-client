@@ -4,43 +4,66 @@ import React, { createContext, useState, useReducer, useContext, useEffect } fro
 
 const CartContext = createContext();
 
+// CartContext.js
 const cartReducer = (state, action) => {
   switch (action.type) {
     case 'ADD_TO_CART':
-      const { product, size } = action.payload;
-      const existingItem = state.find(item => item.product.id === product.id && item.size.id === size.id);
+      const existingItem = state.items.find(item =>
+        item.product.id === action.payload.product.id &&
+        item.productSize.sizeId === action.payload.productSize.sizeId
+      );
+
       if (existingItem) {
-        return state.map(item =>
-          item.product.id === product.id && item.size.id === size.id
-            ? {
-              ...item,
-              quantity: item.quantity <= 5 ? item.quantity + 1 : 5
-            }
-            : item
-        );
+        // Verificar el stock disponible
+        const maxQuantity = action.payload.productSize.stock;
+        const newQuantity = Math.min(existingItem.quantity + 1, maxQuantity);
+
+        return {
+          ...state,
+          items: state.items.map(item =>
+            item.product.id === action.payload.product.id &&
+              item.productSize.sizeId === action.payload.productSize.sizeId
+              ? { ...item, quantity: newQuantity }
+              : item
+          )
+        };
       } else {
-        return [...state, { product, size, quantity: 1 }];
+        return {
+          ...state,
+          items: [ ...state.items, { ...action.payload, quantity: 1 } ]
+        };
       }
 
     case 'REMOVE_FROM_CART':
-      return state.filter(item => !(item.product.id === action.payload.product.id && item.size.id === action.payload.size.id));
+      return {
+        ...state,
+        items: state.items.filter(item =>
+          !(item.product.id === action.payload.product.id && item.productSize.sizeId === action.payload.productSize.sizeId)
+        )
+      };
 
     case 'INCREMENT_QUANTITY':
-      return state.map(item =>
-        item.product.id === action.payload.id && item.size.id === action.payload.size.id
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      );
+      return {
+        ...state,
+        items: state.items.map(item =>
+          item.product.id === action.payload.product.id &&
+            item.productSize.sizeId === action.payload.productSize.sizeId
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        )
+      };
 
     case 'DECREMENT_QUANTITY':
-       return state.map(item =>
-        item.product.id === action.payload.id && item.size.id === action.payload.size.id && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      ); 
+      return {
+        ...state,
+        items: state.items.map(item =>
+          item.product.id === action.payload.product.id &&
+            item.productSize.sizeId === action.payload.productSize.sizeId
+            ? { ...item, quantity: Math.max(item.quantity - 1, 1) }
+            : item
+        )
+      };
 
-    case 'CLEAR_CART':
-      return [];
 
     default:
       return state;
@@ -48,13 +71,14 @@ const cartReducer = (state, action) => {
 };
 
 
-
-
 export const CartProvider = ({ children }) => {
-  const [ cart, dispatch ] = useReducer(cartReducer, [], () => {
+  const [ cart, dispatch ] = useReducer(cartReducer, {
+    items: [],
+  }, () => {
     const localData = localStorage.getItem('cart');
-    return localData ? JSON.parse(localData) : [];
+    return localData ? JSON.parse(localData) : { items: [] };
   });
+
   const [ myCartVisible, setMyCartVisible ] = useState(false);
 
   useEffect(() => {

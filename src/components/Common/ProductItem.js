@@ -13,7 +13,7 @@ const ProductItem = ({ product, isWishlistComponent }) => {
     const { dispatch: wishlistDispatch, isInWishlist } = useWishlist();
     const { dispatch: cartDispatch } = useCart();
     const [ isMobileOrTablet, setIsMobileOrTablet ] = useState(false);
-
+    console.log(product);
     const {currency} = useCurrency();
 
     const baseImgUrl = process.env.NEXT_PUBLIC_BASE_IMG_URL;
