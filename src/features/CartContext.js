@@ -75,6 +75,7 @@ export const CartProvider = ({ children }) => {
   const [ cart, dispatch ] = useReducer(cartReducer, {
     items: [],
   }, () => {
+    localStorage.removeItem('cart');
     const localData = localStorage.getItem('cart');
     return localData ? JSON.parse(localData) : { items: [] };
   });
@@ -82,7 +83,6 @@ export const CartProvider = ({ children }) => {
   const [ myCartVisible, setMyCartVisible ] = useState(false);
 
   useEffect(() => {
-    localStorage.removeItem('cart');
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [ cart ]);
 
