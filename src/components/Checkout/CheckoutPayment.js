@@ -47,7 +47,8 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
         const getSubTotal = () => {
             let subtotal = 0;
             cart.items.forEach(element => {
-                subtotal += currency === "USD" ? element.product.priceUSD : element.product.priceUYU * element.quantity;
+                console.log(element);
+                subtotal += currency === "USD" ? element.product.priceUSD * element.quantity : element.product.priceUYU * element.quantity;
             });
             setSubtotal(subtotal);
 
