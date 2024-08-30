@@ -45,12 +45,17 @@
     font-size: var(--size-title-small);
 }
 
+.header{
+    height: 10vh;
+}
+
 .header-main {
     width: 100%;
     display: flex;
     justify-content: space-around;
     align-items: center;
     padding: 10px;
+    height: 7vh;
 }
 
 .header-pre {
@@ -59,7 +64,8 @@
     padding: 5px;
     text-align: center;
     overflow: hidden;
-    /* white-space: nowrap; */
+    height: 3vh;
+    white-space: nowrap;
 }
 
 .header-logo {
