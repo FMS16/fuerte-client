@@ -82,6 +82,7 @@ export const CartProvider = ({ children }) => {
   const [ myCartVisible, setMyCartVisible ] = useState(false);
 
   useEffect(() => {
+    localStorage.removeItem('cart');
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [ cart ]);
 
