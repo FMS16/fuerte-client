@@ -27,30 +27,61 @@ const Login = () => {
 
     const { dispatch, state } = useContext(UserContext);
     const { isAuthenticated } = state;
-
+    const [ isMobile, setIsMobile ] = useState(false);
     useEffect(() => {
         if (isAuthenticated) {
             router.push('/');
         }
-    }, [ isAuthenticated ]);
+        // Función para actualizar el estado basado en el tamaño de la ventana
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
+
+        // Llama a handleResize cuando el componente se monta
+        handleResize();
+
+        // Añade un event listener para manejar los cambios de tamaño de la ventana
+        window.addEventListener('resize', handleResize);
+
+        // Limpia el event listener cuando el componente se desmonta
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, [ isAuthenticated, isMobile ]);
 
     const handleInputPassword = (e) => {
         setPassword(e.target.value);
     }
 
+
+
     const handleLogin = async (e) => {
         e.preventDefault();
         if (email === '' || password === '') {
-            toast.info('No pueden haber valores vacios.', {
-                position: "bottom-right",
-                autoClose: 1500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
+            if (isMobile) {
+                toast.info('No pueden haber valores vacios.', {
+                    position: "bottom-right",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+
+            } else {
+                toast.info('No pueden haber valores vacios.', {
+                    position: "top-left",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            }
             return;
         }
 
@@ -99,7 +130,34 @@ const Login = () => {
 
             } else {
                 setPassword('');
-                toast.info(responseData.message, {
+                if (isMobile) {
+                    toast.info(responseData.message, {
+                        position: "bottom-right",
+                        autoClose: 1500,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                } else {
+                    toast.info(responseData.message, {
+                        position: "top-left",
+                        autoClose: 2500,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                }
+
+            }
+        } catch (error) {
+            if (isMobile) {
+                toast.info(error, {
                     position: "bottom-right",
                     autoClose: 1500,
                     hideProgressBar: false,
@@ -109,19 +167,18 @@ const Login = () => {
                     progress: undefined,
                     theme: "light",
                 });
+            } else {
+                toast.info(error, {
+                    position: "top-left",
+                    autoClose: 2500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
             }
-        } catch (error) {
-            console.error('Error en el inicio de sesión:', error);
-            toast.error(error, {
-                position: "bottom-right",
-                autoClose: 1500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
         } finally {
             setLoading(false);
         }
@@ -135,16 +192,29 @@ const Login = () => {
     const handleSubmitInit = async (e) => {
         e.preventDefault();
         if (email === '') {
-            toast.error('El mail no puede estar vacio.', {
-                position: "bottom-right",
-                autoClose: 1500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
+            if (isMobile) {
+                toast.info('El email no puede estar vacio.', {
+                    position: "bottom-right",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            } else {
+                toast.info('El email no puede estar vacio.', {
+                    position: "top-left",
+                    autoClose: 2500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            }
             return;
         }
         setLoading(true); // Activar loader al iniciar la verificación
@@ -156,9 +226,6 @@ const Login = () => {
                 },
                 body: JSON.stringify(email.trim()), // Enviar email como objeto JSON
             });
-            if (!responseAdmin.ok) {
-                throw new Error('Error en el registro');
-            }
 
             const responseDataAdmin = await responseAdmin.json();
             if (responseDataAdmin.isSuccess) {
@@ -264,31 +331,59 @@ const Login = () => {
         e.preventDefault();
 
         if (passwordRegister == '' || name == '' || lastName == '' || email == '' || phoneRegister == '' || idCardRegister == '') {
-            toast.info('No pueden haber valores vacios.', {
-                position: "bottom-right",
-                autoClose: 1500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
+            if(isMobile){
+                toast.info('No pueden haber valores vacios.', {
+                    position: "bottom-right",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            }else{
+                toast.info('No pueden haber valores vacios.', {
+                    position: "top-left",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            }
+            
             return;
         }
 
 
         if (passwordRegister.length < 8) {
-            toast.info('La contraseña debe tener como mínimo 8 caracteres..', {
-                position: "bottom-right",
-                autoClose: 1500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
+            if(isMobile){
+                toast.info('La contraseña debe tener como mínimo 8 caracteres..', {
+                    position: "bottom-right",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            }else{
+                toast.info('La contraseña debe tener como mínimo 8 caracteres..', {
+                    position: "top-left",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            }
+            
 
             return;
         }
@@ -320,16 +415,30 @@ const Login = () => {
 
             const data = await responseRegister.json();
             if (data.isSuccess) {
-                toast.success(data.message, {
-                    position: "bottom-right",
-                    autoClose: 1500,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
+                if(isMobile){
+                    toast.success(data.message, {
+                        position: "bottom-right",
+                        autoClose: 1500,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                }else{
+                    toast.success(data.message, {
+                        position: "top-left",
+                        autoClose: 1500,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                }
+                
 
                 sessionStorage.setItem('user', JSON.stringify(data.data));
                 sessionStorage.setItem('isAuthenticated', JSON.stringify(true));
@@ -345,7 +454,35 @@ const Login = () => {
                 router.push('/');
 
             } else {
-                toast.info(data.message, {
+                if(isMobile){
+                    toast.info(data.message, {
+                        position: "bottom-right",
+                        autoClose: 1500,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                }else{
+                    toast.info(data.message, {
+                        position: "top-left",
+                        autoClose: 1500,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                }
+                
+            }
+
+        } catch (err) {
+            if(isMobile){
+                toast.error(err, {
                     position: "bottom-right",
                     autoClose: 1500,
                     hideProgressBar: false,
@@ -355,19 +492,19 @@ const Login = () => {
                     progress: undefined,
                     theme: "light",
                 });
+            }else{
+                toast.error(err, {
+                    position: "top-left",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
             }
-
-        } catch (err) {
-            toast.error(err, {
-                position: "bottom-right",
-                autoClose: 1500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
+            
         } finally {
             setLoading(false);
         }
@@ -412,17 +549,30 @@ const Login = () => {
                     // Actualiza el estado para mostrar la pantalla donde se ingresa el código
                     setShowCodeInput(true);
                     setShowLoginForm(false);
-
-                    toast.info('Se ha enviado un código a tu correo electrónico', {
-                        position: "bottom-right",
-                        autoClose: 1500,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
-                    });
+                    if(isMobile){
+                        toast.info('Se ha enviado un código a tu correo electrónico', {
+                            position: "bottom-right",
+                            autoClose: 1500,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light",
+                        });
+                    }else{
+                        toast.info('Se ha enviado un código a tu correo electrónico', {
+                            position: "top-left",
+                            autoClose: 1500,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light",
+                        });
+                    }
+                    
                 } else {
                     setMessageError(data.message);
                 }
@@ -459,16 +609,30 @@ const Login = () => {
                     setVisibleFormNewPassword(true);
                     setShowCodeInput(false);
                 } else {
-                    toast.info('El código no es correcto o ha habido un error.', {
-                        position: "bottom-right",
-                        autoClose: 1500,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
-                    });
+                    if(isMobile){
+                        toast.info('El código no es correcto o ha habido un error.', {
+                            position: "bottom-right",
+                            autoClose: 1500,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light",
+                        });
+                    }else{
+                        toast.info('El código no es correcto o ha habido un error.', {
+                            position: "top-left",
+                            autoClose: 1500,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light",
+                        });
+                    }
+                    
                 }
             })
             .catch(error => {
@@ -546,7 +710,7 @@ const Login = () => {
         <div className='login'>
             {initForm && (
                 <div className='container-login'>
-                    <h1 className='logo-login'><Image src={logo} width={175} height={25} alt='Fuerte logo' /></h1>
+                    <h1 className='logo-login'><Image src={logo} width={250} height={25} alt='Fuerte logo' /></h1>
                     <h1>Ingresa tu dirección de correo electrónico para comenzar.</h1>
                     <form className='form-init' onSubmit={handleSubmitInit}>
                         <div className="input-field">

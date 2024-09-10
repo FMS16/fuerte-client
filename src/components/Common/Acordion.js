@@ -96,6 +96,12 @@ const accordionData = [
       <p>Tené en cuenta que las prendas deben conservar el empaque y las etiquetas intactas. El precio de los envíos corre por cuenta del cliente.</p>
     </>,
   },
+  {
+    title: 'Contacto',
+    content: <>
+      <p>Tambi&eacute;n puedes contactarnos por Whatsapp o a <span className='bold'>hola@fuerte.com.uy</span>, estaremos encantados de atenderte.</p>
+    </>,
+  },
 ];
 
 export default Acordion;

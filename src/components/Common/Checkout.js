@@ -62,7 +62,8 @@ const Checkout = () => {
                         {/* Add order summary details here */}
                     </div>
                 )}
-                <Image src={logo} width={160} height={20} alt='Logo' />
+                <p className='checkout-logo'><Image  src={logo} width={160} height={20} alt='Logo' /></p>
+                
                 <div className='checkout-process-info'>
                     <ol className='relative'>
                         <li className={currentStep === 'USER_DETAILS' ? 'active' : ''}>

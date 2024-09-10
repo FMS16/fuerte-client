@@ -23,6 +23,24 @@ const CheckoutUserDetails = ({ onNextStep, updateData, userDetails }) => {
     });
     const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
+    const [ isMobile, setIsMobile ] = useState(false);
+    useEffect(() => {
+        // Función para actualizar el estado basado en el tamaño de la ventana
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
+
+        // Llama a handleResize cuando el componente se monta
+        handleResize();
+
+        // Añade un event listener para manejar los cambios de tamaño de la ventana
+        window.addEventListener('resize', handleResize);
+
+        // Limpia el event listener cuando el componente se desmonta
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, [ isMobile ]);
 
 
     const router = useRouter();
@@ -82,40 +100,82 @@ const CheckoutUserDetails = ({ onNextStep, updateData, userDetails }) => {
         e.preventDefault();
         const isEmptyField = Object.values(localUserDetails).some(value => value.trim() === '');
         if (isEmptyField) {
-            toast.info(`No pueden haber campos vacíos.`, {
-                position: "bottom-right",
-                autoClose: 1500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
+            if(isMobile){
+                toast.info(`No pueden haber campos vacíos.`, {
+                    position: "bottom-right",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            }else{
+                toast.info(`No pueden haber campos vacíos.`, {
+                    position: "top-left",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            }
+            
             return;
         } else if (emailExists) {
-            toast.info(`Ya hay una cuenta con ese mail. Inicie sesión o utilice otro.`, {
-                position: "bottom-right",
-                autoClose: 1500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
+            if(isMobile){
+                toast.info(`Ya hay una cuenta con ese mail. Inicie sesión o utilice otro.`, {
+                    position: "bottom-right",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            }else{
+                toast.info(`Ya hay una cuenta con ese mail. Inicie sesión o utilice otro.`, {
+                    position: "top-left",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            }
+            
             return;
         } else if (localUserDetails.phone.length < 5) {
-            toast.info(`Ingrese un teléfono válido.`, {
-                position: "bottom-right",
-                autoClose: 1500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
+            if(isMobile){
+                toast.info(`Ingrese un teléfono válido.`, {
+                    position: "bottom-right",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            }else{
+                toast.info(`Ingrese un teléfono válido.`, {
+                    position: "top-left",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            }
+            
             return;
         }
 
@@ -150,7 +210,7 @@ const CheckoutUserDetails = ({ onNextStep, updateData, userDetails }) => {
     }
 
     return (
-        <div className='checkout-user-details'>
+        <div className={`checkout-user-details `}>
             <h1 className='checkout-title'>Contacto {state.user === null && (<Link href='/login'>Iniciar sesi&oacute;n</Link>)}</h1>
             <motion.form initial="hidden"
                 animate="visible"

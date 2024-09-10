@@ -46,6 +46,11 @@ button {
   font-weight: bold;
 }
 
+.container-90{
+  max-width: 90%;
+  margin: auto;
+}
+
 
 .container-80{
   max-width: 80%;

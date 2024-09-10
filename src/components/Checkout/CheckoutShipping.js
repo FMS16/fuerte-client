@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "@/features/UserContext";
 import { toast } from "react-toastify";
 
@@ -18,7 +18,24 @@ const CheckoutShipping = ({ onNextStep, updateData, onPrevStep, shippingDetails 
         id: -1,
         ...shippingDetails
     });
+    const [ isMobile, setIsMobile ] = useState(false);
+    useEffect(() => {
+        // Función para actualizar el estado basado en el tamaño de la ventana
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
 
+        // Llama a handleResize cuando el componente se monta
+        handleResize();
+
+        // Añade un event listener para manejar los cambios de tamaño de la ventana
+        window.addEventListener('resize', handleResize);
+
+        // Limpia el event listener cuando el componente se desmonta
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, [ isMobile ]);
     const [country, setCountry] = useState('');
 
     const handleSubmit = async (e) => {
@@ -39,30 +56,59 @@ const CheckoutShipping = ({ onNextStep, updateData, onPrevStep, shippingDetails 
         }
 
         if (!newAddress && selectedAddressIndex == null) {
-            toast.info(`Seleccione una dirección existente o agregue una nueva dirección.`, {
-                position: "bottom-right",
-                autoClose: 1500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
+            if(isMobile){
+                toast.info(`Seleccione una dirección existente o agregue una nueva dirección.`, {
+                    position: "bottom-right",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            }else{
+                toast.info(`Seleccione una dirección existente o agregue una nueva dirección.`, {
+                    position: "top-left",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            }
+            
             return;
         }
 
         if (newAddress && (country === '' || !finalShippingDetails.department || !finalShippingDetails.street || !finalShippingDetails.doorNumber)) {
-            toast.info(`Complete el formulario antes de avanzar.`, {
-                position: "bottom-right",
-                autoClose: 1500,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
+            if(isMobile){
+                toast.info(`Complete el formulario antes de avanzar.`, {
+                    position: "bottom-right",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            }else{
+                toast.info(`Complete el formulario antes de avanzar.`, {
+                    position: "top-left",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            }
+            
+            
             return;
         }
 
