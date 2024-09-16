@@ -96,7 +96,7 @@ const ProductItem = ({ product, isWishlistComponent }) => {
                     </motion.button>}
                 <div className='product-item-details'>
                     <h2>{product.name}</h2>
-                    <h3>{product.description}</h3>
+                    <h2>{product.description}</h2>
                     <h2 className='price'>${currency === 'USD' ? product.priceUSD : product.priceUYU}</h2>
                 </div>
             </>

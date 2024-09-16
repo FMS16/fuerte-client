@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.fuerte.con.uy
+
+# Sitemaps
+Sitemap: https://www.fuerte.con.uy/sitemap.xml

@@ -127,7 +127,6 @@ const Contact = () => {
             </div>
             <div className='contact-item'>
               <div className='contact-subitem contact-faqs'>
-                <h1>Preguntas frecuentes</h1>
                 <FAQs />
               </div>
               <div className='contact-subitem'>
