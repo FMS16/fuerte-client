@@ -20,7 +20,7 @@ const montserrat = Montserrat({ subsets: [ "latin" ] });
 const oooh_Baby = Oooh_Baby({ subsets: [ "latin" ], weight:['400'] });
 
 export const metadata = {
-  title: "Fuerte - tienda on-line.",
+  title: "FUERTE",
   description: "Fuerte, tienda deportiva de ropa femenina.",
 };
 
