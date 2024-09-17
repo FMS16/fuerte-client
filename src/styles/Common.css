@@ -1995,7 +1995,6 @@ input:valid~label {
     position: relative;
 }
 
-
 .coming-soon-banner{
     height: 100vh;
     width: 85%;
@@ -2331,7 +2330,7 @@ input:valid~label {
         height: 100vh;
         width: 25%;
         position: absolute;
-        left: 0;
+        left: 15%;
         z-index: 1;
         bottom: -75px;
     }
