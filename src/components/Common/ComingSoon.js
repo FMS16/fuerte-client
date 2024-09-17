@@ -20,7 +20,7 @@ const ComingSoon = () => {
         <div className="pre-web">
             <div className="overlay"></div>
             <div className="coming-soon-banner">
-                <Image src={banner} fill className="coming-soon-banner-img" />
+                <Image src={banner} fill className="coming-soon-banner-img" alt="Imagen Vicky Turusha" />
             </div>
             <div className="pre-web-content">
                 <div className="coming-soon-info">

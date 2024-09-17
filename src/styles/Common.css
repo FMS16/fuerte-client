@@ -1998,12 +1998,13 @@ input:valid~label {
 
 .coming-soon-banner{
     height: 100vh;
-    width: 100%;
+    width: 85%;
     position: absolute;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     overflow: hidden;
     z-index: 1;
-    bottom: -75px;
+    bottom: -175px;
 }
 
 .coming-soon-banner img{
