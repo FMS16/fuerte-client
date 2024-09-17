@@ -2022,27 +2022,8 @@ body {
 
 .coming-soon-info h2 {
     font-size: var(--size-title-small);
-    margin: 5px 0;
+    margin: 2.5px 0;
     font-weight: normal;
-}
-
-.pre-web-content .social-media {
-    position: absolute;
-    bottom: 25px;
-    width: 100%;
-    left: 0;
-}
-
-.pre-web-content .social-media ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-
-.pre-web-content .social-media ul li a svg {
-    width: 20px;
-    height: 20px;
 }
 
 
