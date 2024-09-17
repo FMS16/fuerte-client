@@ -1995,9 +1995,14 @@ body {
     display: flex;
     justify-content: center;
     overflow: hidden;
-    background-color: #b8a088;
+    /* background-color: #b8a088; */
     color: #fff;
     position: relative;
+}
+
+.coming-soon-banner-img{
+    object-fit: cover;
+    object-position: 10%;
 }
 
 

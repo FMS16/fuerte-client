@@ -6,22 +6,22 @@ import Image from "next/image";
 import bannerMobile from "../../assets/images/Vicky portada.webp"
 import bannerDesktop from "../../assets/images/desktop-banner.webp"
 
-const ComingSoon = ({className}) => {
-    const [ isMobileOrTablet, setIsMobileOrTablet ] = useState(false);
+const ComingSoon = () => {
+    const [ isMobile, setIsMobile ] = useState(false);
     useEffect(() => {
-        const mediaQuery = window.matchMedia("(max-width: 1024px)");
-        const updateMediaQuery = () => setIsMobileOrTablet(mediaQuery.matches);
+        const mediaQuery = window.matchMedia("(max-width: 600px)");
+        const updateMediaQuery = () => setIsMobile(mediaQuery.matches);
 
         updateMediaQuery();
         mediaQuery.addEventListener('change', updateMediaQuery);
 
         return () => mediaQuery.removeEventListener('change', updateMediaQuery);
-    }, []);
+    }, [isMobile]);
     return (
         <div className={`pre-web`}>
             <div className="overlay"></div> 
             <Image
-                src={isMobileOrTablet ? bannerMobile : bannerDesktop}
+                src={isMobile ? bannerMobile : bannerDesktop}
                 alt="Imagen Vicky Turusha"
                 layout="fill"
                 objectFit="cover"
