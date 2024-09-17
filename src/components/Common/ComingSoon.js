@@ -33,7 +33,7 @@ const ComingSoon = ({className}) => {
 
             <div className="pre-web-content">
                 <div className="coming-soon-info">
-                    <h1><Image src={logo} width={200} height={25} alt="Logo Fuerte" /></h1>
+                    <h1><Image src={logo} width={200} height={28.75} alt="Logo Fuerte" /></h1>
                     <h2>¡Gracias por estar ac&aacute; preciosa!</h2>
                     <h2>Faltan muy pocos dias.</h2>
                     <h2>Te quiero, Vicky</h2>
