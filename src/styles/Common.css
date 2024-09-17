@@ -1960,6 +1960,102 @@ input:valid~label {
 
 
 
+
+
+.d-flex{
+    display: flex;
+}
+
+.faqs .container-90 h1{
+    font-size: var(--size-title-small);
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.footer-links .footer-list ul li a{
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+.pre-web{
+    width: 100%;
+    max-width: 100%;
+    max-height: 100vh;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    overflow: hidden;
+    background-color: #b8a088;
+    color: #fff;
+    position: relative;
+}
+
+
+.coming-soon-banner{
+    height: 100vh;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    overflow: hidden;
+    z-index: 1;
+    bottom: -75px;
+}
+
+.coming-soon-banner img{
+    object-fit: fill;
+}
+
+.pre-web-content{
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    justify-content: center;
+    position: relative;
+    z-index: 15;
+}
+
+.coming-soon-info{
+    position: absolute;
+    z-index: 10;
+    margin-top: 10%;
+    left: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.coming-soon-info h2{
+    font-size: var(--size-title-small);
+    margin: 5px 0;
+}
+
+.pre-web-content .social-media{
+    position: absolute;
+    bottom: 25px;
+    width: 100%;
+    left: 0;
+}
+
+.pre-web-content .social-media ul{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.pre-web-content .social-media ul li a svg{
+    width: 20px;
+    height: 20px;
+}
+
+
+
+
+
 @media screen and (min-width: 1024px) {
 
     .header {
@@ -2230,83 +2326,33 @@ input:valid~label {
         margin-bottom: 50px;
     }
 
+    .coming-soon-banner{
+        height: 100vh;
+        width: 25%;
+        position: absolute;
+        left: 0;
+        z-index: 1;
+        bottom: -75px;
+    }
+
+    .pre-web-content{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .coming-soon-info{
+        padding: 15px;
+        position: absolute;
+        z-index: 10;
+        margin-top: 0;
+    }
+
+    .pre-web{
+        max-width: 100%;
+        width: 100%;
+    }
+    
+
     
 }
-
-.d-flex{
-    display: flex;
-}
-.faqs .container-90 h1{
-    font-size: var(--size-title-small);
-    text-align: center;
-    margin-bottom: 10px;
-}
-
-.footer-links .footer-list ul li a{
-    cursor: pointer;
-}
-
-
-
-
-.pre-web{
-    width: 100vw;
-    max-width: 100vw;
-    max-height: 100vh;
-    min-height: 100vh;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    background-color: #b8a088;
-    justify-content: center;
-    color: #fff;
-}
-
-.coming-soon-banner{
-    position: fixed;
-    height: 100vh;
-    width: 100%;
-    z-index: 1;
-}
-
-.coming-soon-banner-img{
-    position: fixed;
-    height: 100vh;
-    filter: brightness(0.4);
-    object-fit: cover;
-    object-position: left center;
-}
-
-.coming-soon-info{
-    position: relative;
-    z-index: 5;
-    text-align: center;
-}
-
-.coming-soon-info h2{
-    font-size: var(--size-title-small);
-    font-weight: normal;
-    margin: 10px 0;
-}
-
-
-.content .social-media{
-    position: absolute;
-    bottom: 25px;
-    width: 100%;
-    left: 0;
-}
-
-.content .social-media ul{
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-
-.content .social-media ul li a svg{
-    width: 20px;
-    height: 20px;
-}
-
-

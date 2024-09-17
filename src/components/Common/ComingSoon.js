@@ -1,18 +1,28 @@
 "use client";
 
 import logo from "../../assets/images/logoRecortado.png"
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import Image from "next/image";
-import banner from "../../assets/images/banner2-coming-soon.JPG"
+import banner from "../../assets/images/vicky-banner.png"
 
 const ComingSoon = () => {
+    const [ isMobileOrTablet, setIsMobileOrTablet ] = useState(false);
+    useEffect(() => {
+        const mediaQuery = window.matchMedia("(max-width: 1024px)");
+        const updateMediaQuery = () => setIsMobileOrTablet(mediaQuery.matches);
+
+        updateMediaQuery();
+        mediaQuery.addEventListener('change', updateMediaQuery);
+
+        return () => mediaQuery.removeEventListener('change', updateMediaQuery);
+    }, []);
     return (
         <div className="pre-web">
+            <div className="overlay"></div>
             <div className="coming-soon-banner">
                 <Image src={banner} fill className="coming-soon-banner-img" />
             </div>
-
-            <div className="content">
+            <div className="pre-web-content">
                 <div className="coming-soon-info">
                     <h1><Image src={logo} width={250} height={35} alt="Logo Fuerte" /></h1>
                     <h2>¡Gracias por estar ac&aacute; preciosa!</h2>
