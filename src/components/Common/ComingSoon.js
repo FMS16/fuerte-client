@@ -3,7 +3,7 @@
 import logo from "../../assets/images/logoRecortado.png"
 import React, {useEffect, useState} from 'react'
 import Image from "next/image";
-import bannerMobile from "../../assets/images/image0.jpeg"
+import bannerMobile from "../../assets/images/16-9-banner.jpg"
 import bannerDesktop from "../../assets/images/desktop-banner.png"
 
 const ComingSoon = () => {
@@ -20,9 +20,9 @@ const ComingSoon = () => {
     return (
         <div className="pre-web">
              {/* <div className="overlay"></div> */}
-            <div className="coming-soon-banner">
+            {/* <div className="coming-soon-banner">
                 <Image  src={isMobileOrTablet ? bannerMobile : bannerDesktop} fill className="coming-soon-banner-img" alt="Imagen Vicky Turusha" />
-            </div>
+            </div> */}
             <div className="pre-web-content">
                 <div className="coming-soon-info">
                     <h1><Image src={logo} width={200} height={25} alt="Logo Fuerte" /></h1>
