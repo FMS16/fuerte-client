@@ -1991,9 +1991,6 @@ input:valid~label {
     min-height: 100vh;
     overflow: hidden;
     background-color: #b8a088;
-    background-image: url("../assets/images/image0.jpeg");
-    background-size: cover;
-    background-repeat: no-repeat;
     color: #fff;
     position: relative;
 }
@@ -2009,6 +2006,7 @@ input:valid~label {
     object-fit: cover;
 } */
 
+
 .pre-web-content{
     display: flex;
     align-items: flex-start;
@@ -2016,6 +2014,7 @@ input:valid~label {
     justify-content: center;
     position: relative;
     z-index: 15;
+    overflow: hidden;
 }
 
 .coming-soon-info{
