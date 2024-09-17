@@ -1987,17 +1987,11 @@ body {
     overflow: hidden;
 }
 
-body {
-    touch-action: none;
-    /* Evita desplazamientos no deseados */
-}
-
 .pre-web {
     width: 100%;
     max-width: 100%;
     height: 100vh;
     min-height: -webkit-fill-available;
-    /* Ajusta la altura en dispositivos móviles */
     display: flex;
     justify-content: center;
     overflow: hidden;
