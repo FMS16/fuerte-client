@@ -46,7 +46,7 @@ export default function RootLayout({ children }) {
             </UserProvider>
           </ProductProvider>
         </CurrencyProvider> */}
-        <ComingSoon className={oooh_Baby.className} />
+        <ComingSoon />
       </body>
     </html>
   );

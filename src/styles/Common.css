@@ -2014,7 +2014,7 @@ body {
 .coming-soon-info {
     position: absolute;
     z-index: 10;
-    margin-top: 15%;
+    margin-top: 20%;
     left: 0;
     width: 100%;
     text-align: center;
@@ -2027,6 +2027,7 @@ body {
 .coming-soon-info h2 {
     font-size: var(--size-title-small);
     font-weight: 400;
+    margin: 2.5px 0;
 }
 
 
