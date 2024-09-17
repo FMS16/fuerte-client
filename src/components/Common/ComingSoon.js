@@ -19,7 +19,7 @@ const ComingSoon = ({className}) => {
     }, []);
     return (
         <div className={`pre-web ${className}`}>
-            {/* <div className="overlay"></div> */}
+            <div className="overlay"></div> 
             <Image
                 src={isMobileOrTablet ? bannerMobile : bannerDesktop}
                 alt="Imagen Vicky Turusha"
