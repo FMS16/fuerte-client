@@ -2253,7 +2253,7 @@ input:valid~label {
     width: 100vw;
     max-width: 100vw;
     max-height: 100vh;
-    height: 100vh;
+    min-height: 100vh;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -2272,7 +2272,7 @@ input:valid~label {
 .coming-soon-banner-img{
     position: fixed;
     height: 100vh;
-    filter: brightness(0.5);
+    filter: brightness(0.4);
     object-fit: cover;
     object-position: left center;
 }
@@ -2284,7 +2284,7 @@ input:valid~label {
 }
 
 .coming-soon-info h2{
-    font-size: var(--size-title-medium);
+    font-size: var(--size-title-small);
     font-weight: normal;
     margin: 10px 0;
 }
