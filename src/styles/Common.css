@@ -1996,19 +1996,14 @@ input:valid~label {
 }
 
 .coming-soon-banner{
-    height: 90vh;
-    width: 85%;
-    bottom: 0;
+    height: 100vh;
+    width: 100%;
     position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    overflow: hidden;
     z-index: 1;
-    bottom: -175px;
 }
 
 .coming-soon-banner img{
-    object-fit: fill;
+    object-fit: cover;
 }
 
 .pre-web-content{
@@ -2023,7 +2018,7 @@ input:valid~label {
 .coming-soon-info{
     position: absolute;
     z-index: 10;
-    margin-top: 10%;
+    margin-top: 15%;
     left: 0;
     width: 100%;
     text-align: center;
@@ -2032,6 +2027,7 @@ input:valid~label {
 .coming-soon-info h2{
     font-size: var(--size-title-small);
     margin: 5px 0;
+    font-weight: normal;
 }
 
 .pre-web-content .social-media{
@@ -2053,11 +2049,6 @@ input:valid~label {
     height: 20px;
 }
 
-
-body{
-    max-height: 100vh;
-    overflow: hidden;
-}
 
 
 @media screen and (min-width: 1024px) {
