@@ -26,9 +26,11 @@ const ComingSoon = () => {
                 layout="fill"
                 objectFit="cover"
                 priority
-                quality={100}  // Esto asegura que no se pierda calidad
+                quality={100} 
+                unoptimized 
                 className="coming-soon-banner-img"
             />
+
             <div className="pre-web-content">
                 <div className="coming-soon-info">
                     <h1><Image src={logo} width={200} height={25} alt="Logo Fuerte" /></h1>

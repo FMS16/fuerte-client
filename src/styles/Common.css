@@ -729,7 +729,7 @@
     margin-bottom: 25px;
 }
 
-.product-details-image-container{
+.product-details-image-container {
     height: 70%;
     position: relative;
     overflow: hidden;
@@ -743,7 +743,7 @@
     position: relative;
 }
 
-.product-options-container{
+.product-options-container {
     padding: 5px 15px;
 }
 
@@ -1962,17 +1962,17 @@ input:valid~label {
 
 
 
-.d-flex{
+.d-flex {
     display: flex;
 }
 
-.faqs .container-90 h1{
+.faqs .container-90 h1 {
     font-size: var(--size-title-small);
     text-align: center;
     margin-bottom: 10px;
 }
 
-.footer-links .footer-list ul li a{
+.footer-links .footer-list ul li a {
     cursor: pointer;
 }
 
@@ -1980,34 +1980,34 @@ input:valid~label {
 
 
 
+html,
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
 
+body {
+    touch-action: none;
+    /* Evita desplazamientos no deseados */
+}
 
-.pre-web{
+.pre-web {
     width: 100%;
     max-width: 100%;
-    max-height: 100vh;
+    height: 100vh;
+    min-height: -webkit-fill-available;
+    /* Ajusta la altura en dispositivos móviles */
     display: flex;
     justify-content: center;
-    min-height: 100vh;
     overflow: hidden;
     background-color: #b8a088;
     color: #fff;
     position: relative;
 }
-/* 
-.coming-soon-banner{
-    height: 100vh;
-    width: 100%;
-    position: absolute;
-    z-index: 1;
-}
-
-.coming-soon-banner img{
-    object-fit: cover;
-} */
 
 
-.pre-web-content{
+.pre-web-content {
     display: flex;
     align-items: flex-start;
     width: 100%;
@@ -2017,7 +2017,7 @@ input:valid~label {
     overflow: hidden;
 }
 
-.coming-soon-info{
+.coming-soon-info {
     position: absolute;
     z-index: 10;
     margin-top: 15%;
@@ -2026,27 +2026,27 @@ input:valid~label {
     text-align: center;
 }
 
-.coming-soon-info h2{
+.coming-soon-info h2 {
     font-size: var(--size-title-small);
     margin: 5px 0;
     font-weight: normal;
 }
 
-.pre-web-content .social-media{
+.pre-web-content .social-media {
     position: absolute;
     bottom: 25px;
     width: 100%;
     left: 0;
 }
 
-.pre-web-content .social-media ul{
+.pre-web-content .social-media ul {
     list-style: none;
     display: flex;
     justify-content: center;
     width: 100%;
 }
 
-.pre-web-content .social-media ul li a svg{
+.pre-web-content .social-media ul li a svg {
     width: 20px;
     height: 20px;
 }
@@ -2103,7 +2103,7 @@ input:valid~label {
         transition: all 0.3s;
     }
 
-    .header-nav ul li a:hover{
+    .header-nav ul li a:hover {
         opacity: 0.5;
         transition: all 0.3s;
     }
@@ -2194,7 +2194,7 @@ input:valid~label {
         justify-content: flex-start;
     }
 
-    .footer-social-media a svg{
+    .footer-social-media a svg {
         margin-right: 10px;
     }
 
@@ -2205,7 +2205,7 @@ input:valid~label {
         margin: 0 2.5px;
     }
 
-    .login{
+    .login {
         width: 100%;
         min-width: 100%;
         height: 100vh;
@@ -2215,52 +2215,52 @@ input:valid~label {
         width: 30%;
     }
 
-    .user-nav-details ul li{
+    .user-nav-details ul li {
         cursor: pointer;
     }
 
-    .about-us .container-80 p{
+    .about-us .container-80 p {
         font-size: var(--size-normal);
     }
 
-    .faqs{
+    .faqs {
         width: 50%;
         margin: auto;
     }
 
-    .faqs .container-90{
+    .faqs .container-90 {
         padding-bottom: 50px;
     }
 
-    .faqs .container-90 h1{
+    .faqs .container-90 h1 {
         font-size: var(--size-title-medium);
         text-align: center;
         margin-bottom: 25px;
     }
 
-    .about-us{
+    .about-us {
         min-height: 90vh;
     }
 
-    .about-us .container-90{
+    .about-us .container-90 {
         display: flex;
         justify-content: space-between;
     }
 
-    .about-us-item{
+    .about-us-item {
         width: 49%;
     }
 
-    .about-us-item:last-child p{
+    .about-us-item:last-child p {
         width: 100%;
         height: 80vh;
     }
 
-    .about-us-item:first-child p{
+    .about-us-item:first-child p {
         margin: 20px 0;
     }
 
-    .about-us-item:last-child p img{
+    .about-us-item:last-child p img {
         object-fit: cover;
         object-position: top;
     }
@@ -2272,14 +2272,14 @@ input:valid~label {
         height: 100%;
     }
 
-    .product-options-container{
+    .product-options-container {
         width: 40%;
         padding: 15px;
         display: flex;
         flex-direction: column;
     }
 
-    .product-details-image-container{
+    .product-details-image-container {
         width: 60%;
         padding-bottom: 15px;
         height: 100%;
@@ -2288,42 +2288,44 @@ input:valid~label {
         flex-wrap: wrap;
     }
 
-    .product-details-image-container .relative{
+    .product-details-image-container .relative {
         min-height: 90vh;
         width: 50%;
     }
 
-    .product-details-size-guide .relative{
+    .product-details-size-guide .relative {
         min-height: 450px;
     }
 
-    .product-details-size-guide .relative img{
+    .product-details-size-guide .relative img {
         object-fit: cover;
         margin-top: 50px;
     }
 
-    .banner{
+    .banner {
         height: 88vh;
 
     }
 
-    .checkout-user-details, .checkout-shipping, .checkout-payment{
+    .checkout-user-details,
+    .checkout-shipping,
+    .checkout-payment {
         width: 50%;
         margin: auto;
         margin-top: 25px;
     }
 
-    .checkout-process-info{
+    .checkout-process-info {
         width: 25%;
         margin: auto;
     }
 
-    .checkout-logo{
+    .checkout-logo {
         text-align: center;
         margin-bottom: 50px;
     }
 
-    .coming-soon-banner{
+    .coming-soon-banner {
         height: 100vh;
         width: 25%;
         position: absolute;
@@ -2332,24 +2334,24 @@ input:valid~label {
         bottom: -75px;
     }
 
-    .pre-web-content{
+    .pre-web-content {
         display: flex;
         align-items: center;
         justify-content: center;
     }
 
-    .coming-soon-info{
+    .coming-soon-info {
         padding: 15px;
         position: absolute;
         z-index: 10;
         margin-top: 0;
     }
 
-    .pre-web{
+    .pre-web {
         max-width: 100%;
         width: 100%;
     }
-    
 
-    
+
+
 }
