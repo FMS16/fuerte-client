@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://www.fuerte.con.uy
+Host: https://www.fuerte.com.uy
 
 # Sitemaps
-Sitemap: https://www.fuerte.con.uy/sitemap.xml
+Sitemap: https://www.fuerte.com.uy/sitemap.xml
