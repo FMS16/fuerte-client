@@ -27,7 +27,7 @@ const ComingSoon = () => {
                 objectFit="cover"
                 priority
                 quality={100} 
-                unoptimized 
+                unoptimized={true}
                 className="coming-soon-banner-img"
             />
 
