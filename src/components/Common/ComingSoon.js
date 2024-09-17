@@ -3,7 +3,7 @@
 import logo from "../../assets/images/logoRecortado.png"
 import React, { useEffect, useState } from 'react'
 import Image from "next/image";
-import bannerMobile from "../../assets/images/image0.jpeg"
+import bannerMobile from "../../assets/images/Vicky portada.jpg"
 import bannerDesktop from "../../assets/images/desktop-banner.png"
 
 const ComingSoon = () => {
