@@ -2020,6 +2020,9 @@ body {
     text-align: center;
 }
 
+.coming-soon-info h1{
+    margin-bottom: 15px;
+}
 
 .coming-soon-info h2 {
     font-size: var(--size-title-small);
