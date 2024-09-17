@@ -6,7 +6,7 @@ import Image from "next/image";
 import bannerMobile from "../../assets/images/Vicky portada.jpg"
 import bannerDesktop from "../../assets/images/desktop-banner.png"
 
-const ComingSoon = () => {
+const ComingSoon = ({className}) => {
     const [ isMobileOrTablet, setIsMobileOrTablet ] = useState(false);
     useEffect(() => {
         const mediaQuery = window.matchMedia("(max-width: 1024px)");
@@ -18,7 +18,7 @@ const ComingSoon = () => {
         return () => mediaQuery.removeEventListener('change', updateMediaQuery);
     }, []);
     return (
-        <div className="pre-web">
+        <div className={`pre-web ${className}`}>
             {/* <div className="overlay"></div> */}
             <Image
                 src={isMobileOrTablet ? bannerMobile : bannerDesktop}

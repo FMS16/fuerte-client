@@ -1,5 +1,5 @@
 // src/app/layout.js
-import { Montserrat, Smooch } from "next/font/google";
+import { Montserrat, Oooh_Baby } from "next/font/google";
 import "./globals.css";
 import { ProductProvider } from "@/features/ProductContext";
 import { UserProvider } from "@/features/UserContext";
@@ -17,6 +17,7 @@ import { CurrencyProvider } from "@/features/CurrencyContext";
 import ComingSoon from "@/components/Common/ComingSoon";
 
 const montserrat = Montserrat({ subsets: [ "latin" ] });
+const oooh_Baby = Oooh_Baby({ subsets: [ "latin" ], weight:['400'] });
 
 export const metadata = {
   title: "Fuerte - tienda on-line.",
@@ -41,7 +42,7 @@ export default function RootLayout({ children }) {
             </UserProvider>
           </ProductProvider>
         </CurrencyProvider> */}
-        <ComingSoon />
+        <ComingSoon className={oooh_Baby.className} />
       </body>
     </html>
   );
