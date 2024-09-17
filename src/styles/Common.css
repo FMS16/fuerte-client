@@ -1996,8 +1996,9 @@ input:valid~label {
 }
 
 .coming-soon-banner{
-    height: 100vh;
+    height: 90vh;
     width: 85%;
+    bottom: 0;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
@@ -2056,7 +2057,6 @@ input:valid~label {
 body{
     max-height: 100vh;
     overflow: hidden;
-    background-color: red;
 }
 
 
