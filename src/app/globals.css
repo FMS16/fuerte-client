@@ -1,4 +1,5 @@
-*{
+/* Estilos generales */
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -12,7 +13,7 @@ button {
   color: inherit; /* Hereda el color del texto del contenedor */
 }
 
-:root{
+:root {
   --pink-color: #ffe4f5;
   --size-title-small: 16px;
   --size-title-medium: 20px;
@@ -22,50 +23,49 @@ button {
   --margin-bottom-separation: 10px;
   --warning-color: #ffc107;
   --success-color: #14FA40;
-  --error-color:#dc3545;
+  --error-color: #dc3545;
   --info-color: #17a2b8;
 }
 
-.title-medium{
+.title-medium {
   font-size: var(--size-title-medium);
 }
 
-.info{
+.info {
   color: var(--info-color);
 }
 
-.relative{
+.relative {
   position: relative;
 }
 
-.absolute{
+.absolute {
   position: absolute;
 }
 
-.bold{
+.bold {
   font-weight: bold;
 }
 
-.container-90{
+.container-90 {
   max-width: 90%;
   margin: auto;
 }
 
-
-.container-80{
+.container-80 {
   max-width: 80%;
   margin: auto;
 }
 
-.italic{
+.italic {
   font-style: italic;
 }
 
-
-.flex{
+.flex {
   display: flex;
 }
 
-.justify-between{
+.justify-between {
   justify-content: space-between;
 }
+

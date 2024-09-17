@@ -2230,7 +2230,7 @@ input:valid~label {
         margin-bottom: 50px;
     }
 
-
+    
 }
 
 .d-flex{
@@ -2245,3 +2245,68 @@ input:valid~label {
 .footer-links .footer-list ul li a{
     cursor: pointer;
 }
+
+
+
+
+.pre-web{
+    width: 100vw;
+    max-width: 100vw;
+    max-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    background-color: #b8a088;
+    justify-content: center;
+    color: #fff;
+}
+
+.coming-soon-banner{
+    position: fixed;
+    height: 100vh;
+    width: 100%;
+    z-index: 1;
+}
+
+.coming-soon-banner-img{
+    position: fixed;
+    height: 100vh;
+    filter: brightness(0.5);
+    object-fit: cover;
+    object-position: left center;
+}
+
+.coming-soon-info{
+    position: relative;
+    z-index: 5;
+    text-align: center;
+}
+
+.coming-soon-info h2{
+    font-size: var(--size-title-medium);
+    font-weight: normal;
+    margin: 10px 0;
+}
+
+
+.content .social-media{
+    position: absolute;
+    bottom: 25px;
+    width: 100%;
+    left: 0;
+}
+
+.content .social-media ul{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.content .social-media ul li a svg{
+    width: 20px;
+    height: 20px;
+}
+
+

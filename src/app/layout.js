@@ -1,5 +1,5 @@
 // src/app/layout.js
-import { Montserrat } from "next/font/google";
+import { Montserrat, Smooch } from "next/font/google";
 import "./globals.css";
 import { ProductProvider } from "@/features/ProductContext";
 import { UserProvider } from "@/features/UserContext";
@@ -8,9 +8,13 @@ import Header from "@/components/Common/Header";
 import { WishlistProvider } from "@/features/WishlistContext";
 import Footer from "@/components/Common/Footer";
 import { LayoutProvider } from "./LayoutProvider";
+import Image from "next/image";
+import logo from "../assets/images/logoRecortadoFino.png"
+import banner from "../assets/images/banner-coming-soon.jpeg"
 import { ToastContainer } from "react-toastify";
 import ModalCurrency from "@/components/Common/ModalCurrency";
 import { CurrencyProvider } from "@/features/CurrencyContext";
+import ComingSoon from "@/components/Common/ComingSoon";
 
 const montserrat = Montserrat({ subsets: [ "latin" ] });
 
@@ -21,9 +25,9 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="es">
       <body className={montserrat.className}>
-        <CurrencyProvider>
+        {/* <CurrencyProvider>
           <ProductProvider>
             <UserProvider>
               <WishlistProvider>
@@ -36,7 +40,8 @@ export default function RootLayout({ children }) {
               </WishlistProvider>
             </UserProvider>
           </ProductProvider>
-        </CurrencyProvider>
+        </CurrencyProvider> */}
+        <ComingSoon />
       </body>
     </html>
   );
