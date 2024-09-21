@@ -19,13 +19,11 @@ const UserDetailsComponent = () => {
   const {currency} = useCurrency();
 
   useEffect(() => {
+    console.log(state.user);
     const fetchOrders = async () => {
       if (state.user) {
         try {
           const response = await fetch(`${baseUrl}/order/getByCustomerId/${state.user.logged.id}`);
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
           const data = await response.json();
           setOrders(data.data);
           console.log(data.data);
@@ -118,13 +116,20 @@ const UserDetailsComponent = () => {
                   </div>)}
               </div>
             )}
-            {activeIndex === 2 && (
+            {activeIndex == 2 && state.user.rol == "Admin" && (
               <div className='user-acount-details'>
-                <p>Nombre: {state.user.logged.name}</p>
-                <p>Apellido: {state.user.logged.lastName}</p>
-                <p>Email: {state.user.logged.email}</p>
-                <p>Tel&eacute;fono: {state.user.logged.phone}</p>
+                <p>Nombre: {state.user.name}</p>
+                <p>Apellido: {state.user.lastName}</p>
+                <p>Email: {state.user.email}</p>
               </div>
+            )}
+            {activeIndex === 2 && state.user.logged != null && (
+              <div className='user-acount-details'>
+              <p>Nombre: {state.user.logged.name}</p>
+              <p>Apellido: {state.user.logged.lastName}</p>
+              <p>Email: {state.user.logged.email}</p>
+              <p>Tel&eacute;fono: {state.user.logged.phone}</p>
+            </div>
             )}
           </div>
         </>
