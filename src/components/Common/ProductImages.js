@@ -7,9 +7,7 @@ import Image from 'next/image'; // O la librería de imágenes que uses
 const ProductImages = ({ product }) => {
     const [ mainImage, setMainImage ] = useState(product.mainImage); // Imagen principal
 
-    const images = product.images;
-
-    console.log(product);
+    const images = [...product.images, product.mainImage]; // Añade la imagen principal al final
 
     const baseImgUrl = process.env.NEXT_PUBLIC_BASE_IMG_URL;
 

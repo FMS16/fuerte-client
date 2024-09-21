@@ -477,7 +477,10 @@
     letter-spacing: 1.25px;
 }
 
-
+.banner-text button a{
+    color: #fff;
+    text-decoration: none;
+}
 
 
 

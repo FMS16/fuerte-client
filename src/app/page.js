@@ -18,6 +18,7 @@ export default function Home() {
           positionTextLeft='15'
           positionTextTop='50'
           colorText={'white'}
+          link={'/shop'}
           invertedTitle={false}
         />
         <Banner
@@ -28,6 +29,7 @@ export default function Home() {
           positionTextLeft='50'
           positionTextTop='50'
           colorText={'white'}
+          link={'/about'}
           invertedTitle={true}
         />
       </div>
