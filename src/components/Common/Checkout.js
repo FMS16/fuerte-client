@@ -59,7 +59,6 @@ const Checkout = () => {
             <div className='checkout container-90'>
                 {isOrderSummaryVisible && (
                     <div className='checkout-order-summary'>
-                        {/* Add order summary details here */}
                     </div>
                 )}
                 <p className='checkout-logo'><Image  src={logo} width={160} height={20} alt='Logo' /></p>

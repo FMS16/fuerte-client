@@ -101,7 +101,7 @@ const MyCart = () => {
                                     
                                     <div className='cart-item-image relative'>
                                         <Link onClick={toggleCartVisibility} href={`/product/${item.product.id}`}>
-                                            <Image alt={item.product.name} loader={myLoader} fill src={`${baseImgUrl}/${item.product.image}`} />
+                                            <Image alt={item.product.name} loader={myLoader} fill src={`${baseImgUrl}/${item.product.mainImage}`} />
                                         </Link>
                                     </div>
                                     <div className='cart-item-info'>

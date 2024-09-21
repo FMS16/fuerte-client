@@ -3,7 +3,7 @@
 import React from 'react'
 import Image from 'next/image';
 
-import img from "../../assets/images/bannerDos.jpg"
+import img from "../../assets/images/image4.webp"
 import { useEffect, useState } from 'react';
 
 const AboutUs = () => {
@@ -37,7 +37,7 @@ const AboutUs = () => {
           <p>Vicky</p>
         </div>
         <div className='about-us-item'>
-          <p className='relative'><Image src={img} alt='Modelo sobre nosotros' fill /></p>
+          <p className='relative'><Image src={img} objectFit='cover' objectPosition='left bottom' alt='Modelo sobre nosotros' layout='fill' /></p>
         </div>
       </div>
     </div>

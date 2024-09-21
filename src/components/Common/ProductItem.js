@@ -19,7 +19,7 @@ const ProductItem = ({ product, isWishlistComponent }) => {
 
     const baseImgUrl = process.env.NEXT_PUBLIC_BASE_IMG_URL;
 
-    // Verificar si el producto actual está en la wishlist
+
     const inWishlist = isInWishlist(product.id);
 
     const addToCart = (product, size) => {
@@ -63,7 +63,6 @@ const ProductItem = ({ product, isWishlistComponent }) => {
         updateMediaQuery();
         mediaQuery.addEventListener('change', updateMediaQuery);
 
-        console.log(product);
 
         return () => mediaQuery.removeEventListener('change', updateMediaQuery);
 
@@ -75,7 +74,7 @@ const ProductItem = ({ product, isWishlistComponent }) => {
             <>
                 <div className="product-item-image-container" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                     <Link href={`product/${product.id}`}>
-                        <Image loader={myLoader} src={`${baseUrl}/${product.image}`} fill={true} alt={`${product.name}`} />
+                        <Image loader={myLoader} src={`${baseUrl}/${product.mainImage}`} fill={true} alt={`${product.name}`} />
                     </Link>
                 </div>
                 {inWishlist ?
@@ -96,7 +95,6 @@ const ProductItem = ({ product, isWishlistComponent }) => {
                     </motion.button>}
                 <div className='product-item-details'>
                     <h2>{product.name}</h2>
-                    <h2>{product.description}</h2>
                     <h2 className='price'>${currency === 'USD' ? product.priceUSD : product.priceUYU}</h2>
                 </div>
             </>
@@ -104,8 +102,7 @@ const ProductItem = ({ product, isWishlistComponent }) => {
             <>
                 <div className="product-item-image-container" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                     <Link href={`product/${product.id}`}>
-                        <Image loader={myLoader} src={`${baseUrl}/${product.image}`} fill={true} alt={`${product.name}`} />
-                        {/* <Image className="product-big-image" alt='Producto' src={`${baseUrl}/${hovered ? product.imageTwo : product.image}`}></Image> */}
+                        <Image loader={myLoader} src={`${baseUrl}/${product.mainImage}`} fill={true} alt={`${product.name}`} />
                     </Link>
                 </div>
                 {inWishlist ?

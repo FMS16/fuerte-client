@@ -10,6 +10,7 @@ import { useCurrency } from "@/features/CurrencyContext";
 import WebLoader from "@/components/Common/WebLoader";
 
 import guiaTalla from "../../../assets/images/Guía de tallas .png"
+import ProductImages from "@/components/Common/ProductImages";
 
 export default function ProductDetails({ params }) {
   const [ product, setProduct ] = useState(null);
@@ -125,24 +126,19 @@ export default function ProductDetails({ params }) {
               }}
             >
               <motion.p className="relative" variants={{ hidden: { opacity: 0, y: -20 }, visible: { opacity: 1, y: 0 } }}>
-                <Image loader={myLoader} src={product.image} fill={true} alt={product.name} />
+                <Image loader={myLoader} src={product.mainImage} fill={true} alt={product.name} />
               </motion.p>
-              <motion.p className="relative" variants={{ hidden: { opacity: 0, y: -20 }, visible: { opacity: 1, y: 0 } }}>
-                <Image loader={myLoader} src={product.imageTwo} fill={true} alt={product.name} />
-              </motion.p>
-              <motion.p className="relative" variants={{ hidden: { opacity: 0, y: -20 }, visible: { opacity: 1, y: 0 } }}>
-                <Image loader={myLoader} src={product.imageThree} fill={true} alt={product.name} />
-              </motion.p>
+
+              {product.images.map(item => (
+                <motion.p className="relative" variants={{ hidden: { opacity: 0, y: -20 }, visible: { opacity: 1, y: 0 } }}>
+                  <Image quality={100} loader={myLoader} src={item.imageUrl} fill={true} alt={product.name} />
+                </motion.p>
+              ))}
             </motion.div>
           ) : (
-            <motion.div
-              className="product-details-image-container"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <p className="relative"><Image loader={myLoader} src={product.image} fill={true} alt={product.name} /></p>
-            </motion.div>
+            <>
+              <ProductImages product={product} />
+            </>
           )}
 
 
@@ -231,7 +227,7 @@ export default function ProductDetails({ params }) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.8 }}
               >
-                
+
               </motion.div>
             )}
           </motion.div>

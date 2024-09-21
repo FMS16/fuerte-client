@@ -66,26 +66,31 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
         const getSubTotal = () => {
             let subtotal = 0;
             cart.items.forEach(element => {
-                console.log(element);
-                subtotal += currency === "USD" ? element.product.priceUSD * element.quantity : element.product.priceUYU * element.quantity;
+                subtotal += currency === "USD"
+                    ? element.product.priceUSD * element.quantity
+                    : element.product.priceUYU * element.quantity;
             });
             setSubtotal(subtotal);
 
-            // Calcula el total basado en el subtotal
-            let totalFunction = currency === "USD" ? subtotal + 15 : subtotal + 250;
-
+            // Aplica el descuento solo al subtotal de los productos
+            let discountedSubtotal = subtotal;
             if (couponDiscount !== 0) {
-                // Asegúrate de aplicar el descuento correctamente
-                let discountAmount = (totalFunction * (couponDiscount / 100));
-                totalFunction = totalFunction - discountAmount;
+                // Calcula el monto de descuento
+                let discountAmount = (subtotal * (couponDiscount / 100));
+                discountedSubtotal = subtotal - discountAmount;
                 setSaved(discountAmount);
             }
 
-            setTotal(totalFunction);
+            // Suma el envío al subtotal con descuento
+            let shippingCost = currency === "USD" ? 15 : 250;
+            let totalWithShipping = discountedSubtotal + shippingCost;
+
+            setTotal(totalWithShipping);
         };
 
         getSubTotal();
-    }, [ cart, currency, usingCoupon, couponDiscount, saved ]);
+    }, [ cart, currency, couponDiscount ]);
+
 
 
     // Fetch order data once on mount
@@ -152,7 +157,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                 setOrder(responseAdd.data);
                 setOrdenIsConfirmed(true);
             } else {
-                if(isMobile){
+                if (isMobile) {
                     toast.info('Hubo un error, intente más tarde', {
                         position: "bottom-right",
                         autoClose: 1500,
@@ -163,7 +168,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                         progress: undefined,
                         theme: "light",
                     });
-                }else{
+                } else {
                     toast.info('Hubo un error, intente más tarde', {
                         position: "top-left",
                         autoClose: 1500,
@@ -175,10 +180,10 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                         theme: "light",
                     });
                 }
-                
+
             }
         } catch (error) {
-            if(isMobile){
+            if (isMobile) {
                 toast.error(error.message, {
                     position: "bottom-right",
                     autoClose: 1500,
@@ -189,7 +194,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                     progress: undefined,
                     theme: "light",
                 });
-            }else{
+            } else {
                 toast.error(error.message, {
                     position: "top-left",
                     autoClose: 1500,
@@ -201,7 +206,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                     theme: "light",
                 });
             }
-            
+
         } finally {
             setLoadingOrder(false);
         }
@@ -225,7 +230,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
             if (data.isSuccess && data.data) {
                 setCouponDiscount(data.data); // Actualiza el descuento del cupón
                 setUsingCoupon(true);
-                if(isMobile){
+                if (isMobile) {
                     toast.success(data.message, {
                         position: "bottom-right",
                         autoClose: 5000,
@@ -236,7 +241,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                         progress: undefined,
                         theme: "light",
                     });
-                }else{
+                } else {
                     toast.success(data.message, {
                         position: "top-left",
                         autoClose: 5000,
@@ -248,9 +253,9 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                         theme: "light",
                     });
                 }
-                
+
             } else {
-                if(isMobile){
+                if (isMobile) {
                     toast.error(data.message, {
                         position: "bottom-right",
                         autoClose: 5000,
@@ -261,7 +266,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                         progress: undefined,
                         theme: "light",
                     });
-                }else{
+                } else {
                     toast.error(data.message, {
                         position: "top-left",
                         autoClose: 5000,
@@ -273,10 +278,10 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                         theme: "light",
                     });
                 }
-                
+
             }
         } catch (error) {
-            if(isMobile){
+            if (isMobile) {
                 toast.error("Error al validar el cupón.", {
                     position: "bottom-right",
                     autoClose: 5000,
@@ -287,7 +292,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                     progress: undefined,
                     theme: "light",
                 });
-            }else{
+            } else {
                 toast.error("Error al validar el cupón.", {
                     position: "top-left",
                     autoClose: 5000,
@@ -312,7 +317,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
         setSaved(0);
         // Recalcula el total con el descuento restablecido
         setTotal(subtotal + (currency === "USD" ? 15 : 250));
-        if(isMobile){
+        if (isMobile) {
             toast.info('Cupón eliminado.', {
                 position: "bottom-right",
                 autoClose: 5000,
@@ -323,7 +328,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                 progress: undefined,
                 theme: "light",
             });
-        }else{
+        } else {
             toast.info('Cupón eliminado.', {
                 position: "top-left",
                 autoClose: 5000,
@@ -335,7 +340,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                 theme: "light",
             });
         }
-        
+
     };
 
 
@@ -356,8 +361,8 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                         </li>
                     )}
                 </ul>
+                {saved != 0 && (<h2>Descuento: <span className='price saved'> -${saved.toFixed(1)}</span></h2>)}
                 <h2>Env&iacute;o: <span className='price'>${currency === "USD" ? 15 : 250}</span></h2>
-                {saved != 0 && (<h2>Descuento: <span className='price saved'> -${saved}</span></h2>)}
                 <h1>Total: <span className='price bold'>${total}</span></h1>
             </div>
             {order == null && !isOrdenConfirmed && (
@@ -507,7 +512,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                                 <path d="M21 11L6.414 11 11.707 5.707 10.293 4.293 2.586 12 10.293 19.707 11.707 18.293 6.414 13 21 13z"></path>
                             </svg> Env&iacute;o
                         </button>
-                        {loadingOrder ? <button className='btn-form btn-loader'><div className='loader'></div></button> : <button onClick={confirmOrder} className='btn-form input-btn'>Confirmar orden</button>}
+                        {loadingOrder ? <button className='btn-form btn-loader'><div className='loader'></div></button> : <button onClick={confirmOrder} className='btn-form input-btn'>Confirmar</button>}
                     </div>
                 </>
             )}
