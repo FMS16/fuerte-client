@@ -130,7 +130,7 @@ export default function ProductDetails({ params }) {
               </motion.p>
 
               {product.images.map(item => (
-                <motion.p className="relative" variants={{ hidden: { opacity: 0, y: -20 }, visible: { opacity: 1, y: 0 } }}>
+                <motion.p key={item.id} className="relative" variants={{ hidden: { opacity: 0, y: -20 }, visible: { opacity: 1, y: 0 } }}>
                   <Image quality={100} loader={myLoader} src={item.imageUrl} fill={true} alt={product.name} />
                 </motion.p>
               ))}
