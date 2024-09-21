@@ -4,17 +4,10 @@ import "./globals.css";
 import { ProductProvider } from "@/features/ProductContext";
 import { UserProvider } from "@/features/UserContext";
 import { CartProvider } from "@/features/CartContext";
-import Header from "@/components/Common/Header";
 import { WishlistProvider } from "@/features/WishlistContext";
-import Footer from "@/components/Common/Footer";
 import { LayoutProvider } from "./LayoutProvider";
-import Image from "next/image";
-import logo from "../assets/images/logoRecortadoFino.png"
-import banner from "../assets/images/banner-coming-soon.jpeg"
-import { ToastContainer } from "react-toastify";
 import ModalCurrency from "@/components/Common/ModalCurrency";
 import { CurrencyProvider } from "@/features/CurrencyContext";
-import ComingSoon from "@/components/Common/ComingSoon";
 import Head from 'next/head';
 
 const montserrat = Montserrat({ subsets: [ "latin" ] });
