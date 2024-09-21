@@ -9,7 +9,7 @@ const Newsletter = () => {
     }
     return (
         <div className='newsletter'>
-            <Image src={banner} className='newsletter-banner' layout='fill' quality={100} objectFit='cover' alt='Banner newsletter' />
+            <Image priority={true} src={banner} className='newsletter-banner' layout='fill' quality={100} objectFit='cover' alt='Banner newsletter' />
             <div className='newsletter-container'>
                 <h1><span>Unite al club</span> <Image src={logo} alt='Logo'></Image></h1>
                 <h2>Para recibir promociones, novedades, descuentos y mucho m&aacute;s</h2> 

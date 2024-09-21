@@ -11,7 +11,7 @@ const Banner = ({ img, title, subtitle, buttonText, positionTextTop, positionTex
     
     return (
         <div className="banner">
-            <Image src={img} alt="banner" unoptimized quality={100}></Image>
+            <Image src={img} alt="banner" unoptimized quality={100} priority={true} ></Image>
             <div className="banner-text" style={styles}>
                 <p>{invertedTitle}</p>
                 {invertedTitle ? <>
