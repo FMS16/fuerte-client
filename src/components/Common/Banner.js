@@ -15,9 +15,7 @@ const Banner = ({ img, title, subtitle, buttonText, positionTextTop, positionTex
                 layout="fill" 
                 objectFit="cover" 
                 quality={100} 
-                priority 
-                fetchpriority="high" 
-                decoding="async"  ></Image>
+                priority></Image>
             <div className="banner-text" style={styles}>
                 <p>{invertedTitle}</p>
                 {invertedTitle ? <>
