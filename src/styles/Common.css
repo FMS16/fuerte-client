@@ -1697,7 +1697,9 @@ input:valid~label {
     border: 1px solid lightgray;
 }
 
-
+.modal-content h1{
+    font-size: var(--size-title-medium);
+}
 
 
 .checkout-transfer {

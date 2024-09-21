@@ -61,7 +61,7 @@ const ModalCurrency = () => {
                             transition={{ duration: 0.3 }}
                             onAnimationComplete={handleAnimationComplete}
                         >
-                            <h3>Selecciona tu moneda</h3>
+                            <h1>Selecciona tu moneda</h1>
                             <div className='currency-btn-container'>
                                 <button onClick={() => handleCurrencyChange('USD')}>$USD</button>
                                 <button onClick={() => handleCurrencyChange('UYU')}>$UYU (Pesos Uruguayos)</button>
