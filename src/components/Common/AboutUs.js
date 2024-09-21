@@ -37,7 +37,7 @@ const AboutUs = () => {
           <p>Vicky</p>
         </div>
         <div className='about-us-item'>
-          <p className='relative'><Image src={img} objectFit='cover' objectPosition='left bottom' alt='Modelo sobre nosotros' layout='fill' /></p>
+          {/* <p className='relative'><Image src={img} objectFit='cover' objectPosition='left bottom' alt='Modelo sobre nosotros' layout='fill' /></p> */}
         </div>
       </div>
     </div>
