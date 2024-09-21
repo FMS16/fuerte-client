@@ -86,7 +86,7 @@ const Newsletter = () => {
                         theme: "light",
                     });
                 } else {
-                    toast.info('Hubo un error. Intente más tarde.', {
+                    toast.info('Subscrito al newsletter con éxito.', {
                         position: "top-left",
                         autoClose: 1500,
                         hideProgressBar: false,
