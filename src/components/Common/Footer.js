@@ -52,9 +52,9 @@ const Footer = () => {
                     <div className='footer-list'>
                         <h1 className='footer-list-title'>Cuenta</h1>
                         <ul>
-                            <li onClick={toggleHrefUser}><a>Mi cuenta</a></li>
+                            <li><a href={toggleHrefUser}>Mi cuenta</a></li>
                             <li><Link href='/wishlist'>Mis favoritos</Link></li>
-                            <li onClick={toggleHrefUser}><a >Mis compras</a></li>
+                            <li><a href={toggleHrefUser}>Mis compras</a></li>
                         </ul>
                     </div>
                     <div className='footer-list'>

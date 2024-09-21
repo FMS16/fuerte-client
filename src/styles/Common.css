@@ -741,7 +741,7 @@
     display: flex;
     width: 100%;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: space-between;
 }
 
 .shop-product-item {
@@ -2467,6 +2467,10 @@ input:valid~label {
 
     .currency-btn-container button {
         cursor: pointer;
+    }
+
+    .shop-container-products{
+        justify-content: flex-start;
     }
 
 }
