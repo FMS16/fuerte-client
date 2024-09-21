@@ -2,6 +2,8 @@
 
 import dynamic from 'next/dynamic';
 import { useEffect } from 'react';
+import Header from '@/components/Common/Header';
+import Footer from '@/components/Common/Footer';
 
 const ToastContainer = dynamic(
   () => import('react-toastify').then((mod) => mod.ToastContainer),
