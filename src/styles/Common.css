@@ -2474,3 +2474,25 @@ input:valid~label {
     }
 
 }
+
+
+.social-footer-list{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 25px;
+}
+
+.social-footer-list ul{
+    display: flex;
+    list-style: none;
+}
+
+.social-footer-list ul li{
+    margin: 0 10px;
+}
+
+.social-footer-list ul li svg{
+    width: 25px;
+    height: 25px;
+}
