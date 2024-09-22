@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, act } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { UserContext } from "@/features/UserContext";
@@ -124,7 +124,7 @@ export default function AdminPage() {
                             <div className="overlay" onClick={toggleModalChangeOrderStatus}></div>
                             <div className="modal-content-change-order-status">
                                 <p>
-                                    Se cambiar&aacute; el estado de la orden de
+                                    Se cambiar&aacute; el estado de la orden {activeOrder.order.id} de
                                     <span className="bold"> <OrderStatus orderStatus={activeOrder.order.orderStatus} /> </span>
                                     a
                                     <span className="bold"> <OrderStatus orderStatus={parseInt(activeOrder.newStatus)} /> </span>
@@ -140,7 +140,44 @@ export default function AdminPage() {
                         <div className="modal-order-detail">
                             <div className="overlay" onClick={() => setModalOrderDetail(!modalOrderDetail)}></div>
                             <div className="modal-content-order-detail">
-                                <p>{activeOrder.id}</p>
+                                <div className="modal-content-order-detail-header">
+                                    <h1>#{activeOrder.id}</h1>
+                                    <h1>{new Date(activeOrder.date).toLocaleDateString()}</h1>
+                                </div>
+                                <div className="container">
+                                    <div className="modal-content-order-detail-user">
+                                        <h1>Datos del comprador:</h1>
+                                        <ul className="modal-content-order-detail-list">
+                                            <li>Nombre: {activeOrder.user.name} {activeOrder.user.lastName}</li>
+                                            <li>CI: {activeOrder.user.idCard}</li>
+                                            <li>Mail: {activeOrder.user.email}</li>
+                                            <li>Tel.: {activeOrder.user.phone}</li>
+                                        </ul>
+                                    </div>
+                                    <div className="modal-content-order-detail-order">
+                                        <h1>Datos de la orden:</h1>
+                                        <ul className="modal-content-order-detail-list">
+                                            {activeOrder.products.map((item, index) => {
+                                                return(
+                                                    <li className="flex" key={index}>
+                                                        <span>{item.product.name} {item.size.name}</span>
+                                                        <span>{item.quantity}</span>
+                                                    </li>
+                                                )
+                                            })}
+                                            <li>Total: ${activeOrder.selectedAddress.country == "Ecuador" ? activeOrder.totalUSD : activeOrder.totalUYU}</li>
+                                        </ul>
+                                    </div>
+                                    <div className="modal-content-order-detail-shipping">
+                                        <h1>Datos del env&iacute;o:</h1>
+                                        <ul className="modal-content-order-detail-list">
+                                            <li>Pa&iacute;s: {activeOrder.selectedAddress.country}</li>
+                                            <li>Direcci&oacute;n: {activeOrder.selectedAddress.department}, {activeOrder.selectedAddress.street} {activeOrder.selectedAddress.doorNumber}</li>
+                                            <li>Comentarios: {activeOrder.selectedAddress.comments}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     )}
