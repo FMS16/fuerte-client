@@ -160,8 +160,8 @@ export default function AdminPage() {
                                             {activeOrder.products.map((item, index) => {
                                                 return(
                                                     <li className="flex" key={index}>
-                                                        <span>{item.product.name} {item.size.name}</span>
-                                                        <span>{item.quantity}</span>
+                                                        <p><span dangerouslySetInnerHTML={{ __html: item.product.name }} /> <span>{item.size.name}</span></p>
+                                                        <p>{item.quantity}</p>
                                                     </li>
                                                 )
                                             })}
