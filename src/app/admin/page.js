@@ -55,6 +55,7 @@ export default function AdminPage() {
                                 </svg>
                             </button>
                         )}
+                        <p>{state.user.name} {state.user.lastName}</p>
                     </header>
                     {activeTab == "dashboard" && (<h1>dashboard</h1>)}
                 </>
