@@ -8,6 +8,7 @@ import WebLoader from '../Common/WebLoader';
 import Image from 'next/image';
 import OrderStatus from '@/app/utils/OrderStatus';
 import { useCurrency } from '@/features/CurrencyContext';
+import Link from 'next/link';
 
 const UserDetailsComponent = () => {
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -16,9 +17,16 @@ const UserDetailsComponent = () => {
   const [ orders, setOrders ] = useState([]);
   const [ activeIndex, setActiveIndex ] = useState(null);
 
-  const {currency} = useCurrency();
+  const { isAuthenticated, isAdmin } = state;
+
+  const router = useRouter();
+
+  const { currency } = useCurrency();
 
   useEffect(() => {
+    if(isAuthenticated === false){
+      router.push("/");
+    }
     const fetchOrders = async () => {
       if (state.user) {
         try {
@@ -34,7 +42,6 @@ const UserDetailsComponent = () => {
 
     fetchOrders();
   }, [ state.user, baseUrl ]);
-  const router = useRouter();
   const handleNavClick = (index) => {
     if (index == 3) {
       dispatch({ type: actionTypes.LOGOUT });
@@ -53,7 +60,7 @@ const UserDetailsComponent = () => {
     return src;
   };
 
-/*   const {currency} = useCurrency(); */
+  /*   const {currency} = useCurrency(); */
 
   return (
     <div className='user-details container'>
@@ -90,6 +97,10 @@ const UserDetailsComponent = () => {
                   <path fillRule="evenodd" d="M2 8a.5.5 0 01.5-.5H13a.5.5 0 010 1H2.5A.5.5 0 012 8z" clipRule="evenodd"></path>
                 </svg>
               </li>
+              {isAdmin && (<li><Link href='/admin'>Mi panel</Link><svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                  <path fillRule="evenodd" d="M10.146 4.646a.5.5 0 01.708 0l3 3a.5.5 0 010 .708l-3 3a.5.5 0 01-.708-.708L12.793 8l-2.647-2.646a.5.5 0 010-.708z" clipRule="evenodd"></path>
+                  <path fillRule="evenodd" d="M2 8a.5.5 0 01.5-.5H13a.5.5 0 010 1H2.5A.5.5 0 012 8z" clipRule="evenodd"></path>
+                </svg></li>)}
             </ul>
           </nav>
           <div className='user-details-content container'>
@@ -99,7 +110,7 @@ const UserDetailsComponent = () => {
                   <div key={order.id} className='user-order'>
                     <p className='bb'><span>N&uacute;mero de &oacute;rden: </span><span>{order.id}</span></p>
                     <p className='bb'><span>N&uacute;mero de transacci&oacute;n:</span> <span>{order.paymentId == null ? order.paymentReference : order.paymentId}</span></p>
-                    <p className='bb'><span>Estado:</span><span>{ <OrderStatus orderStatus={order.orderStatus} /> }</span> </p>
+                    <p className='bb'><span>Estado:</span><span>{<OrderStatus orderStatus={order.orderStatus} />}</span> </p>
                     <ul>
                       {order.products.map((orderProduct, index) =>
                         <li key={index} className='user-order-product'>
@@ -108,7 +119,7 @@ const UserDetailsComponent = () => {
                         </li>
                       )}
                     </ul>
-                    { <p className='bt'><span>Total:</span> <span className='price'>${currency == "USD" ? order.totalUSD : order.totalUYU}</span></p> }
+                    {<p className='bt'><span>Total:</span> <span className='price'>${currency == "USD" ? order.totalUSD : order.totalUYU}</span></p>}
                   </div>)}
               </div>
             )}
@@ -121,11 +132,11 @@ const UserDetailsComponent = () => {
             )}
             {activeIndex === 2 && state.user.logged != null && (
               <div className='user-acount-details'>
-              <p>Nombre: {state.user.logged.name}</p>
-              <p>Apellido: {state.user.logged.lastName}</p>
-              <p>Email: {state.user.logged.email}</p>
-              <p>Tel&eacute;fono: {state.user.logged.phone}</p>
-            </div>
+                <p>Nombre: {state.user.logged.name}</p>
+                <p>Apellido: {state.user.logged.lastName}</p>
+                <p>Email: {state.user.logged.email}</p>
+                <p>Tel&eacute;fono: {state.user.logged.phone}</p>
+              </div>
             )}
           </div>
         </>

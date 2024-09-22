@@ -1607,6 +1607,10 @@ input:valid~label {
     justify-content: space-between;
 }
 
+.user-nav-details ul li a{
+    color: #000;
+}
+
 .user-details-info ul li svg {
     width: 25px;
     height: 25px;
