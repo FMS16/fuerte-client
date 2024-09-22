@@ -15,7 +15,7 @@ export default function AdminPage() {
 
     useEffect(() => {
 
-        if (!isAdmin) {
+        if (isAdmin == false || isAuthenticated == false || state.user === null) {
             router.push("/");
         }
 
