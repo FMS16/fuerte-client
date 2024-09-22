@@ -66,8 +66,8 @@ const ProductItem = ({ product, isWishlistComponent }) => {
 
         return () => mediaQuery.removeEventListener('change', updateMediaQuery);
 
-        
-    }, [isMobileOrTablet]);
+
+    }, [ isMobileOrTablet ]);
 
     return (
         isMobileOrTablet ? (
@@ -122,7 +122,7 @@ const ProductItem = ({ product, isWishlistComponent }) => {
                         </svg>
                     </motion.button>}
                 <div className='product-item-details'>
-                    <h2>{product.name}</h2>
+                    <h2 dangerouslySetInnerHTML={{ __html: product.name }} />
                     <h2 className='price'>${currency === 'USD' ? product.priceUSD : product.priceUYU}</h2>
                 </div>
             </>)

@@ -175,7 +175,7 @@ export default function ProductDetails({ params }) {
                   </li>
                 ))}
               </ul>
-              <h1>{product.name}</h1>
+              <h1 dangerouslySetInnerHTML={{ __html: product.name }} />
               <p dangerouslySetInnerHTML={{ __html: product.description }} />
               <p className="price">${currency === 'USD' ? product.priceUSD : product.priceUYU}</p>
             </motion.div>

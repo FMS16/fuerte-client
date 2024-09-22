@@ -33,7 +33,7 @@ const Header = () => {
         mediaQuery.addEventListener('change', updateMediaQuery);
 
         return () => mediaQuery.removeEventListener('change', updateMediaQuery);
-    }, [ isAuthenticated ]);
+    }, [ isAuthenticated, isMobileOrTablet ]);
 
     const toggleCartVisibility = () => {
         setMyCartVisible(!myCartVisible);
