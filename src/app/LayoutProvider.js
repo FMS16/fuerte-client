@@ -12,9 +12,9 @@ export const LayoutProvider = ({ children }) => {
     
     return (
         <>
-            {pathname !== "/checkout" && pathname !== "/login" && <Header />}
+            {pathname !== "/checkout" && pathname !== "/login" && pathname !== "/admin" && <Header />}
             {children}
-            {pathname !== "/checkout" && pathname !== "/login" && <Footer />}
+            {pathname !== "/checkout" && pathname !== "/login" && pathname !== "/admin" && <Footer />}
             <ToastContainer />
         </>
     );

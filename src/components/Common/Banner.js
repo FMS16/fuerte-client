@@ -15,7 +15,8 @@ const Banner = ({ img, title, subtitle, buttonText, positionTextTop, positionTex
                 layout="fill" 
                 objectFit="cover" 
                 quality={100} 
-                priority></Image>
+                unoptimized
+                priority ></Image>
             <div className="banner-text" style={styles}>
                 <p>{invertedTitle}</p>
                 {invertedTitle ? <>

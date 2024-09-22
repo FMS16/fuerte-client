@@ -19,16 +19,13 @@ const UserDetailsComponent = () => {
   const {currency} = useCurrency();
 
   useEffect(() => {
-    console.log(state.user);
     const fetchOrders = async () => {
       if (state.user) {
         try {
           const response = await fetch(`${baseUrl}/order/getByCustomerId/${state.user.logged.id}`);
           const data = await response.json();
           setOrders(data.data);
-          console.log(data.data);
         } catch (err) {
-          console.log(err);
         } finally {
           setLoading(false);
         }
@@ -45,7 +42,6 @@ const UserDetailsComponent = () => {
     } else if (index == 1) {
       router.push('/wishlist');
     }
-    console.log(orders);
     setActiveIndex(index);
   };
 

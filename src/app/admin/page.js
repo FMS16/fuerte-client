@@ -6,7 +6,7 @@ import React from "react";
 import { useEffect, useContext } from "react";
 import { UserContext } from "@/features/UserContext";
 
-export default function LoginPage() {
+export default function AdminPage() {
 
     const { state } = useContext(UserContext);
     const { isAuthenticated, isAdmin } = state;
@@ -15,17 +15,18 @@ export default function LoginPage() {
 
     useEffect(() => {
 
-        if(isAuthenticated){
-            if(isAdmin){
-                router.push('/admin');
-            }else{
-                router.push('/');
-            }
+        if (!isAdmin) {
+            router.push("/");
         }
 
-    }, [isAuthenticated])
+    }, [ isAuthenticated, isAdmin ])
 
     return (
-        <Login />
+        <div className="container">
+            <h1>HOLAAAAAAAAAAAAAAAA {state.user.name}</h1>
+            <h2>ESTE ES TU PANEL</h2>
+            <h3>DESDE AQU&Iacute; ADMINISTRARAS FUERTE</h3>
+            <h4>lo estoy construyendo, asi que, vuelve pronto jeje</h4>
+        </div>
     )
 }

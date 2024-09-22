@@ -6,7 +6,6 @@ import React, { createContext, useReducer, useEffect } from 'react';
 export const actionTypes = {
     LOGIN: 'LOGIN',
     LOGOUT: 'LOGOUT',
-    GET_USERS: 'GET_USERS', // Nueva acción para obtener usuarios
 };
 
 // Initial state fetched from localStorage
@@ -14,7 +13,6 @@ export const initialState = {
     user: null, // Iniciar como null en lugar de usar sessionStorage
     isAuthenticated: false,
     isAdmin: false,
-    users: [], // Nuevo estado para almacenar usuarios
 };
 
 
@@ -40,45 +38,11 @@ export const UserProvider = ({ children }) => {
                 });
             }
         }
-
-
-
     }, []);
 
 
-
-    // Function to fetch users
-    const fetchUsers = async () => {
-        try {
-            const response = await fetch('https://localhost:7207/user/list', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${state.user.token}`
-                },
-            });
-
-            if (!response.ok) {
-                throw new Error('Error obteniendo los usuarios');
-            }
-
-            const responseData = await response.json();
-
-            if (responseData.isSuccess) {
-                dispatch({
-                    type: actionTypes.GET_USERS,
-                    payload: {
-                        users: responseData.data,
-                    },
-                });
-            }
-        } catch (error) {
-            console.error('Error fetching users:', error);
-        }
-    };
-
     return (
-        <UserContext.Provider value={{ state, dispatch, fetchUsers }}>
+        <UserContext.Provider value={{ state, dispatch }}>
             {children}
         </UserContext.Provider>
     );
@@ -101,12 +65,6 @@ export const userReducer = (state, action) => {
                 isAdmin: action.payload.user.rol === 'Admin',
             };
 
-        case actionTypes.GET_USERS:
-            return {
-                ...state,
-                users: action.payload.users,
-            };
-
         case actionTypes.LOGOUT:
             if (typeof window !== 'undefined') {
                 // Puedes usar window o localStorage aquí
@@ -120,7 +78,6 @@ export const userReducer = (state, action) => {
                 user: null,
                 isAuthenticated: false,
                 isAdmin: false,
-                users: [], // Limpiar usuarios al cerrar sesión
             };
 
         default:

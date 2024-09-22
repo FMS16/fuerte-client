@@ -18,7 +18,6 @@ const Login = () => {
     const [ password, setPassword ] = useState('');
 
     const router = useRouter();
-    const { query } = router;
 
     const [ showLoginForm, setShowLoginForm ] = useState(false);
     const [ mailUserExists, setMailUserExists ] = useState(false);
@@ -26,11 +25,17 @@ const Login = () => {
     const [ initForm, setInitForm ] = useState(true);
 
     const { dispatch, state } = useContext(UserContext);
-    const { isAuthenticated } = state;
+    const { isAuthenticated, isAdmin } = state;
     const [ isMobile, setIsMobile ] = useState(false);
     useEffect(() => {
+
         if (isAuthenticated) {
-            router.push('/');
+            if(isAdmin){
+                router.push('/admin');
+            }else{
+                router.push('/');
+            }
+
         }
         // Función para actualizar el estado basado en el tamaño de la ventana
         const handleResize = () => {
@@ -47,7 +52,7 @@ const Login = () => {
         return () => {
             window.removeEventListener('resize', handleResize);
         };
-    }, [ isAuthenticated, isMobile ]);
+    }, [ isAuthenticated, isMobile, isAdmin ]);
 
     const handleInputPassword = (e) => {
         setPassword(e.target.value);
@@ -109,10 +114,6 @@ const Login = () => {
                 body: JSON.stringify(userData),
             });
 
-            if (!response.ok) {
-                throw new Error('Error en el inicio de sesión');
-            }
-
             const responseData = await response.json();
             setLoading(false);
 
@@ -127,7 +128,6 @@ const Login = () => {
                         user: responseData.data,
                     },
                 });
-
             } else {
                 setPassword('');
                 if (isMobile) {
@@ -244,9 +244,6 @@ const Login = () => {
                         },
                         body: JSON.stringify(email.trim()), // Enviar email como objeto JSON
                     });
-                    if (!responseUser.ok) {
-                        throw new Error('Error en el registro');
-                    }
                     const responseDataUser = await responseUser.json();
                     if (responseDataUser.isSuccess && responseDataUser.data === true) {
                         // El email existe como usuario normal
@@ -409,10 +406,6 @@ const Login = () => {
                 },
                 body: JSON.stringify(object), // Enviar email como objeto JSON
             });
-            if (!responseRegister.ok) {
-                throw new Error('Error en el registro');
-            }
-
             const data = await responseRegister.json();
             if (data.isSuccess) {
                 if(isMobile){
@@ -599,9 +592,6 @@ const Login = () => {
             body: JSON.stringify(object),
         })
             .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error en la solicitud');
-                }
                 return response.json();
             })
             .then(data => {
@@ -667,9 +657,6 @@ const Login = () => {
             body: JSON.stringify(object),
         })
             .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error en la solicitud');
-                }
                 return response.json();
             })
             .then(data => {

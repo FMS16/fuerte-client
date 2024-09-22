@@ -43,7 +43,6 @@ export default function RootLayout({ children }) {
             </UserProvider>
           </ProductProvider>
         </CurrencyProvider> 
-        {/* <ComingSoon /> */}
       </body>
     </html>
   );
