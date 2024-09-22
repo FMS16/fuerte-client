@@ -2502,3 +2502,99 @@ input:valid~label {
     width: 25px;
     height: 25px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.admin-panel-header{
+    display: flex;
+    padding: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admin-panel-header .fa-bars svg{
+    width: 25px;
+    height: 25px;
+}
+
+
+.admin-nav{
+    position: fixed;
+    top: 0;
+    background-color: #000;
+    left: 0;
+    height: 100vh;
+    width: 40%;
+    padding-top: 50px;
+    z-index: 50;
+    list-style: none;
+}
+
+.admin-nav ul li{
+    color: #fff;
+    padding: 15px;
+    border-bottom: 1px solid #fff;
+}

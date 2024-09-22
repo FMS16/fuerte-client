@@ -30,7 +30,12 @@ const UserDetailsComponent = () => {
     const fetchOrders = async () => {
       if (state.user) {
         try {
-          const response = await fetch(`${baseUrl}/order/getByCustomerId/${state.user.logged.id}`);
+          const response = await fetch(`${baseUrl}/order/getByCustomerId/${state.user.logged.id}`, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${state.user.token}`, // Asegúrate de pasar el token adecuado aquí
+          },
+          });
           const data = await response.json();
           setOrders(data.data);
         } catch (err) {
