@@ -23,10 +23,14 @@ export default function AdminPage() {
 
     return (
         <div className="container">
-            <h1>HOLAAAAAAAAAAAAAAAA {state.user.name}</h1>
-            <h2>ESTE ES TU PANEL</h2>
-            <h3>DESDE AQU&Iacute; ADMINISTRARAS FUERTE</h3>
-            <h4>lo estoy construyendo, asi que, vuelve pronto jeje</h4>
+            {state.user ? (
+                <>
+                    
+                </>
+            ) : (
+                <p>Redirigiendo...</p>
+            )}
         </div>
-    )
+    );
+    
 }
