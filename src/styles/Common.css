@@ -1801,7 +1801,7 @@ input:valid~label {
     background-color: #ffe4f5;
     padding: 15px;
     margin: 5px 0;
-    cursor: pointer;
+    cursor: default;
 }
 
 .acordion-title {
@@ -1825,6 +1825,10 @@ input:valid~label {
 .acordion-item-content p {
     margin-bottom: 10px;
     padding-left: 15px;
+}
+
+.acordion-item-content p a{
+    color: #000;
 }
 
 

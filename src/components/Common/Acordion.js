@@ -99,7 +99,7 @@ const accordionData = [
   {
     title: 'Contacto',
     content: <>
-      <p>Tambi&eacute;n puedes contactarnos por Whatsapp o a <span className='bold'>hola@fuerte.com.uy</span>, estaremos encantados de atenderte.</p>
+      <p>Tambi&eacute;n puedes contactarnos por <a href='https://wa.link/ip2hee'>Whatsapp</a> o a <span className='bold'>hola@fuerte.com.uy</span>, estaremos encantados de atenderte.</p>
     </>,
   },
 ];
