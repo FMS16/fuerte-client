@@ -475,8 +475,8 @@
     border: 1px solid #fff;
     margin: 10px 0;
     text-transform: uppercase;
-    font-weight: bold;
     letter-spacing: 1.25px;
+    font-size: var(--size-normal);
     text-decoration: none;
     display: inline-block;
 }

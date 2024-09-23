@@ -16,7 +16,7 @@ const oooh_Baby = Oooh_Baby({ subsets: [ "latin" ], weight:['400'] });
 
 export const metadata = {
   title: "FUERTE",
-  description: "Descubre Fuerte, tu tienda deportiva especializada en ropa femenina...",
+  description: ".",
   keywords: "tienda deportiva, ropa femenina, moda deportiva, ropa fitness mujeres, Vicky Turusha, Fuerte marca, Fuerte tienda deportiva, ropa deportiva mujeres, moda fitness, ropa deportiva Fuerte, tienda de deportes Fuerte, marca Fuerte, ropa para mujeres",
   author: "Fabricio Secondo",
   robots: "index, follow",
