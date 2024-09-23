@@ -73,7 +73,7 @@ const Footer = () => {
                 </div>
             </div>
             <div className='footer-copyright'>
-                <span>2024 Fuerte & developed by Fabricio Secondo.</span>
+                <span>2024 Fuerte & developed by <a href='mailto:martinsecondo16@gmail.com'>Fabricio Secondo</a>.</span>
             </div>
         </footer>
     )
