@@ -27,7 +27,7 @@ const Banner = ({ img, title, subtitle, buttonText, positionTextTop, positionTex
                         <h1>{title}</h1>
                         <p>{subtitle}</p>
                     </>}
-                <button><Link href={link}>{buttonText}</Link></button>
+                <Link href={link}>{buttonText}</Link>
             </div>
         </div>
     )

@@ -468,18 +468,17 @@
     transform: translateX();
 }
 
-.banner-text button {
+
+.banner-text a {
+    color: #fff;
     padding: 10px 16px;
     border: 1px solid #fff;
     margin: 10px 0;
     text-transform: uppercase;
     font-weight: bold;
     letter-spacing: 1.25px;
-}
-
-.banner-text button a {
-    color: #fff;
     text-decoration: none;
+    display: inline-block;
 }
 
 
