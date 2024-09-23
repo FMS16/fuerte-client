@@ -8,28 +8,27 @@ import { WishlistProvider } from "@/features/WishlistContext";
 import { LayoutProvider } from "./LayoutProvider";
 import ModalCurrency from "@/components/Common/ModalCurrency";
 import { CurrencyProvider } from "@/features/CurrencyContext";
-import Head from 'next/head';
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const montserrat = Montserrat({ subsets: [ "latin" ] });
 const oooh_Baby = Oooh_Baby({ subsets: [ "latin" ], weight:['400'] });
 
 export const metadata = {
   title: "FUERTE",
-  description: "Descubre Fuerte, tu tienda deportiva especializada en ropa femenina. Ofrecemos productos de alta calidad para mujeres activas y con estilo.",
-  keywords: "tienda deportiva, ropa femenina, moda deportiva, mujeres activas, ropa fitness, Fuerte, deporte, ropa deportiva, Vicky Turusha, Turusha",
+  description: "Descubre Fuerte, tu tienda deportiva especializada en ropa femenina...",
+  keywords: "tienda deportiva, ropa femenina, moda deportiva...",
   author: "Fabricio Secondo",
   robots: "index, follow",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
-
 
 export default function RootLayout({ children }) {
   return (
     <html lang="es">
-      <Head>
-        <link rel="icon" href="./favicon.ico" />
-      </Head>
       <body className={montserrat.className}>
-         <CurrencyProvider>
+        <CurrencyProvider>
           <ProductProvider>
             <UserProvider>
               <WishlistProvider>
@@ -42,7 +41,8 @@ export default function RootLayout({ children }) {
               </WishlistProvider>
             </UserProvider>
           </ProductProvider>
-        </CurrencyProvider> 
+        </CurrencyProvider>
+        <SpeedInsights /> {/* Deja esto al final del body */}
       </body>
     </html>
   );

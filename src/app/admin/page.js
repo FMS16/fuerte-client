@@ -96,25 +96,23 @@ export default function AdminPage() {
             {state.user ? (
                 <>
                     <header className="admin-panel-header">
-                        {isMobile && (
-                            <button onClick={toggleMenu} className="fa-bars" aria-label="Abrir menú">
-                                <svg
-                                    stroke="currentColor"
-                                    fill="currentColor"
-                                    strokeWidth="0"
-                                    viewBox="0 0 16 16"
-                                    height="1em"
-                                    width="1em"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        fillRule="evenodd"
-                                        clipRule="evenodd"
-                                        d="M14 5H2V3h12v2zm0 4H2V7h12v2zM2 13h12v-2H2v2z"
-                                    ></path>
-                                </svg>
-                            </button>
-                        )}
+                        <button onClick={toggleMenu} className="fa-bars" aria-label="Abrir menú">
+                            <svg
+                                stroke="currentColor"
+                                fill="currentColor"
+                                strokeWidth="0"
+                                viewBox="0 0 16 16"
+                                height="1em"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    fillRule="evenodd"
+                                    clipRule="evenodd"
+                                    d="M14 5H2V3h12v2zm0 4H2V7h12v2zM2 13h12v-2H2v2z"
+                                ></path>
+                            </svg>
+                        </button>
                         <p>
                             {state.user.name} {state.user.lastName}
                         </p>
@@ -158,7 +156,7 @@ export default function AdminPage() {
                                         <h1>Datos de la orden:</h1>
                                         <ul className="modal-content-order-detail-list">
                                             {activeOrder.products.map((item, index) => {
-                                                return(
+                                                return (
                                                     <li className="flex" key={index}>
                                                         <p><span dangerouslySetInnerHTML={{ __html: item.product.name }} /> <span>{item.size.name}</span></p>
                                                         <p>{item.quantity}</p>
@@ -183,7 +181,12 @@ export default function AdminPage() {
                         </div>
                     )}
                     <div className="container admin-panel-body">
-                        {activeTab === "dashboard" && <h1>Dashboard</h1>}
+                        {activeTab === "dashboard" && <>
+                            <div className="container">
+
+                            </div>
+
+                        </>}
                         {activeTab === "orders" && (
                             <>
                                 <h1>Órdenes</h1>

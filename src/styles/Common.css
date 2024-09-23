@@ -2583,6 +2583,10 @@ input:valid~label {
     align-items: center;
 }
 
+.admin-panel-header .fa-bars{
+    cursor: pointer;
+}
+
 .admin-panel-header .fa-bars svg {
     width: 25px;
     height: 25px;
@@ -2605,6 +2609,7 @@ input:valid~label {
     color: #fff;
     padding: 15px;
     border-bottom: 1px solid #fff;
+    cursor: pointer;
 }
 
 .admin-panel-body {
@@ -2745,4 +2750,29 @@ input:valid~label {
     background-color: #ffe4f5;
     padding: 10px;
     border-radius: 10px 10px 0 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.chart-title{
+    font-size: var(--size-title-small);
+    margin: 10px 0;
 }
