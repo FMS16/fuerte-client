@@ -165,7 +165,8 @@ export default function AdminPage() {
                                                     </li>
                                                 )
                                             })}
-                                            <li>Total: ${activeOrder.selectedAddress.country == "Ecuador" ? activeOrder.totalUSD : activeOrder.totalUYU}</li>
+                                            <li className="flex"><span>Total:</span> <span>${activeOrder.selectedAddress.country == "Ecuador" ? activeOrder.totalUSD : activeOrder.totalUYU}</span></li>
+                                            {activeOrder.paymentStatus == "pending" && (<li className="flex"><span>Estado del pago:</span> <span>Pendiente.</span></li>)}
                                         </ul>
                                     </div>
                                     <div className="modal-content-order-detail-shipping">
