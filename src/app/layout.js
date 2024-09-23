@@ -9,6 +9,7 @@ import { LayoutProvider } from "./LayoutProvider";
 import ModalCurrency from "@/components/Common/ModalCurrency";
 import { CurrencyProvider } from "@/features/CurrencyContext";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react"
 
 const montserrat = Montserrat({ subsets: [ "latin" ] });
 const oooh_Baby = Oooh_Baby({ subsets: [ "latin" ], weight:['400'] });
@@ -42,7 +43,8 @@ export default function RootLayout({ children }) {
             </UserProvider>
           </ProductProvider>
         </CurrencyProvider>
-        <SpeedInsights /> {/* Deja esto al final del body */}
+        <SpeedInsights /> 
+        <Analytics />
       </body>
     </html>
   );
