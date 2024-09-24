@@ -427,13 +427,13 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
             )}
             {shippingDetails.country === 'Uruguay' && (
                 <Card
-                    initialization={{ amount: total }}
+                    initialization={{ amount: 5 }}
                     onSubmit={async (param) => {
                         const response = await fetch(`${API_BASE_URL}/MercadoPago/process-payment`, {
                             method: 'POST',
                             headers: new Headers({ 'Content-type': 'application/json' }),
                             body: JSON.stringify({
-                                transactionAmount: total,
+                                transactionAmount: 5,
                                 token: param.token,
                                 description: "Pago FUERTE.",
                                 installments: param.installments,
@@ -443,13 +443,14 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                             }),
                         });
                         const data = await response.json();
-                        if (data.data.status === "approved") {
+                        if (data.data.status === "approved" || data.data.status == "in_process") {
                             try {
                                 let items = [];
-                                cart.forEach(item => {
+                                console.log(cart);
+                                cart.items.forEach(item => {
                                     const object = {
                                         "productId": item.product.id,
-                                        "sizeId": item.size.id,
+                                        "sizeId": item.productSize.size.id,
                                         "quantity": item.quantity
                                     };
                                     items.push(object);
@@ -460,25 +461,22 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                                     headers: { 'Content-Type': 'application/json' },
                                     body: JSON.stringify({
                                         "orderProductRequests": items,
-                                        "userId": state.user ? state.user.id : -1,
+                                        "userId": state.user ? state.user?.logged.id : -1,
                                         "name": userDetails.name,
                                         "lastName": userDetails.lastName,
                                         "phone": userDetails.phone,
                                         "email": userDetails.email,
-                                        "paymentId": null,
+                                        "paymentId": data.data.id,
                                         "paymentStatus": "pending",
                                         "address": shippingDetails,
                                         "dateBorn": userDetails.dateBorn,
                                         "idCard": userDetails.idCard,
-                                        "amountDiscount": couponDiscount,
+                                        "amountShippingDiscount": (shippingSavings * 100)/shippingPrice,
+                                        "amountSubtotalDiscount": (subtotalSavings * 100)/subtotal,
                                         "shippingPrice": shippingPrice,
                                         "currency": currency
                                     })
                                 });
-
-                                if (!response.ok) {
-                                    throw new Error('Network response was not ok');
-                                }
 
                                 const responseAdd = await response.json();
                                 if (responseAdd.isSuccess) {
