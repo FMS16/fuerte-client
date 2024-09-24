@@ -58,8 +58,7 @@ const SuccessPayment = () => {
                     <h2>Orden confirmada</h2>
                     <p>Tu c&oacute;digo de transacci&oacute;n es: <strong>{paymentId}</strong></p>
                     <p>
-                        Podr&aacute;s ver el detalle de la &oacute;rden en 
-                        <span className='italic'>mis pedidos</span> en tu cuenta.
+                        Podr&aacute;s ver el detalle de la &oacute;rden en <span className='italic'> mis pedidos </span> en tu cuenta.
                     </p>
                     <p>Por ayuda, comunicate <a href='https://wa.link/ip2hee'>aqu&iacute;</a></p>
                 </div>

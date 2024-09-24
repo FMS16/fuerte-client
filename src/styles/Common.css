@@ -628,7 +628,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgb(116, 246, 116);
+    background-color: #ffe4f5;
 }
 
 .order-confirmed-page h1 span svg {
