@@ -105,7 +105,7 @@ const MyCart = () => {
                                         </Link>
                                     </div>
                                     <div className='cart-item-info'>
-                                        <h1 dangerouslySetInnerHTML={{ __html: product.name }}  />
+                                        <h1 dangerouslySetInnerHTML={{ __html: item.product.name }}  />
                                         <h2 className='price'>
                                             ${currency === 'USD' ? item.product.priceUSD : item.product.priceUYU}
                                         </h2>
