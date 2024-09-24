@@ -25,12 +25,11 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
     const { currency, updateCurrency } = useCurrency();
     const router = useRouter();
 
-
-    const [ couponDiscount, setCouponDiscount ] = useState(0); // Estado para el descuento del cupón
     const [ couponCode, setCouponCode ] = useState(""); // Estado para almacenar el código del cupón
 
 
-    const [ usingCoupon, setUsingCoupon ] = useState(false);
+    const [ usingCouponSubtotal, setUsingCouponSubtotal ] = useState(false);
+    const [usingCouponShipping, setUsingCouponShipping] = useState(false);
 
     const [ total, setTotal ] = useState(0);
 
@@ -40,7 +39,8 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
 
     const [ isOrdenConfirmed, setOrdenIsConfirmed ] = useState(false);
 
-    const [ saved, setSaved ] = useState(0);
+    const [ subtotalSavings, setSubtotalSavings ] = useState(0); // Ahorro del subtotal
+    const [ shippingSavings, setShippingSavings ] = useState(0); // Ahorro del envío
 
     const [ isMobile, setIsMobile ] = useState(false);
     useEffect(() => {
@@ -61,7 +61,27 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
         };
     }, [ isMobile ]);
 
-    // Calculate subtotal once on mount
+    const [ couponSubtotalAmount, setCouponSubtotalAmount ] = useState(0);
+    const [ couponShippingAmount, setCouponShippingAmount ] = useState(0);
+
+
+
+    const setCouponDiscount = (couponData) => {
+        if (couponData.isForShippingOnly) {
+            if (couponShippingAmount !== couponData.amount) {
+                setCouponShippingAmount(couponData.amount);
+                setSubtotalSavings(0); // Solo resetear el subtotal si el cupón es diferente
+            }
+        } else {
+            if (couponSubtotalAmount !== couponData.amount) {
+                setCouponSubtotalAmount(couponData.amount);
+                setShippingSavings(0); // Solo resetear el envío si el cupón es diferente
+            }
+        }
+    };
+    
+
+
     useEffect(() => {
         const getSubTotal = () => {
             let subtotal = 0;
@@ -72,24 +92,34 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
             });
             setSubtotal(subtotal);
 
-            // Aplica el descuento solo al subtotal de los productos
+            // Inicializa los costos de envío y subtotales descontados
             let discountedSubtotal = subtotal;
-            if (couponDiscount !== 0) {
-                // Calcula el monto de descuento
-                let discountAmount = (subtotal * (couponDiscount / 100));
-                discountedSubtotal = subtotal - discountAmount;
-                setSaved(discountAmount);
+            let shippingCost = shippingPrice;
+
+            // Aplica el cupón de subtotal
+            if (couponSubtotalAmount > 0) {
+                const discountValue = (subtotal * (couponSubtotalAmount / 100));
+                discountedSubtotal -= discountValue;
+                setSubtotalSavings(discountValue); // Guarda el ahorro del subtotal
             }
 
-            // Suma el envío al subtotal con descuento
-            let shippingCost = currency === "USD" ? 15 : 250;
-            let totalWithShipping = discountedSubtotal + shippingCost;
+            // Aplica el cupón de envío
+            if (couponShippingAmount > 0) {
+                const shippingDiscountValue = (shippingPrice * (couponShippingAmount / 100));
+                shippingCost -= shippingDiscountValue;
+                setShippingSavings(shippingDiscountValue); // Guarda el ahorro del envío
+            }
 
-            setTotal(totalWithShipping);
+            // Asegúrate de no sumar NaN
+            if (isNaN(discountedSubtotal)) discountedSubtotal = subtotal;
+            if (isNaN(shippingCost)) shippingCost = shippingPrice;
+
+            let total = discountedSubtotal + shippingCost;
+            setTotal(total);
         };
 
         getSubTotal();
-    }, [ cart, currency, couponDiscount ]);
+    }, [ cart, currency, couponSubtotalAmount, couponShippingAmount ]);
 
 
 
@@ -100,7 +130,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
 
 
     const [ shippingPrice, setShippingPrice ] = useState(
-        (shippingDetails && shippingDetails.country === "Ecuador") ? 15 : 250
+        (shippingDetails && shippingDetails.country === "Ecuador") ? 15 : 210
     );
 
     useEffect(() => {
@@ -111,108 +141,13 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
             updateCurrency("UYU");
         }
         if (shippingDetails && shippingDetails.country) {
-            setShippingPrice(shippingDetails.country === "Ecuador" ? 15 : 250);
+            setShippingPrice(shippingDetails.country === "Ecuador" ? 15 : 210);
         }
     }, [ shippingDetails ]);
 
     if (loading) {
         return <WebLoader />
     }
-
-    const confirmOrder = async () => {
-        setLoadingOrder(true);
-        try {
-            let items = [];
-            cart.items.forEach(item => {
-                const object = {
-                    "productId": item.product.id,
-                    "sizeId": item.productSize.size.id,
-                    "quantity": item.quantity
-                };
-                items.push(object);
-            });
-            const response = await fetch(`${API_BASE_URL}/order/add`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    "orderProductRequests": items,
-                    "userId": state.user ? state.user?.logged.id : -1,
-                    "name": userDetails.name,
-                    "lastName": userDetails.lastName,
-                    "phone": userDetails.phone,
-                    "email": userDetails.email,
-                    "paymentId": null,
-                    "paymentStatus": "pending",
-                    "address": shippingDetails,
-                    "dateBorn": userDetails.dateBorn,
-                    "idCard": userDetails.idCard,
-                    "amountDiscount": couponDiscount,
-                    "shippingPrice": shippingPrice,
-                    "currency": currency
-                })
-            });
-
-            const responseAdd = await response.json();
-            if (responseAdd.data != null) {
-                setOrder(responseAdd.data);
-                setOrdenIsConfirmed(true);
-            } else {
-                if (isMobile) {
-                    toast.info('Hubo un error, intente más tarde', {
-                        position: "bottom-right",
-                        autoClose: 1500,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
-                    });
-                } else {
-                    toast.info('Hubo un error, intente más tarde', {
-                        position: "top-left",
-                        autoClose: 1500,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light",
-                    });
-                }
-
-            }
-        } catch (error) {
-            if (isMobile) {
-                toast.error(error.message, {
-                    position: "bottom-right",
-                    autoClose: 1500,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
-            } else {
-                toast.error(error.message, {
-                    position: "top-left",
-                    autoClose: 1500,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                });
-            }
-
-        } finally {
-            setLoadingOrder(false);
-        }
-    };
-
-
 
     const validateCoupon = async (e) => {
         e.preventDefault(); // Evita que la página se recargue al enviar el formulario
@@ -229,7 +164,11 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
 
             if (data.isSuccess && data.data) {
                 setCouponDiscount(data.data); // Actualiza el descuento del cupón
-                setUsingCoupon(true);
+                if(data.data.isForShippingOnly == 1){
+                    setUsingCouponShipping(true);
+                }else{
+                    setUsingCouponSubtotal(true);
+                }
                 if (isMobile) {
                     toast.success(data.message, {
                         position: "bottom-right",
@@ -310,15 +249,15 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
     };
 
     const handleRemoveCoupon = () => {
-        // Restablece el estado del cupón
-        setCouponDiscount(0);
+        // Restablece los estados de ambos cupones
+        setCouponSubtotalAmount(0);
         setCouponCode("");
-        setUsingCoupon(false);
-        setSaved(0);
-        // Recalcula el total con el descuento restablecido
-        setTotal(subtotal + (currency === "USD" ? 15 : 250));
+        setUsingCouponSubtotal(false);
+        setSubtotalSavings(0);
+        // Recalcula el total con los descuentos restablecidos
+        setTotal(subtotal + (currency === "USD" ? 15 : 210));
         if (isMobile) {
-            toast.info('Cupón eliminado.', {
+            toast.info('Cupones eliminados.', {
                 position: "bottom-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -329,7 +268,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                 theme: "light",
             });
         } else {
-            toast.info('Cupón eliminado.', {
+            toast.info('Cupones eliminados.', {
                 position: "top-left",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -340,7 +279,100 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                 theme: "light",
             });
         }
+    };
 
+    const confirmOrder = async () => {
+        setLoadingOrder(true);
+        try {
+            let items = [];
+            cart.items.forEach(item => {
+                const object = {
+                    "productId": item.product.id,
+                    "sizeId": item.productSize.size.id,
+                    "quantity": item.quantity
+                };
+                items.push(object);
+            });
+            const response = await fetch(`${API_BASE_URL}/order/add`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    "orderProductRequests": items,
+                    "userId": state.user ? state.user?.logged.id : -1,
+                    "name": userDetails.name,
+                    "lastName": userDetails.lastName,
+                    "phone": userDetails.phone,
+                    "email": userDetails.email,
+                    "paymentId": null,
+                    "paymentStatus": "pending",
+                    "address": shippingDetails,
+                    "dateBorn": userDetails.dateBorn,
+                    "idCard": userDetails.idCard,
+                    "amountShippingDiscount": (shippingSavings * 100)/shippingPrice,
+                    "amountSubtotalDiscount": (subtotalSavings * 100)/subtotal,
+                    "shippingPrice": shippingPrice,
+                    "currency": currency
+                })
+            });
+
+            const responseAdd = await response.json();
+            if (responseAdd.data != null) {
+                setOrder(responseAdd.data);
+                setOrdenIsConfirmed(true);
+            } else {
+                if (isMobile) {
+                    toast.info('Hubo un error, intente más tarde', {
+                        position: "bottom-right",
+                        autoClose: 1500,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                } else {
+                    toast.info('Hubo un error, intente más tarde', {
+                        position: "top-left",
+                        autoClose: 1500,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                }
+
+            }
+        } catch (error) {
+            if (isMobile) {
+                toast.error(error.message, {
+                    position: "bottom-right",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            } else {
+                toast.error(error.message, {
+                    position: "top-left",
+                    autoClose: 1500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            }
+
+        } finally {
+            setLoadingOrder(false);
+        }
     };
 
 
@@ -361,8 +393,11 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                         </li>
                     )}
                 </ul>
-                {saved != 0 && (<h2>Descuento: <span className='price saved'> -${saved.toFixed(1)}</span></h2>)}
-                <h2>Env&iacute;o: <span className='price'>${currency === "USD" ? 15 : 250}</span></h2>
+                {usingCouponSubtotal && subtotalSavings > 0 && (<h2>Descuento: <span className='price saved'> -${subtotalSavings.toFixed(1)}</span></h2>)}
+                <h2>Env&iacute;o: <span className='price'>${currency === "USD" ? 15 : 210}</span></h2>
+                {usingCouponShipping && shippingSavings > 0 && (<h2>Descuento: <span className='price saved'> -$
+                    {(shippingSavings.toFixed(1))}
+                </span></h2>)}
                 <h1>Total: <span className='price bold'>${total}</span></h1>
             </div>
             {order == null && !isOrdenConfirmed && (
@@ -377,12 +412,17 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                             required
                             onChange={(e) => setCouponCode(e.target.value)}
                         />
-                        {loadingCoupon ? <button className='input-btn btn-loader'><div className='loader'></div></button> : <button disabled={usingCoupon} type='submit' className='input-btn'>Aplicar</button>}
+                        {loadingCoupon ? <button className='input-btn btn-loader'><div className='loader'></div></button> : <button type='submit' className='input-btn'>Aplicar</button>}
                     </form>
-                    {usingCoupon && (
+                    {subtotalSavings > 0&& (
                         <div className='flex justify-between remove-coupon'>
-                            <p><span className='saved'>{couponDiscount}% descuento aplicado</span></p>
+                            <p><span className='saved'>{(subtotalSavings * 100)/subtotal}% descuento aplicado</span></p>
                             <button onClick={handleRemoveCoupon} className='remove-coupon-btn'>Eliminar</button>
+                        </div>
+                    )}
+                    {shippingSavings > 0&& (
+                        <div className='flex justify-between remove-coupon'>
+                            <p><span className='saved'>{(shippingSavings * 100)/shippingPrice}% descuento aplicado</span></p>
                         </div>
                     )}
                 </div>

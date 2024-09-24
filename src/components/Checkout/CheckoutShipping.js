@@ -146,6 +146,10 @@ const CheckoutShipping = ({ onNextStep, updateData, onPrevStep, shippingDetails 
         }));
     };
 
+    const handleNoAddressClick = () =>{
+
+    }
+
     return (
         <div className='checkout-shipping'>
             <h1 className='checkout-title'>Env&iacute;o</h1>
