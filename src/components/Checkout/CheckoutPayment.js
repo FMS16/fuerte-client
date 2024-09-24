@@ -443,7 +443,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                             }),
                         });
                         const data = await response.json();
-                        if (data.data.status === "approved" || data.data.status == "in_process") {
+                        if (data.data.status === "approved") {
                             try {
                                 let items = [];
                                 console.log(cart);
