@@ -28,15 +28,18 @@ const UserDetailsComponent = () => {
       router.push("/");
     }
     const fetchOrders = async () => {
+      console.log(state.user);
       if (state.user) {
+        
         try {
           const response = await fetch(`${baseUrl}/order/getByCustomerId/${state.user.logged.id}`, {
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${state.user.token}`, // Asegúrate de pasar el token adecuado aquí
+              Authorization: `Bearer ${state.user.logged.token}`, // Asegúrate de pasar el token adecuado aquí
           },
           });
           const data = await response.json();
+          console.log(data);
           setOrders(data.data);
         } catch (err) {
         } finally {
@@ -119,8 +122,8 @@ const UserDetailsComponent = () => {
                     <ul>
                       {order.products.map((orderProduct, index) =>
                         <li key={index} className='user-order-product'>
-                          <p><Image loader={myLoader} src={`${baseUrlImg}/${orderProduct.product.image}`} width={100} height={150} alt={`${orderProduct.product.name}`} /></p>
-                          <p className='user-order-product-info'><span>{orderProduct.product.name}</span> - <span>{orderProduct.size.name}</span> - <span> x{orderProduct.quantity}</span></p>
+                          <p><Image loader={myLoader} src={`${baseUrlImg}/${orderProduct.product.mainImage}`} width={100} height={150} alt={`${orderProduct.product.name}`} /></p>
+                          <p className='user-order-product-info'><span dangerouslySetInnerHTML={{ __html: orderProduct.product.name }} /> - <span>{orderProduct.size.name}</span> - <span> x{orderProduct.quantity}</span></p>
                         </li>
                       )}
                     </ul>
