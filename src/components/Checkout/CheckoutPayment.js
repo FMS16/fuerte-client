@@ -395,9 +395,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                 </ul>
                 {usingCouponSubtotal && subtotalSavings > 0 && (<h2>Descuento: <span className='price saved'> -${subtotalSavings.toFixed(1)}</span></h2>)}
                 <h2>Env&iacute;o: <span className='price'>${currency === "USD" ? 15 : 210}</span></h2>
-                {usingCouponShipping && shippingSavings > 0 && (<h2>Descuento: <span className='price saved'> -$
-                    {(shippingSavings.toFixed(1))}
-                </span></h2>)}
+                {usingCouponShipping && shippingSavings > 0 && (<h2>Descuento: <span className='price saved'> -${(shippingSavings.toFixed(1))}</span></h2>)}
                 <h1>Total: <span className='price bold'>${total}</span></h1>
             </div>
             {order == null && !isOrdenConfirmed && (
