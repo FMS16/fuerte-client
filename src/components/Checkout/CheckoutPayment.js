@@ -384,7 +384,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                     {cart.items.map((item, index) =>
                         <li key={index}>
                             <div>
-                                <span dangerouslySetInnerHTML={{ __html: product.name }} />
+                                <span dangerouslySetInnerHTML={{ __html: item.product.name }} />
                                 <span>x{item.quantity}</span>
                             </div>
                             <div>
