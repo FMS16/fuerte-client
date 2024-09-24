@@ -393,14 +393,14 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                         </li>
                     )}
                 </ul>
-                {/* {usingCouponSubtotal && subtotalSavings > 0 && (<h2>Descuento: <span className='price saved'> -${subtotalSavings.toFixed(1)}</span></h2>)} */}
+                {usingCouponSubtotal && subtotalSavings > 0 && (<h2>Descuento: <span className='price saved'> -${subtotalSavings.toFixed(1)}</span></h2>)}
                 <h2>Env&iacute;o: <span className='price'>${currency === "USD" ? 15 : 210}</span></h2>
-                {/* {usingCouponShipping && shippingSavings > 0 && (<h2>Descuento: <span className='price saved'> -$
+                {usingCouponShipping && shippingSavings > 0 && (<h2>Descuento: <span className='price saved'> -$
                     {(shippingSavings.toFixed(1))}
-                </span></h2>)} */}
+                </span></h2>)}
                 <h1>Total: <span className='price bold'>${total}</span></h1>
             </div>
-            {/* {order == null && !isOrdenConfirmed && (
+            {order == null && !isOrdenConfirmed && (
                 <div className='checkout-coupon'>
                     <h1>¿Tienes un cup&oacute;n?</h1>
                     <form className='form-checkout-coupon' onSubmit={validateCoupon}>
@@ -426,7 +426,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                         </div>
                     )}
                 </div>
-            )} */}
+            )}
             {shippingDetails.country === 'Uruguay' && (
                 <Card
                     initialization={{ amount: total }}

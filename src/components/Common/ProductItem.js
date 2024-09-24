@@ -96,7 +96,7 @@ const ProductItem = ({ product, isWishlistComponent }) => {
                 <div className='product-item-details'>
                     <h1 dangerouslySetInnerHTML={{ __html: product.name }} />
                     <h2 className='price-before'>${currency === 'USD' ? product.priceUSD : product.priceUYU}</h2>
-                    <h2 className='price-now'>${currency === 'USD' ?  (product.priceUSD * 0.90).toFixed(0) : (product.priceUYU * 0.90).toFixed(0)}</h2>
+                    <h2 className='price-now'>${currency === 'USD' ? (product.priceUSD * 0.90).toFixed(0) : (product.priceUYU * 0.90).toFixed(0)}</h2>
                 </div>
             </>
         ) : (
@@ -123,9 +123,9 @@ const ProductItem = ({ product, isWishlistComponent }) => {
                         </svg>
                     </motion.button>}
                 <div className='product-item-details'>
-                    <h2 dangerouslySetInnerHTML={{ __html: product.name }} />
+                    <h1 dangerouslySetInnerHTML={{ __html: product.name }} />
                     <h2 className='price-before'>${currency === 'USD' ? product.priceUSD : product.priceUYU}</h2>
-                    <h2 className='price'>${currency === 'USD' ?  (product.priceUSD * 0.90).toFixed(0) : (product.priceUYU * 0.90).toFixed(0)}</h2>
+                    <h2 className='price-now'>${currency === 'USD' ? (product.priceUSD * 0.90).toFixed(0) : (product.priceUYU * 0.90).toFixed(0)}</h2>
                 </div>
             </>)
     );
