@@ -427,13 +427,13 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
             )}
             {shippingDetails.country === 'Uruguay' && (
                 <Card
-                    initialization={{ amount: 5 }}
+                    initialization={{ amount: total }}
                     onSubmit={async (param) => {
                         const response = await fetch(`${API_BASE_URL}/MercadoPago/process-payment`, {
                             method: 'POST',
                             headers: new Headers({ 'Content-type': 'application/json' }),
                             body: JSON.stringify({
-                                transactionAmount: 5,
+                                transactionAmount: total,
                                 token: param.token,
                                 description: "Pago FUERTE.",
                                 installments: param.installments,
