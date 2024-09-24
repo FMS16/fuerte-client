@@ -28,9 +28,7 @@ const UserDetailsComponent = () => {
       router.push("/");
     }
     const fetchOrders = async () => {
-      console.log(state.user);
       if (state.user) {
-        
         try {
           const response = await fetch(`${baseUrl}/order/getByCustomerId/${state.user.logged.id}`, {
             headers: {
@@ -39,7 +37,6 @@ const UserDetailsComponent = () => {
           },
           });
           const data = await response.json();
-          console.log(data);
           setOrders(data.data);
         } catch (err) {
         } finally {
