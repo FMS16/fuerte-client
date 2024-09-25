@@ -11,6 +11,7 @@ import { CurrencyProvider } from "@/features/CurrencyContext";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 /* import { Analytics } from "@vercel/analytics/react" */
 import Head from "next/head";
+import { GoogleAnalyticsTracking } from "@/components/GoogleAnalyticsTracking";
 
 const montserrat = Montserrat({ subsets: [ "latin" ] });
 const oooh_Baby = Oooh_Baby({ subsets: [ "latin" ], weight:['400'] });
@@ -29,19 +30,6 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="es">
-      <Head>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-S8N7STLR9S"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-S8N7STLR9S');
-            `,
-          }}
-        />
-      </Head>
       <body className={montserrat.className}>
         <CurrencyProvider>
           <ProductProvider>
@@ -60,6 +48,7 @@ export default function RootLayout({ children }) {
         <SpeedInsights /> 
         {/* <Analytics /> */}
       </body>
+      <GoogleAnalyticsTracking />
     </html>
   );
 }
