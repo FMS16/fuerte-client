@@ -446,7 +446,6 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                         if (data.data.status === "approved") {
                             try {
                                 let items = [];
-                                console.log(cart);
                                 cart.items.forEach(item => {
                                     const object = {
                                         "productId": item.product.id,
