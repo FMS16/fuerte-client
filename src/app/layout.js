@@ -46,7 +46,6 @@ export default function RootLayout({ children }) {
           </ProductProvider>
         </CurrencyProvider>
         <SpeedInsights /> 
-        {/* <Analytics /> */}
       </body>
       <GoogleAnalyticsTracking />
     </html>

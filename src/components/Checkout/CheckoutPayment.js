@@ -473,7 +473,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                                         "amountShippingDiscount": (shippingSavings * 100)/shippingPrice,
                                         "amountSubtotalDiscount": (subtotalSavings * 100)/subtotal,
                                         "shippingPrice": shippingPrice,
-                                        "currency": currency
+                                        "currency": "UYU"
                                     })
                                 });
 
