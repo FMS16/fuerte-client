@@ -429,6 +429,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                 <Card
                     initialization={{ amount: total }}
                     onSubmit={async (param) => {
+                        setLoading(true);
                         const response = await fetch(`${API_BASE_URL}/MercadoPago/process-payment`, {
                             method: 'POST',
                             headers: new Headers({ 'Content-type': 'application/json' }),
@@ -481,6 +482,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                                 if (responseAdd.isSuccess) {
                                     router.push(`/sucess-payment?paymentId=${data.data.id}`);
                                 } else {
+                                    setLoading(false);
                                     toast.info(`Su pago se procesó pero tuvimos un error. ¡No es tu culpa! En breves nos comunicaremos contigo a ${userDetails.email}`, {
                                         position: "bottom-right",
                                         autoClose: 10000,
@@ -493,6 +495,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                                     });
                                 }
                             } catch (error) {
+                                setLoading(false);
                                 toast.error(error.message, {
                                     position: "bottom-right",
                                     autoClose: 1500,
@@ -505,6 +508,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                                 });
                             }
                         } else if (data.data.status === "rejected") {
+                            setLoading(false);
                             toast.error('Su entidad bancaria ha rechazado el pago. Consulte el saldo disponible.', {
                                 position: "bottom-right",
                                 autoClose: 10000,
@@ -516,6 +520,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                                 theme: "light",
                             });
                         } else if (data.data.status === "in_process" || data.data.status === "pending") {
+                            setLoading(false);
                             toast.warn('Su pago no se procesó y está pendiente. Intente más tarde o con otro método de pago.', {
                                 position: "bottom-right",
                                 autoClose: 10000,
