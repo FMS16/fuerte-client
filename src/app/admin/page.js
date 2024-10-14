@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { UserContext } from "@/features/UserContext";
 import OrderStatus from "../utils/OrderStatus";
+import ProductsAdmin from "@/components/Admin/ProductsAdmin";
+import NewsletterAdmin from "@/components/Admin/NewsletterAdmin";
 
 export default function AdminPage() {
     const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -232,7 +234,8 @@ export default function AdminPage() {
                             </>
                         )}
                         {activeTab === "users" && <h1>Usuarios</h1>}
-                        {activeTab === "products" && <h1>Productos</h1>}
+                        {activeTab === "products" && <ProductsAdmin />}
+                        {activeTab === "newsletter" && <NewsletterAdmin />}
                     </div>
 
                     <AnimatePresence>
@@ -250,6 +253,7 @@ export default function AdminPage() {
                                     <li onClick={() => handleTabClick("products")}>Productos</li>
                                     <li onClick={() => handleTabClick("orders")}>&Oacute;rdenes</li>
                                     <li onClick={() => handleTabClick("users")}>Usuarios</li>
+                                    <li onClick={() => handleTabClick("newsletter")}>Newsletter</li>
                                 </ul>
                             </motion.nav>
                         )}
