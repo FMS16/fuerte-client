@@ -9,6 +9,7 @@ import ProductsAdmin from "@/components/Admin/ProductsAdmin";
 import NewsletterAdmin from "@/components/Admin/NewsletterAdmin";
 import { toast } from "react-toastify";
 import WebLoader from "@/components/Common/WebLoader";
+import DashboardGraph from "@/components/Admin/DashboardGraph";
 
 export default function AdminPage() {
     const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -62,7 +63,7 @@ export default function AdminPage() {
 
         fetchOrders();
 
-    }, [ state.token, orders ]); // Dependencias: cuando cambia el tab o el token
+    }, [ state.token ]); // Dependencias: cuando cambia el tab o el token
 
     const toggleMenu = () => {
         setMenuVisible(!menuVisible);
@@ -220,9 +221,8 @@ export default function AdminPage() {
                     <div className="container admin-panel-body">
                         {activeTab === "dashboard" && <>
                             <div className="container">
-
+                                <DashboardGraph orders={orders} />
                             </div>
-
                         </>}
                         {activeTab === "orders" && (
                             <>
