@@ -22,38 +22,41 @@ ChartJS.register(
 );
 
 const DashboardGraph = ({ orders }) => {
-    const [chartData, setChartData] = useState(null);
+    const [chartDataUYU, setChartDataUYU] = useState(null);
+    const [chartDataUSD, setChartDataUSD] = useState(null);
     const [weeklyOrderData, setWeeklyOrderData] = useState(null);
+
     useEffect(() => {
-        // Filtra y organiza los datos de totales de los pedidos
-        if(orders.length == 0) return;
-        const orderIds = orders.map(order => `#${order.id}`);
+        if (orders.length === 0) return;
 
-        // Crea un array con los totales en la moneda correspondiente
-        const totalCurrency = orders.map(order => {
-            return order.currency === 'UYU' ? order.totalUYU : order.totalUSD; // Solo muestra el total en la moneda correspondiente
-        });
+        // Filtra las órdenes por moneda
+        const ordersUYU = orders.filter(order => order.currency === 'UYU');
+        const ordersUSD = orders.filter(order => order.currency === 'USD');
 
-        const data = {
-            labels: orderIds,
-            datasets: [
-                {
-                    label: 'Total por Orden',
-                    data: totalCurrency, // Mostrar solo el total en la moneda correspondiente
-                    backgroundColor: (ctx) => {
-                        const index = ctx.dataIndex;
-                        return orders[index].currency === 'UYU' ? 'rgba(153, 102, 255, 0.6)' : 'rgba(75, 192, 192, 0.6)';
+        // Función para crear datos del gráfico
+        const createChartData = (orders, currencyLabel) => {
+            const orderIds = orders.map(order => `#${order.id}`);
+            const totalCurrency = orders.map(order => {
+                return currencyLabel === 'UYU' ? order.totalUYU : order.totalUSD;
+            });
+
+            return {
+                labels: orderIds,
+                datasets: [
+                    {
+                        label: `Total por Orden (${currencyLabel})`,
+                        data: totalCurrency,
+                        backgroundColor: currencyLabel === 'UYU' ? 'rgba(153, 102, 255, 0.6)' : 'rgba(75, 192, 192, 0.6)',
+                        borderColor: currencyLabel === 'UYU' ? 'rgba(153, 102, 255, 1)' : 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1,
                     },
-                    borderColor: (ctx) => {
-                        const index = ctx.dataIndex;
-                        return orders[index].currency === 'UYU' ? 'rgba(153, 102, 255, 1)' : 'rgba(75, 192, 192, 1)';
-                    },
-                    borderWidth: 1,
-                },
-            ],
+                ],
+            };
         };
 
-        setChartData(data);
+        // Crea los datos para UYU y USD
+        setChartDataUYU(createChartData(ordersUYU, 'UYU'));
+        setChartDataUSD(createChartData(ordersUSD, 'USD'));
 
         // Agrupando pedidos por semana
         const ordersByWeek = {};
@@ -96,10 +99,13 @@ const DashboardGraph = ({ orders }) => {
     return (
         <div className="dashboard-graph">
             <div className='mb-3'>
-                <h3>Total por Orden en su Moneda Correspondiente</h3>
-                {chartData && <Bar data={chartData} options={options} />}
+                <h3>Total por Orden en UYU</h3>
+                {chartDataUYU && <Bar data={chartDataUYU} options={options} />}
             </div>
-
+            <div className='mb-3'>
+                <h3>Total por Orden en USD</h3>
+                {chartDataUSD && <Bar data={chartDataUSD} options={options} />}
+            </div>
             <div className='mt-3'>
                 <h3>Cantidad de Pedidos por Semana</h3>
                 {weeklyOrderData && <Bar data={weeklyOrderData} options={options} />}
