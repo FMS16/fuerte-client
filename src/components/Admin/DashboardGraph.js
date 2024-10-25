@@ -28,24 +28,26 @@ const DashboardGraph = ({ orders }) => {
     useEffect(() => {
         // Filtra y organiza los datos de totales de los pedidos
         const orderIds = orders.map(order => `#${order.id}`);
-        const totalUSD = orders.map(order => order.totalUSD);
-        const totalUYU = orders.map(order => order.totalUYU);
+
+        // Crea un array con los totales en la moneda correspondiente
+        const totalCurrency = orders.map(order => {
+            return order.currency === 'USD' ? order.totalUSD : order.totalUYU;
+        });
 
         const data = {
             labels: orderIds,
             datasets: [
                 {
-                    label: 'Total en USD',
-                    data: totalUSD,
-                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1,
-                },
-                {
-                    label: 'Total en UYU',
-                    data: totalUYU,
-                    backgroundColor: 'rgba(153, 102, 255, 0.6)',
-                    borderColor: 'rgba(153, 102, 255, 1)',
+                    label: 'Total por Orden',
+                    data: totalCurrency, // Mostrar solo el total en la moneda correspondiente
+                    backgroundColor: (ctx) => {
+                        const index = ctx.dataIndex;
+                        return orders[index].currency === 'USD' ? 'rgba(75, 192, 192, 0.6)' : 'rgba(153, 102, 255, 0.6)';
+                    },
+                    borderColor: (ctx) => {
+                        const index = ctx.dataIndex;
+                        return orders[index].currency === 'USD' ? 'rgba(75, 192, 192, 1)' : 'rgba(153, 102, 255, 1)';
+                    },
                     borderWidth: 1,
                 },
             ],
@@ -94,7 +96,7 @@ const DashboardGraph = ({ orders }) => {
     return (
         <div className="dashboard-graph">
             <div className='mb-3'>
-                <h3>Total de Pedidos en USD y UYU</h3>
+                <h3>Total por Orden en su Moneda Correspondiente</h3>
                 {chartData && <Bar data={chartData} options={options} />}
             </div>
 
