@@ -24,14 +24,14 @@ ChartJS.register(
 const DashboardGraph = ({ orders }) => {
     const [chartData, setChartData] = useState(null);
     const [weeklyOrderData, setWeeklyOrderData] = useState(null);
-
     useEffect(() => {
         // Filtra y organiza los datos de totales de los pedidos
+        if(orders.length == 0) return;
         const orderIds = orders.map(order => `#${order.id}`);
 
         // Crea un array con los totales en la moneda correspondiente
         const totalCurrency = orders.map(order => {
-            return order.currency === 'USD' ? order.totalUSD : order.totalUYU;
+            return order.currency === 'UYU' ? order.totalUYU : order.totalUSD; // Solo muestra el total en la moneda correspondiente
         });
 
         const data = {
@@ -42,11 +42,11 @@ const DashboardGraph = ({ orders }) => {
                     data: totalCurrency, // Mostrar solo el total en la moneda correspondiente
                     backgroundColor: (ctx) => {
                         const index = ctx.dataIndex;
-                        return orders[index].currency === 'USD' ? 'rgba(75, 192, 192, 0.6)' : 'rgba(153, 102, 255, 0.6)';
+                        return orders[index].currency === 'UYU' ? 'rgba(153, 102, 255, 0.6)' : 'rgba(75, 192, 192, 0.6)';
                     },
                     borderColor: (ctx) => {
                         const index = ctx.dataIndex;
-                        return orders[index].currency === 'USD' ? 'rgba(75, 192, 192, 1)' : 'rgba(153, 102, 255, 1)';
+                        return orders[index].currency === 'UYU' ? 'rgba(153, 102, 255, 1)' : 'rgba(75, 192, 192, 1)';
                     },
                     borderWidth: 1,
                 },
