@@ -2764,11 +2764,12 @@ input:valid~label {
     padding: 12px 24px;
     border-radius: 5px;
     margin: 0 10px;
+    cursor: pointer;
 }
 
 .modal-content-options button:first-child {
     background-color: var(--success-color);
-    color: #000;
+    color: #fff;
 }
 
 .modal-content-options button:last-child {

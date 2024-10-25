@@ -7,6 +7,8 @@ import { UserContext } from "@/features/UserContext";
 import OrderStatus from "../utils/OrderStatus";
 import ProductsAdmin from "@/components/Admin/ProductsAdmin";
 import NewsletterAdmin from "@/components/Admin/NewsletterAdmin";
+import { toast } from "react-toastify";
+import WebLoader from "@/components/Common/WebLoader";
 
 export default function AdminPage() {
     const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -17,6 +19,9 @@ export default function AdminPage() {
     const { state } = useContext(UserContext);
     const { isAuthenticated, isAdmin } = state;
     const router = useRouter();
+
+    const [loading, setLoading] = useState(false);
+
     const [ isMobile, setIsMobile ] = useState(false);
 
     useEffect(() => {
@@ -79,7 +84,7 @@ export default function AdminPage() {
         setModalChangeOrderStatusVisible(!modalChangeOrderStatusVisible);
     }
 
-    const handleOrderStatusChange = (value, order) => {
+    const handleOrderStatusChange = async (value, order) => {
         const object = {
             order: order,
             newStatus: value
@@ -88,9 +93,39 @@ export default function AdminPage() {
         setModalChangeOrderStatusVisible(!modalChangeOrderStatusVisible);
     }
 
+    const handleSubmitNewStatus = async () => {
+        setLoading(true);
+        const response = await fetch(`${API_BASE_URL}/order/update-order-status/${activeOrder.order.id}/${activeOrder.newStatus}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${state.user.token}`, // Asegúrate de pasar el token adecuado aquí
+            },
+        });
+        const data = await response.json();
+        if(data.isSuccess == true){
+            toast.success("Orden actualizada con éxito.", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            })
+        }
+        setLoading(false);
+        toggleModalChangeOrderStatus();
+    }
+
     const handleDetailOrder = (order) => {
         setActiveOrder(order);
         setModalOrderDetail(!modalOrderDetail);
+    }
+
+    if(loading){
+        return (<WebLoader />);
     }
 
     return (
@@ -130,7 +165,7 @@ export default function AdminPage() {
                                     <span className="bold"> <OrderStatus orderStatus={parseInt(activeOrder.newStatus)} /> </span>
                                 </p>
                                 <div className="modal-content-options">
-                                    <button>Confirmar</button>
+                                    <button onClick={() => handleSubmitNewStatus()}>Confirmar</button>
                                     <button onClick={toggleModalChangeOrderStatus}>Cancelar</button>
                                 </div>
                             </div>
