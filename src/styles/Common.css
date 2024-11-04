@@ -805,7 +805,7 @@
 }
 
 .price-now {
-    color: red;
+    color: #000;
     font-size: var(--size-title-small);
 }
 
