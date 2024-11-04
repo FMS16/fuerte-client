@@ -95,7 +95,6 @@ const ProductItem = ({ product, isWishlistComponent }) => {
                     </motion.button>}
                 <div className='product-item-details'>
                     <h1 dangerouslySetInnerHTML={{ __html: product.name }} />
-                    <h2 className='price-before'>${currency === 'USD' ? (product.priceUSD * 1.10).toFixed(0) : ((product.priceUYU * 100) / 90).toFixed(0)}</h2>
                     <h2 className='price-now'>${currency === 'USD' ? product.priceUSD : product.priceUYU}</h2>
                 </div>
             </>
@@ -124,7 +123,6 @@ const ProductItem = ({ product, isWishlistComponent }) => {
                     </motion.button>}
                 <div className='product-item-details'>
                     <h1 dangerouslySetInnerHTML={{ __html: product.name }} />
-                    <h2 className='price-before'>${currency === 'USD' ? ((product.priceUSD * 100) / 90).toFixed(0) : ((product.priceUYU * 100) / 90).toFixed(0)}</h2>
                     <h2 className='price-now'>${currency === 'USD' ? product.priceUSD : product.priceUYU}</h2>
                 </div>
             </>)
