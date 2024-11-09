@@ -64,22 +64,22 @@ const Header = () => {
                     <div className="ticker">
                         <div className="ticker-inner">
                             <div className="ticker-item">
-                                <p className='size-small'>¡Hola preciosa! Lleg&oacute; Cybermonday y te regalamos 15% de descuento con el c&oacute;digo cyber15 🎉</p>
+                                <p className='size-small'>¡Hola preciosa! Con tu primera compra ten&eacute; 10% de descuento con el c&oacute;digo ABUNDANCIA 🎉</p>
                             </div>
                             <div className="ticker-item">
-                            <p className='size-small'>¡Hola preciosa! Lleg&oacute; Cybermonday y te regalamos 15% de descuento con el c&oacute;digo cyber15 🎉</p>
+                            <p className='size-small'>¡Hola preciosa! Con tu primera compra ten&eacute; 10% de descuento con el c&oacute;digo ABUNDANCIA 🎉</p>
                             </div>
                             <div className="ticker-item">
-                            <p className='size-small'>¡Hola preciosa! Lleg&oacute; Cybermonday y te regalamos 15% de descuento con el c&oacute;digo cyber15 🎉</p>
+                            <p className='size-small'>¡Hola preciosa! Con tu primera compra ten&eacute; 10% de descuento con el c&oacute;digo ABUNDANCIA 🎉</p>
                             </div>
                             <div className="ticker-item">
-                            <p className='size-small'>¡Hola preciosa! Lleg&oacute; Cybermonday y te regalamos 15% de descuento con el c&oacute;digo cyber15 🎉</p>
+                            <p className='size-small'>¡Hola preciosa! Con tu primera compra ten&eacute; 10% de descuento con el c&oacute;digo ABUNDANCIA 🎉</p>
                             </div>
                             <div className="ticker-item">
-                            <p className='size-small'>¡Hola preciosa! Lleg&oacute; Cybermonday y te regalamos 15% de descuento con el c&oacute;digo cyber15 🎉</p>
+                            <p className='size-small'>¡Hola preciosa! Con tu primera compra ten&eacute; 10% de descuento con el c&oacute;digo ABUNDANCIA 🎉</p>
                             </div>
                             <div className="ticker-item">
-                            <p className='size-small'>¡Hola preciosa! Lleg&oacute; Cybermonday y te regalamos 15% de descuento con el c&oacute;digo cyber15 🎉</p>
+                            <p className='size-small'>¡Hola preciosa! Con tu primera compra ten&eacute; 10% de descuento con el c&oacute;digo ABUNDANCIA 🎉</p>
                             </div>
                         </div>
                     </div>
