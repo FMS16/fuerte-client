@@ -836,7 +836,7 @@
 
 .modal-web-content{
     width: 70%;
-    height: 350px;
+    height: 60%;
     position: absolute;
     z-index: 150;
     top: 50%;
@@ -846,7 +846,17 @@
 }
 
 
-
+.close-modal-web{
+    color: red;
+    position: absolute;
+    z-index: 200;
+    width: 30px;
+    font-size: 16px;
+    border-radius: 0 0 0 25%;
+    height: 30px;
+    background-color: #fff;
+    right: 0;
+}
 
 
 
