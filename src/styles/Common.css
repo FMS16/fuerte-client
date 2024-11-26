@@ -816,6 +816,37 @@
 
 
 
+
+
+
+
+.modal-web{
+    width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-web-content{
+    width: 450px;
+    position: absolute;
+    z-index: 150;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    height: 600px;
+}
+
+
+
+
+
+
 .product-details {
     width: 100%;
     margin: auto;
