@@ -803,6 +803,7 @@
 .price-before {
     text-decoration: line-through;
     font-size: var(--size-normal);
+    color: red;
 }
 
 .price-now {

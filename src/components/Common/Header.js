@@ -67,19 +67,19 @@ const Header = () => {
                                 <p className='size-small'>¡Hola preciosa! Black Week con 25% OFF, desde 26/11 hasta 1/12 🎉</p>
                             </div>
                             <div className="ticker-item">
-                            <p className='size-small'>¡Hola preciosa! Black Week con 25% OFF, desde 26/11 hasta 1/12 🎉</p>
+                                <p className='size-small'>¡Hola preciosa! Black Week con 25% OFF, desde 26/11 hasta 1/12 🎉</p>
                             </div>
                             <div className="ticker-item">
-                            <p className='size-small'>¡Hola preciosa! Black Week con 25% OFF, desde 26/11 hasta 1/12 🎉</p>
+                                <p className='size-small'>¡Hola preciosa! Black Week con 25% OFF, desde 26/11 hasta 1/12 🎉</p>
                             </div>
                             <div className="ticker-item">
-                            <p className='size-small'>¡Hola preciosa! Black Week con 25% OFF, desde 26/11 hasta 1/12 🎉</p>
+                                <p className='size-small'>¡Hola preciosa! Black Week con 25% OFF, desde 26/11 hasta 1/12 🎉</p>
                             </div>
                             <div className="ticker-item">
-                            <p className='size-small'>¡Hola preciosa! Black Week con 25% OFF, desde 26/11 hasta 1/12 🎉</p>
+                                <p className='size-small'>¡Hola preciosa! Black Week con 25% OFF, desde 26/11 hasta 1/12 🎉</p>
                             </div>
                             <div className="ticker-item">
-                            <p className='size-small'>¡Hola preciosa! Black Week con 25% OFF, desde 26/11 hasta 1/12 🎉</p>
+                                <p className='size-small'>¡Hola preciosa! Black Week con 25% OFF, desde 26/11 hasta 1/12 🎉</p>
                             </div>
                         </div>
                     </div>
