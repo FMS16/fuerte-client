@@ -12,10 +12,10 @@ export default function Home() {
 
   useEffect(() => {
     // Mostrar modal solo la primera vez
-    const hasModalShown = localStorage.getItem('modalShown');
+    const hasModalShown = sessionStorage.getItem('modalShown');
     if (!hasModalShown) {
       setShowModal(true);
-      localStorage.setItem('modalShown', 'true');
+      sessionStorage.setItem('modalShown', 'true');
     }
   }, []);
 

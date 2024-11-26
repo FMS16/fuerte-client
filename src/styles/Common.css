@@ -834,13 +834,14 @@
 }
 
 .modal-web-content{
-    width: 450px;
+    width: 85%;
+    height: 350px;
     position: absolute;
     z-index: 150;
     top: 50%;
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
-    height: 600px;
+
 }
 
 
@@ -2186,6 +2187,7 @@ input:valid~label {
 
 
 
+
 .pre-web {
     width: 100%;
     max-width: 100%;
@@ -2586,6 +2588,11 @@ input:valid~label {
 
     .shop-container-products {
         justify-content: flex-start;
+    }
+
+    .modal-web-content{
+        width: 450px;
+        height: 600px;
     }
 
 }
