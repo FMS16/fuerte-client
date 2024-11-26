@@ -64,22 +64,22 @@ const Header = () => {
                     <div className="ticker">
                         <div className="ticker-inner">
                             <div className="ticker-item">
-                                <p className='size-small'>¡Hola preciosa! Con tu primera compra obten&eacute; 10% de descuento con el c&oacute;digo ABUNDANCIA 🎉</p>
+                                <p className='size-small'>¡Hola preciosa! Black Week con 25% OFF, desde 26/11 hasta 1/12 🎉</p>
                             </div>
                             <div className="ticker-item">
-                            <p className='size-small'>¡Hola preciosa! Con tu primera compra obten&eacute; 10% de descuento con el c&oacute;digo ABUNDANCIA 🎉</p>
+                            <p className='size-small'>¡Hola preciosa! Black Week con 25% OFF, desde 26/11 hasta 1/12 🎉</p>
                             </div>
                             <div className="ticker-item">
-                            <p className='size-small'>¡Hola preciosa! Con tu primera compra obten&eacute; 10% de descuento con el c&oacute;digo ABUNDANCIA 🎉</p>
+                            <p className='size-small'>¡Hola preciosa! Black Week con 25% OFF, desde 26/11 hasta 1/12 🎉</p>
                             </div>
                             <div className="ticker-item">
-                            <p className='size-small'>¡Hola preciosa! Con tu primera compra obten&eacute; 10% de descuento con el c&oacute;digo ABUNDANCIA 🎉</p>
+                            <p className='size-small'>¡Hola preciosa! Black Week con 25% OFF, desde 26/11 hasta 1/12 🎉</p>
                             </div>
                             <div className="ticker-item">
-                            <p className='size-small'>¡Hola preciosa! Con tu primera compra obten&eacute; 10% de descuento con el c&oacute;digo ABUNDANCIA 🎉</p>
+                            <p className='size-small'>¡Hola preciosa! Black Week con 25% OFF, desde 26/11 hasta 1/12 🎉</p>
                             </div>
                             <div className="ticker-item">
-                            <p className='size-small'>¡Hola preciosa! Con tu primera compra obten&eacute; 10% de descuento con el c&oacute;digo ABUNDANCIA 🎉</p>
+                            <p className='size-small'>¡Hola preciosa! Black Week con 25% OFF, desde 26/11 hasta 1/12 🎉</p>
                             </div>
                         </div>
                     </div>

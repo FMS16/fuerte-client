@@ -60,7 +60,8 @@
 
 .header-pre {
     width: 100%;
-    background-color: var(--pink-color);
+    background-color: black;
+    color: #fff;
     padding: 5px;
     text-align: center;
     overflow: hidden;
