@@ -10,6 +10,7 @@ import bannerImg1 from "../assets/images/image4.webp";
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
 
+/*
   useEffect(() => {
     // Mostrar modal solo la primera vez
     const hasModalShown = sessionStorage.getItem('modalShown');
@@ -18,7 +19,7 @@ export default function Home() {
       sessionStorage.setItem('modalShown', 'true');
     }
   }, []);
-
+*/
   const handleCloseModal = () => {
     setShowModal(false);
   };
