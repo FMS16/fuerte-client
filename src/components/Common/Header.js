@@ -64,22 +64,22 @@ const Header = () => {
                     <div className="ticker">
                         <div className="ticker-inner">
                             <div className="ticker-item">
-                                <p className='size-small'>¡Hola preciosa! Black Week con 25% OFF, desde 26/11 hasta 1/12 🎉</p>
+                                <p className='size-small'>¡Hola preciosa! Mantenemos el 10% OFF en toda la tienda 🎉</p>
                             </div>
                             <div className="ticker-item">
-                                <p className='size-small'>¡Hola preciosa! Black Week con 25% OFF, desde 26/11 hasta 1/12 🎉</p>
+                                <p className='size-small'>¡Hola preciosa! Mantenemos el 10% OFF en toda la tienda 🎉</p>
                             </div>
                             <div className="ticker-item">
-                                <p className='size-small'>¡Hola preciosa! Black Week con 25% OFF, desde 26/11 hasta 1/12 🎉</p>
+                                <p className='size-small'>¡Hola preciosa! Mantenemos el 10% OFF en toda la tienda 🎉</p>
                             </div>
                             <div className="ticker-item">
-                                <p className='size-small'>¡Hola preciosa! Black Week con 25% OFF, desde 26/11 hasta 1/12 🎉</p>
+                                <p className='size-small'>¡Hola preciosa! Mantenemos el 10% OFF en toda la tienda 🎉</p>
                             </div>
                             <div className="ticker-item">
-                                <p className='size-small'>¡Hola preciosa! Black Week con 25% OFF, desde 26/11 hasta 1/12 🎉</p>
+                                <p className='size-small'>¡Hola preciosa! Mantenemos el 10% OFF en toda la tienda 🎉</p>
                             </div>
                             <div className="ticker-item">
-                                <p className='size-small'>¡Hola preciosa! Black Week con 25% OFF, desde 26/11 hasta 1/12 🎉</p>
+                                <p className='size-small'>¡Hola preciosa! Mantenemos el 10% OFF en toda la tienda 🎉</p>
                             </div>
                         </div>
                     </div>
