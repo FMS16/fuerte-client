@@ -61,7 +61,7 @@
 .header-pre {
     width: 100%;
     background-color: var(--pink-color);
-    color: #fff;
+    color: #000;
     padding: 5px;
     text-align: center;
     overflow: hidden;
