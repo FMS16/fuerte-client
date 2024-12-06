@@ -64,22 +64,22 @@ const Header = () => {
                     <div className="ticker">
                         <div className="ticker-inner">
                             <div className="ticker-item">
-                                <p className='size-small'>¡Hola preciosa! Mantenemos 10% en toda la web 🎉</p>
+                                <p className='size-small'>¡Hola preciosa! Aprovecha 10% en toda la web por tiempo limitado 🎉</p>
                             </div>
                             <div className="ticker-item">
-                            <p className='size-small'>¡Hola preciosa! Mantenemos 10% en toda la web 🎉</p>
+                            <p className='size-small'>¡Hola preciosa! Aprovecha 10% en toda la web por tiempo limitado 🎉</p>
                             </div>
                             <div className="ticker-item">
-                            <p className='size-small'>¡Hola preciosa! Mantenemos 10% en toda la web 🎉</p>
+                            <p className='size-small'>¡Hola preciosa! Aprovecha 10% en toda la web por tiempo limitado 🎉</p>
                             </div>
                             <div className="ticker-item">
-                            <p className='size-small'>¡Hola preciosa! Mantenemos 10% en toda la web 🎉</p>
+                            <p className='size-small'>¡Hola preciosa! Aprovecha 10% en toda la web por tiempo limitado 🎉</p>
                             </div>
                             <div className="ticker-item">
-                            <p className='size-small'>¡Hola preciosa! Mantenemos 10% en toda la web 🎉</p>
+                            <p className='size-small'>¡Hola preciosa! Aprovecha 10% en toda la web por tiempo limitado 🎉</p>
                             </div>
                             <div className="ticker-item">
-                            <p className='size-small'>¡Hola preciosa! Mantenemos 10% en toda la web 🎉</p>
+                            <p className='size-small'>¡Hola preciosa! Aprovecha 10% en toda la web por tiempo limitado 🎉</p>
                             </div>
                         </div>
                     </div>
