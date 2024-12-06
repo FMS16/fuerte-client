@@ -64,22 +64,22 @@ const Header = () => {
                     <div className="ticker">
                         <div className="ticker-inner">
                             <div className="ticker-item">
-                                <p className='size-small'>¡Hola preciosa! Mantenemos el 10% OFF en toda la tienda 🎉</p>
+                                <p className='size-small'>¡Hola preciosa! Mantenemos 10% en la primera colección 🎉</p>
                             </div>
                             <div className="ticker-item">
-                                <p className='size-small'>¡Hola preciosa! Mantenemos el 10% OFF en toda la tienda 🎉</p>
+                                <p className='size-small'>¡Hola preciosa! Mantenemos 10% en la primera colección 🎉</p>
                             </div>
                             <div className="ticker-item">
-                                <p className='size-small'>¡Hola preciosa! Mantenemos el 10% OFF en toda la tienda 🎉</p>
+                                <p className='size-small'>¡Hola preciosa! Mantenemos 10% en la primera colección 🎉</p>
                             </div>
                             <div className="ticker-item">
-                                <p className='size-small'>¡Hola preciosa! Mantenemos el 10% OFF en toda la tienda 🎉</p>
+                                <p className='size-small'>¡Hola preciosa! Mantenemos 10% en la primera colección 🎉</p>
                             </div>
                             <div className="ticker-item">
-                                <p className='size-small'>¡Hola preciosa! Mantenemos el 10% OFF en toda la tienda 🎉</p>
+                                <p className='size-small'>¡Hola preciosa! Mantenemos 10% en la primera colección 🎉</p>
                             </div>
                             <div className="ticker-item">
-                                <p className='size-small'>¡Hola preciosa! Mantenemos el 10% OFF en toda la tienda 🎉</p>
+                                <p className='size-small'>¡Hola preciosa! Mantenemos 10% en la primera colección 🎉</p>
                             </div>
                         </div>
                     </div>

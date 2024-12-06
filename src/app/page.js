@@ -7,6 +7,8 @@ import ModalWeb from '@/components/Common/ModalWeb';
 import bannerImg from "../assets/images/image3.webp";
 import bannerImg1 from "../assets/images/image4.webp";
 
+import bannerNew from "../assets/images/banner-new-2.jpeg";
+
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
 
@@ -28,12 +30,12 @@ export default function Home() {
     <>
       <div className="wrapper-banner">
         <Banner
-          img={bannerImg}
+          img={bannerNew}
           title={'TU MOTIVACIÓN'}
           subtitle={'YA ESTÁ ACÁ'}
           buttonText={'Ver colección'}
-          positionTextLeft='15'
-          positionTextTop='50'
+          positionTextLeft='50'
+          positionTextTop='40'
           colorText={'white'}
           link={'/shop'}
           invertedTitle={false}
