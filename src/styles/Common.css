@@ -462,7 +462,6 @@
 
 .banner:last-child img {
     object-position: 15% center;
-    filter: brightness(0.7);
 }
 
 .banner-text {
@@ -524,7 +523,6 @@
 
 .newsletter .newsletter-banner {
     width: 100%;
-    filter: brightness(0.7);
 }
 
 .footer-container {
