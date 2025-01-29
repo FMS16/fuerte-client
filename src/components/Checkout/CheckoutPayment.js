@@ -130,7 +130,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
 
 
     const [ shippingPrice, setShippingPrice ] = useState(
-        (shippingDetails && shippingDetails.country === "Ecuador") ? 15 : 210
+        (shippingDetails && shippingDetails.country === "Ecuador") ? 15 : 250
     );
 
     useEffect(() => {
@@ -141,7 +141,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
             updateCurrency("UYU");
         }
         if (shippingDetails && shippingDetails.country) {
-            setShippingPrice(shippingDetails.country === "Ecuador" ? 15 : 210);
+            setShippingPrice(shippingDetails.country === "Ecuador" ? 15 : 250);
         }
     }, [ shippingDetails ]);
 
@@ -255,7 +255,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
         setUsingCouponSubtotal(false);
         setSubtotalSavings(0);
         // Recalcula el total con los descuentos restablecidos
-        setTotal(subtotal + (currency === "USD" ? 15 : 210));
+        setTotal(subtotal + (currency === "USD" ? 15 : 250));
         if (isMobile) {
             toast.info('Cupones eliminados.', {
                 position: "bottom-right",
@@ -394,7 +394,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
                     )}
                 </ul>
                 {usingCouponSubtotal && subtotalSavings > 0 && (<h2>Descuento: <span className='price saved'> -${subtotalSavings.toFixed(1)}</span></h2>)}
-                <h2>Env&iacute;o: <span className='price'>${currency === "USD" ? 15 : 210}</span></h2>
+                <h2>Env&iacute;o: <span className='price'>${currency === "USD" ? 15 : 250}</span></h2>
                 {usingCouponShipping && shippingSavings > 0 && (<h2>Descuento: <span className='price saved'> -${(shippingSavings.toFixed(1))}</span></h2>)}
                 <h1>Total: <span className='price bold'>${total.toFixed(1)}</span></h1>
             </div>
