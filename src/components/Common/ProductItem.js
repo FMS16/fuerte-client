@@ -96,7 +96,7 @@ const ProductItem = ({ product, isWishlistComponent }) => {
                 <div className='product-item-details'>
                     <h1 dangerouslySetInnerHTML={{ __html: product.name }} />
                     {product.id <= 14 ? 
-                     <h2 className='price-before'>${currency === 'USD' ? ((product.priceUSD*100)/80).toFixed(0) : ((product.priceUYU*100)/80).toFixed(0)}</h2>
+                     <h2 className='price-before'>${currency === 'USD' ? ((product.priceUSD*100)/90).toFixed(0) : ((product.priceUYU*100)/90).toFixed(0)}</h2>
                      :
                      <h2 className='price-before'>${currency === 'USD' ? ((product.priceUSD*100)/90).toFixed(0) : ((product.priceUYU*100)/90).toFixed(0)}</h2>
                     }
@@ -129,7 +129,7 @@ const ProductItem = ({ product, isWishlistComponent }) => {
                 <div className='product-item-details'>
                     <h1 dangerouslySetInnerHTML={{ __html: product.name }} />
                     {product.id <= 14 ? 
-                     <h2 className='price-before'>${currency === 'USD' ? ((product.priceUSD*100)/80).toFixed(0) : ((product.priceUYU*100)/80).toFixed(0)}</h2>
+                     <h2 className='price-before'>${currency === 'USD' ? ((product.priceUSD*100)/90).toFixed(0) : ((product.priceUYU*100)/90).toFixed(0)}</h2>
                      :
                      <h2 className='price-before'>${currency === 'USD' ? ((product.priceUSD*100)/90).toFixed(0) : ((product.priceUYU*100)/90).toFixed(0)}</h2>
                     }
