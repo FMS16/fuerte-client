@@ -64,22 +64,22 @@ const Header = () => {
                     <div className="ticker">
                         <div className="ticker-inner">
                             <div className="ticker-item">
-                                <p className='size-small'>Hola Preciosa! Te regalamos 10% de descuento en TODA la web para darte la motivaci&oacute;n que necesitabas! 🎉</p>
+                                <p className='size-small'>Hola Preciosa!</p>
                             </div>
                             <div className="ticker-item">
-                            <p className='size-small'>Hola Preciosa! Te regalamos 10% de descuento en TODA la web para darte la motivaci&oacute;n que necesitabas! 🎉</p>
+                            <p className='size-small'>Hola Preciosa!</p>
                             </div>
                             <div className="ticker-item">
-                            <p className='size-small'>Hola Preciosa! Te regalamos 10% de descuento en TODA la web para darte la motivaci&oacute;n que necesitabas! 🎉</p>
+                            <p className='size-small'>Hola Preciosa!</p>
                             </div>
                             <div className="ticker-item">
-                            <p className='size-small'>Hola Preciosa! Te regalamos 10% de descuento en TODA la web para darte la motivaci&oacute;n que necesitabas! 🎉</p>
+                            <p className='size-small'>Hola Preciosa!</p>
                             </div>
                             <div className="ticker-item">
-                            <p className='size-small'>Hola Preciosa! Te regalamos 10% de descuento en TODA la web para darte la motivaci&oacute;n que necesitabas! 🎉</p>
+                            <p className='size-small'>Hola Preciosa!</p>
                             </div>
                             <div className="ticker-item">
-                            <p className='size-small'>Hola Preciosa! Te regalamos 10% de descuento en TODA la web para darte la motivaci&oacute;n que necesitabas! 🎉</p>
+                            <p className='size-small'>Hola Preciosa!</p>
                             </div>
                         </div>
                     </div>
