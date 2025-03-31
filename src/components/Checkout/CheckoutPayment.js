@@ -25,7 +25,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
     const { currency, updateCurrency } = useCurrency();
     const router = useRouter();
 
-    const [ couponCode, setCouponCode ] = useState(""); // Estado para almacenar el código del cupón
+    const [ couponCode, setCouponCode ] = useState(""); 
 
 
     const [ usingCouponSubtotal, setUsingCouponSubtotal ] = useState(false);
@@ -64,6 +64,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
     const [ couponSubtotalAmount, setCouponSubtotalAmount ] = useState(0);
     const [ couponShippingAmount, setCouponShippingAmount ] = useState(0);
 
+    const totalWithDiscount = useMemo(() => finalSubtotal + shippingPrice, [finalSubtotal, shippingPrice]);
 
 
     const setCouponDiscount = (couponData) => {
@@ -427,7 +428,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
             )}
             {shippingDetails.country === 'Uruguay' && (
                 <Card
-                    initialization={{ amount: total }}
+                    initialization={{ amount: totalWithDiscount }}
                     onSubmit={async (param) => {
                         setLoading(true);
                         const response = await fetch(`${API_BASE_URL}/MercadoPago/process-payment`, {
