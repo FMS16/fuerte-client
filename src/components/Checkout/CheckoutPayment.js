@@ -65,7 +65,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
     const [ couponSubtotalAmount, setCouponSubtotalAmount ] = useState(0);
     const [ couponShippingAmount, setCouponShippingAmount ] = useState(0);
 
-     const totalWithDiscount = useMemo(() => subtotal - subtotalSavings + shippingPrice, [subtotal, subtotalSavings, shippingPrice]);
+
 
 
 
@@ -377,6 +377,8 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
             setLoadingOrder(false);
         }
     };
+
+    const totalWithDiscount = useMemo(() => subtotal - subtotalSavings + shippingPrice, [subtotal, subtotalSavings, shippingPrice]);
 
 
     return (
