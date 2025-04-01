@@ -378,8 +378,6 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
         }
     };
 
-    const totalWithDiscount = useMemo(() => subtotal - subtotalSavings + shippingPrice, [subtotal, subtotalSavings, shippingPrice]);
-
 
     return (
         <div className='checkout-payment'>
@@ -432,7 +430,7 @@ const CheckoutPayment = ({ onPrevStep, userDetails, shippingDetails }) => {
             )}
             {shippingDetails.country === 'Uruguay' && (
                 <Card
-                    initialization={{ amount: totalWithDiscount }}
+                    initialization={{ amount: subtotal }}
                     onSubmit={async (param) => {
                         setLoading(true);
                         const response = await fetch(`${API_BASE_URL}/MercadoPago/process-payment`, {
