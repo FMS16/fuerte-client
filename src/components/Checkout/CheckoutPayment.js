@@ -4,6 +4,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import Card from '@mercadopago/sdk-react/bricks/cardPayment';
+import { useMemo } from 'react';
 import { initMercadoPago } from '@mercadopago/sdk-react';
 import { useCart } from '@/features/CartContext';
 import { UserContext } from '@/features/UserContext';
