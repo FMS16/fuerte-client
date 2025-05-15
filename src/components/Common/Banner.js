@@ -31,7 +31,7 @@ const Banner = ({ img, title, subtitle, buttonText, positionTextTop, positionTex
     };
 
     return (
-        <div className="banner">
+        <div className="banner" style="background-color: #000;">
             <Image
                 src={img}
                 alt="banner"

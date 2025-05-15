@@ -64,22 +64,22 @@ const Header = () => {
                     <div className="ticker">
                         <div className="ticker-inner">
                             <div className="ticker-item">
-                                <p className='size-small'>Hola Preciosa! Aprovecha las &uacute;ltimas unidades! TODO 20% OFF</p>
+                                <p className='size-small'>Lleg&oacute; el momento de impactar FUERTE!</p>
                             </div>
                             <div className="ticker-item">
-                            <p className='size-small'>Hola Preciosa! Aprovecha las &uacute;ltimas unidades! TODO 20% OFF</p>
+                             <p className='size-small'>Lleg&oacute; el momento de impactar FUERTE!</p>
                             </div>
                             <div className="ticker-item">
-                            <p className='size-small'>Hola Preciosa! Aprovecha las &uacute;ltimas unidades! TODO 20% OFF</p>
+                             <p className='size-small'>Lleg&oacute; el momento de impactar FUERTE!</p>
                             </div>
                             <div className="ticker-item">
-                            <p className='size-small'>Hola Preciosa! Aprovecha las &uacute;ltimas unidades! TODO 20% OFF</p>
+                             <p className='size-small'>Lleg&oacute; el momento de impactar FUERTE!</p>
                             </div>
                             <div className="ticker-item">
-                            <p className='size-small'>Hola Preciosa! Aprovecha las &uacute;ltimas unidades! TODO 20% OFF</p>
+                             <p className='size-small'>Lleg&oacute; el momento de impactar FUERTE!</p>
                             </div>
                             <div className="ticker-item">
-                            <p className='size-small'>Hola Preciosa! Aprovecha las &uacute;ltimas unidades! TODO 20% OFF</p>
+                             <p className='size-small'>Lleg&oacute; el momento de impactar FUERTE!</p>
                             </div>
                         </div>
                     </div>

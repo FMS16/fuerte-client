@@ -7,7 +7,7 @@ import ModalWeb from '@/components/Common/ModalWeb';
 import bannerImg from "../assets/images/image3.webp";
 import bannerImg1 from "../assets/images/image4.webp";
 
-import bannerNew from "../assets/images/banner-new-2.jpeg";
+import bannerNew from "../assets/images/nuevoBanner.jpeg";
 
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
