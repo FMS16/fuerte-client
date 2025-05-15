@@ -8,6 +8,7 @@ import bannerImg from "../assets/images/image3.webp";
 import bannerImg1 from "../assets/images/image4.webp";
 
 import bannerNew from "../assets/images/banner-new-2.jpeg";
+import nuevoBanner from "../assets/images/BANNERDEFINITIVO.jpeg"
 
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
@@ -30,7 +31,7 @@ export default function Home() {
     <>
       <div className="wrapper-banner">
         <Banner
-          img={bannerNew}
+          img={nuevoBanner}
           title={'TU MOTIVACIÓN'}
           subtitle={'YA ESTÁ ACÁ'}
           buttonText={'Ver colección'}
