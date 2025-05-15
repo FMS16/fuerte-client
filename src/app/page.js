@@ -8,7 +8,7 @@ import bannerImg from "../assets/images/image3.webp";
 import bannerImg1 from "../assets/images/image4.webp";
 
 import bannerNew from "../assets/images/banner-new-2.jpeg";
-import nuevoBanner from "../assets/images/BANNERDEFINITIVO.jpeg"
+import nuevoBanner from "../assets/images/BANNER_dEFINITIVO_AHORA.JPG"
 
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
