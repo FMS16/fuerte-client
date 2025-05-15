@@ -25,7 +25,7 @@ export const ProductProvider = ({ children }) => {
         }
         const data = await response.json();
         // products tiene 
-        data.sort((a, b) => b.id - a.id);
+        //data.sort((a, b) => b.id - a.id);
         setProducts(data.data);
       } catch (error) {
         console.error('Error:', error);
