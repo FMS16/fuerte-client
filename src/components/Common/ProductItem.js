@@ -95,10 +95,10 @@ const ProductItem = ({ product, isWishlistComponent }) => {
                     </motion.button>}
                 <div className='product-item-details'>
                     <h1 dangerouslySetInnerHTML={{ __html: product.name }} />
-                    {product.id <= 14 ? 
+                    {product.id <= 20 ? 
                      <h2 className='price-before'>${currency === 'USD' ? ((product.priceUSD*100)/80).toFixed(0) : ((product.priceUYU*100)/80).toFixed(0)}</h2>
                      :
-                     <h2 className='price-before'>${currency === 'USD' ? ((product.priceUSD*100)/80).toFixed(0) : ((product.priceUYU*100)/80).toFixed(0)}</h2>
+                     <></>
                     }
                     <h2 className='price-now'>${currency === 'USD' ? product.priceUSD : product.priceUYU}</h2>
                 </div>
@@ -128,10 +128,10 @@ const ProductItem = ({ product, isWishlistComponent }) => {
                     </motion.button>}
                 <div className='product-item-details'>
                     <h1 dangerouslySetInnerHTML={{ __html: product.name }} />
-                    {product.id <= 14 ? 
+                    {product.id <= 20 ? 
                      <h2 className='price-before'>${currency === 'USD' ? ((product.priceUSD*100)/80).toFixed(0) : ((product.priceUYU*100)/80).toFixed(0)}</h2>
                      :
-                     <h2 className='price-before'>${currency === 'USD' ? ((product.priceUSD*100)/80).toFixed(0) : ((product.priceUYU*100)/80).toFixed(0)}</h2>
+                     <></>
                     }
                     <h2 className='price-now'>${currency === 'USD' ? product.priceUSD : product.priceUYU}</h2>
                 </div>

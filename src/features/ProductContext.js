@@ -24,6 +24,8 @@ export const ProductProvider = ({ children }) => {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
+        // products tiene 
+        data.sort((a, b) => b.id - a.id);
         setProducts(data.data);
       } catch (error) {
         console.error('Error:', error);
